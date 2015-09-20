@@ -5,6 +5,7 @@ int main(int argc, char** argv)
   // create main window
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
 
+  sf::RectangleShape shape = sf::RectangleShape(sf::Vector2f(50, 50));
   // start main loop
   while(App.isOpen())
   {
@@ -12,6 +13,7 @@ int main(int argc, char** argv)
     sf::Event Event;
     while(App.pollEvent(Event))
     {
+
       // Exit
       if(Event.type == sf::Event::Closed)
         App.close();
@@ -19,6 +21,7 @@ int main(int argc, char** argv)
 
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
+    App.draw(shape);
 
     // display
     App.display();
