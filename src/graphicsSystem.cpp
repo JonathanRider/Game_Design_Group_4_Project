@@ -14,11 +14,10 @@ void graphicsSystem::update(float time){
   std::list<entity>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(iterator->hasComponent(1)){
+      //it is a graphics component, so we can cast it
       graphicsComponent *gp = (graphicsComponent*)iterator->getComponent(1);
-      gp->draw(screen, iterator->getXY());
+      gp->getSprite()->setPosition(iterator->getXY());
+      screen->draw(*(gp->getSprite()));
     }
-
   }
-
-
 }

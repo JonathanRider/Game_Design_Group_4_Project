@@ -16,14 +16,12 @@ public:
   float getRotation();
   void setOpacity(float a);
 
-  void draw(sf::RenderWindow *w, sf::Vector2f xy);
+  sf::RectangleShape* getSprite(){return sprite;}
 
 private:
   sf::RectangleShape *sprite;//sf::Sprite sprite;
   float angle;
   float alpha;
-
-
 
 };
 

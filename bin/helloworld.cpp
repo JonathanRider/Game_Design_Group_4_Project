@@ -17,8 +17,8 @@ int main(int argc, char** argv)
   graphicsComponent* gc = new graphicsComponent(shape);
 
 
-  entity helloEntity =  entity(1);
-  helloEntity.addComponent(*gc);
+  entity helloEntity =  entity(1); //random id for now
+  helloEntity.addComponent(gc);
   entityM->addEntity(helloEntity);
 
 
@@ -37,7 +37,6 @@ int main(int argc, char** argv)
 
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
-    //gc->draw(&App, sf::Vector2f(0,0));
     graphicsS->update(1.0);
     //App.draw(shape);
 

@@ -8,6 +8,7 @@ public:
   ~component(){}
 
   int getType(){return type;} //enum
+  void setType(int t){type = t;}
 
 
 private:
