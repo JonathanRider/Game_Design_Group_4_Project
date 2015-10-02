@@ -1,11 +1,27 @@
 #include <SFML/Graphics.hpp>
+#include "entityManager.h"
+#include "graphicsSystem.h"
+
+#include <iostream>
 
 int main(int argc, char** argv)
 {
   // create main window
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
 
-  sf::RectangleShape shape = sf::RectangleShape(sf::Vector2f(50, 50));
+  sf::RectangleShape *shape = new sf::RectangleShape(sf::Vector2f(50, 50));
+
+  entityManager* entityM = new entityManager();
+  graphicsSystem* graphicsS = new graphicsSystem(&App, entityM, 1);
+
+  graphicsComponent* gc = new graphicsComponent(shape);
+
+
+  entity helloEntity =  entity(1);
+  helloEntity.addComponent(*gc);
+  entityM->addEntity(helloEntity);
+
+
   // start main loop
   while(App.isOpen())
   {
@@ -21,7 +37,9 @@ int main(int argc, char** argv)
 
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
-    App.draw(shape);
+    //gc->draw(&App, sf::Vector2f(0,0));
+    graphicsS->update(1.0);
+    //App.draw(shape);
 
     // display
     App.display();
