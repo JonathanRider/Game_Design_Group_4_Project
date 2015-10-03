@@ -1,7 +1,7 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include "graphicsComponent.h"
+#include "component.h"
 #include <map>
 #include <SFML/Graphics.hpp>
 class Entity
