@@ -1,4 +1,4 @@
-#ifndef _COMPONENT_H
+#ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
 #include "constants.h"
