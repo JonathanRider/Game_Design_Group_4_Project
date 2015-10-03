@@ -1,21 +1,21 @@
 #include "graphicsSystem.h"
 #include <iostream>
 
-graphicsSystem::graphicsSystem(sf::RenderWindow* w, entityManager* m, int vType){
+GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m, GameState s){
   screen = w;
   manager = m;
-  viewType = vType;
+  state = s;
 }
 
 
-void graphicsSystem::update(float time){
+void GraphicsSystem::update(float time){
   //iterate through entityManager and update
-  std::list<entity>* eList = manager->getEntityList();
-  std::list<entity>::iterator iterator;
+  std::list<Entity>* eList = manager->getEntityList();
+  std::list<Entity>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-    if(iterator->hasComponent(1)){
+    if(iterator->hasComponent(GRAPHICS)){
       //it is a graphics component, so we can cast it
-      graphicsComponent *gp = (graphicsComponent*)iterator->getComponent(1);
+      GraphicsComponent *gp = (GraphicsComponent*)iterator->getComponent(GRAPHICS);
       gp->getSprite()->setPosition(iterator->getXY());
       screen->draw(*(gp->getSprite()));
     }

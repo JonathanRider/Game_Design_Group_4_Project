@@ -3,20 +3,21 @@
 
 #include "graphicsComponent.h"
 #include "entityManager.h"
+#include "constants.h"
 #include <SFML/Graphics.hpp>
 
-class graphicsSystem
+class GraphicsSystem
 {
 public:
-  graphicsSystem(sf::RenderWindow* w, entityManager *m, int vType);
-  ~graphicsSystem();
+  GraphicsSystem(sf::RenderWindow* w, EntityManager *m, GameState state);
+  ~GraphicsSystem();
   void update(float time);
-  void changeViewType(int v);
+  void changeViewType(GameState state);
 
 private:
   sf::RenderWindow* screen;
-  entityManager* manager;
-  int viewType;
+  EntityManager* manager;
+  GameState state;
 };
 
 #endif

@@ -1,12 +1,12 @@
 #include "entityManager.h"
 
-entityManager::entityManager(){}
+EntityManager::EntityManager(){}
 
 
-void entityManager::addEntity(entity e){
+void EntityManager::addEntity(Entity e){
   entityList.push_back(e);
 }
 
-std::list<entity>* entityManager::getEntityList(){
+std::list<Entity>* EntityManager::getEntityList(){
   return &entityList;
 }

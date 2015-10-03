@@ -4,24 +4,24 @@
 #include "graphicsComponent.h"
 #include <map>
 #include <SFML/Graphics.hpp>
-class entity
+class Entity
 {
 public:
-  entity(int id);
-  ~entity(){}
+  Entity(int id);
+  ~Entity(){}
 
   void getId();
-  bool hasComponent(int c);
-  void addComponent(component* c);
-  void removeComponent(int c); //eventually enum
+  bool hasComponent(ComponentType type);
+  void addComponent(Component* c);
+  void removeComponent(ComponentType type); //eventually enum
   void removeAllComponents();
-  component* getComponent(int type);
+  Component* getComponent(ComponentType type);
 
   void setXY(sf::Vector2f xy);
   sf::Vector2f getXY(){return xy;}
 
 private:
-  std::map<int, component*> componentMap;
+  std::map<ComponentType, Component*> componentMap;
   int id;
   sf::Vector2f xy;
 

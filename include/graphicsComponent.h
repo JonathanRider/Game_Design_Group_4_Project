@@ -4,11 +4,11 @@
 #include "component.h"
 #include <SFML/Graphics.hpp>
 
-class graphicsComponent : public component
+class GraphicsComponent : public Component
 {
 public:
-  graphicsComponent(/*sf::Sprite*/sf::RectangleShape* s, float a = 0, float al = 0);
-  ~graphicsComponent();
+  GraphicsComponent(/*sf::Sprite*/sf::RectangleShape* s, float a = 0, float al = 0);
+  ~GraphicsComponent();
 
   void setGraphics(sf::RectangleShape);//Sprite);
   void setRotation(float a);

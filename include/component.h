@@ -1,18 +1,20 @@
 #ifndef _COMPONENT_H
 #define _COMPONENT_H_
 
-class component
+#include "constants.h"
+
+class Component
 {
 public:
-  component(){}
-  ~component(){}
+  Component(){}
+  ~Component(){}
 
-  int getType(){return type;} //enum
-  void setType(int t){type = t;}
+  ComponentType getType(){return type;} //enum
+  void setType(ComponentType t){type = t;}
 
 
 private:
-  int type;
+  ComponentType type;
 };
 
 #endif

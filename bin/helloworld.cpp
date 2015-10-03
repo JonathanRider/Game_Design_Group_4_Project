@@ -11,13 +11,13 @@ int main(int argc, char** argv)
 
   sf::RectangleShape *shape = new sf::RectangleShape(sf::Vector2f(50, 50));
 
-  entityManager* entityM = new entityManager();
-  graphicsSystem* graphicsS = new graphicsSystem(&App, entityM, 1);
+  EntityManager* entityM = new EntityManager();
+  GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM, MENU);
 
-  graphicsComponent* gc = new graphicsComponent(shape);
+  GraphicsComponent* gc = new GraphicsComponent(shape);
 
 
-  entity helloEntity =  entity(1); //random id for now
+  Entity helloEntity =  Entity(1); //random id for now
   helloEntity.addComponent(gc);
   entityM->addEntity(helloEntity);
 

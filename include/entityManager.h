@@ -4,21 +4,21 @@
 #include "entity.h"
 #include <list>
 
-class entityManager
+class EntityManager
 {
 public:
-  entityManager();
-  ~entityManager();
+  EntityManager();
+  ~EntityManager();
 
-  void addEntity(entity e);
+  void addEntity(Entity e);
   void removeEntity(int id);
-  entity findEntity(int id);
-  std::list<entity>* getEntityList();
+  Entity findEntity(int id);
+  std::list<Entity>* getEntityList();
 
   int getNewID();
 
 private:
-  std::list<entity> entityList;
+  std::list<Entity> entityList;
   int nextId;
 
 };
