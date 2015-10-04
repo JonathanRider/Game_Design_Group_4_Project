@@ -7,19 +7,19 @@
 class GraphicsComponent : public Component
 {
 public:
-  GraphicsComponent(/*sf::Sprite*/sf::RectangleShape* s, float a = 0, float al = 0);
+  GraphicsComponent(sf::Sprite* s, float a = 0, float al = 0);
   ~GraphicsComponent();
 
-  void setGraphics(sf::RectangleShape);//Sprite);
+  void setGraphics(sf::Sprite);
   void setRotation(float a);
   void rotate(float a);
   float getRotation();
   void setOpacity(float a);
 
-  sf::RectangleShape* getSprite(){return sprite;}
+  sf::Sprite* getSprite(){return sprite;}
 
 private:
-  sf::RectangleShape *sprite;//sf::Sprite sprite;
+  sf::Sprite* sprite;
   float angle;
   float alpha;
 
