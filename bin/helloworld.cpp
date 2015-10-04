@@ -17,9 +17,9 @@ int main(int argc, char** argv)
 
   //load texture
   sf::Texture texture;
-  texture.loadFromFile("test.png");
+  texture.loadFromFile("resources/test.png");
   //create sprite
-  sf::Sprite *sprite;
+  sf::Sprite *sprite = new sf::Sprite();
   sprite->setTexture(texture);
 
   EntityManager* entityM = new EntityManager();
