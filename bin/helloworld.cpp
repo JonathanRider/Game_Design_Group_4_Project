@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "entityManager.h"
 #include "graphicsSystem.h"
+#include "logicSystem.h"
 
 #include <iostream>
 
@@ -13,6 +14,7 @@ int main(int argc, char** argv)
 
   EntityManager* entityM = new EntityManager();
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM, MENU);
+  LogicSystem* logicS = new LogicSystem(entityM, MENU);
 
   GraphicsComponent* gc = new GraphicsComponent(shape);
 
@@ -38,6 +40,7 @@ int main(int argc, char** argv)
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
     graphicsS->update(1.0);
+    logicS->update(1.0);
     //App.draw(shape);
 
     // display
