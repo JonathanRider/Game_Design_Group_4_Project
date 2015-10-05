@@ -29,7 +29,7 @@ int main(int argc, char** argv)
   InputSystem* inputS = new InputSystem(entityM, MENU);
 
 
-  GraphicsComponent* gc = new GraphicsComponent(shape);
+  GraphicsComponent* gc = new GraphicsComponent(sprite);
   ControllableComponent* cc = new ControllableComponent();
 
 
