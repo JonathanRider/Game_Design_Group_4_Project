@@ -3,22 +3,26 @@
 
 #include "component.h"
 
-class GraphicsComponent : public Component
+class MoveableComponent : public Component
 {
 public:
-  GraphicsComponent(int speed);
-  ~GraphicsComponent();
+  MoveableComponent(int speed);
+  ~MoveableComponent();
 
   void setSpeed(int s);
   int getSpeed();
   void setDirectoin(float d);
-  int
+  float getDirection();
+
+  void setMaxSpeed();
+  int getMaxSpeed();
 
 
 
 
 private:
   int speed;
+  int maxSpeed;
   float direction;
 
 };
