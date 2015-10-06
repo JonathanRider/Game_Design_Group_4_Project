@@ -14,15 +14,23 @@ void InputSystem::update(float time){
       ControllableComponent *cp = (ControllableComponent*)iterator->getComponent(CONTROLLABLE);
 
       if(sf::Keyboard::isKeyPressed(cp->getKey(UP))){
-        std::cout << "up\n";
+        //std::cout << "up\n";
+        sf::Vector2f v = iterator->getXY();
+        iterator->setXY(sf::Vector2f(v.x, v.y - 500*time));
       }else if(sf::Keyboard::isKeyPressed(cp->getKey(DOWN))){
-        std::cout << "down\n";
+        //std::cout << "down\n";
+        sf::Vector2f v = iterator->getXY();
+        iterator->setXY(sf::Vector2f(v.x, v.y + 500*time));
       }
 
       if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
-        std::cout << "left\n";
+        //std::cout << "left\n";
+        sf::Vector2f v = iterator->getXY();
+        iterator->setXY(sf::Vector2f(v.x- 500*time, v.y));
       }else if(sf::Keyboard::isKeyPressed(cp->getKey(RIGHT))){
-        std::cout << "right\n";
+        //std::cout << "right\n";
+        sf::Vector2f v = iterator->getXY();
+        iterator->setXY(sf::Vector2f(v.x + 500*time, v.y));
       }
     }
   }

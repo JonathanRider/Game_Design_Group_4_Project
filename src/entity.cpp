@@ -17,3 +17,8 @@ Component* Entity::getComponent(ComponentType type){
   std::map<ComponentType,Component*>::iterator it =  componentMap.find(type);
   return (it->second); //return thes value of the key-value pair
 }
+
+void Entity::setXY(sf::Vector2f newXY){
+  xy.x = newXY.x;
+  xy.y = newXY.y;
+}

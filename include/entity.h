@@ -17,7 +17,7 @@ public:
   void removeAllComponents();
   Component* getComponent(ComponentType type);
 
-  void setXY(sf::Vector2f xy);
+  void setXY(sf::Vector2f Newxy);
   sf::Vector2f getXY(){return xy;}
 
 private:

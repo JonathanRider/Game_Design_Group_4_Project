@@ -39,7 +39,9 @@ int main(int argc, char** argv)
   helloEntity.addComponent(cc);
   entityM->addEntity(helloEntity);
 
-
+  sf::Clock graphicsTimer;
+  sf::Clock inputTimer;
+  sf::Clock logicTimer;
   // start main loop
   while(App.isOpen())
   {
@@ -61,9 +63,13 @@ int main(int argc, char** argv)
 
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
-    graphicsS->update(1.0);
-    logicS->update(1.0);
-    inputS->update(1.0);
+
+    float dTime = graphicsTimer.restart().asSeconds();
+    graphicsS->update(dTime);
+    dTime = logicTimer.restart().asSeconds();
+    logicS->update(dTime);
+    dTime = inputTimer.restart().asSeconds();
+    inputS->update(dTime);
     //App.draw(shape);
 
     // display
