@@ -1,7 +1,7 @@
 #ifndef _MOVEABLE_COMPONENT_H_
 #define _MOVEABLE_COMPONENT_H_
 
-#include "component.h"
+#include "components/component.h"
 
 class MoveableComponent : public Component
 {

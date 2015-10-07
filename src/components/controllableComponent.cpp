@@ -1,4 +1,4 @@
-#include "controllableComponent.h"
+#include "../components/controllableComponent.h"
 
 ControllableComponent::ControllableComponent(bool active, sf::Keyboard::Key up ,
                       sf::Keyboard::Key down,

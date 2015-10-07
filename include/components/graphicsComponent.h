@@ -1,7 +1,7 @@
 #ifndef _GRAPHICS_COMPONENT_H_
 #define _GRAPHICS_COMPONENT_H_
 
-#include "component.h"
+#include "components/component.h"
 #include <SFML/Graphics.hpp>
 
 class GraphicsComponent : public Component

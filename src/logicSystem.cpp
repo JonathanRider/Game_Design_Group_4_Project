@@ -1,5 +1,7 @@
 #include "logicSystem.h"
+#include "allComponents.h"
 #include <iostream>
+
 
 LogicSystem::LogicSystem(EntityManager *m, GameState s)
   :manager(m), state(s){}

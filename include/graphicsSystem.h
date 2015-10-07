@@ -1,7 +1,7 @@
 #ifndef _GRAPHICS_SYSTEM_H_
 #define _GRAPHICS_SYSTEM_H_
 
-#include "graphicsComponent.h"
+#include "components/graphicsComponent.h"
 #include "entityManager.h"
 #include "constants.h"
 #include <SFML/Graphics.hpp>
