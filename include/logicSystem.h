@@ -16,8 +16,7 @@ public:
 private:
 
   void resolveCollisions(Entity* e);
-  bool intersecting(sf::FloatRect *a, sf::FloatRect *b);
-
+  void moveEntity(Entity* e, float time);
 
   EntityManager* manager;
   GameState state;

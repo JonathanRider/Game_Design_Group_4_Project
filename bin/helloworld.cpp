@@ -29,22 +29,25 @@ int main(int argc, char** argv)
   LogicSystem* logicS = new LogicSystem(entityM, MENU);
   InputSystem* inputS = new InputSystem(entityM, MENU);
 
-
-
-  GraphicsComponent* gc = new GraphicsComponent(sprite);
-  GraphicsComponent* wallgc = new GraphicsComponent(sprite);
-  ControllableComponent* cc = new ControllableComponent();
-  MoveableComponent* mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
-
-  CollidableComponent* colc = new CollidableComponent(sf::Vector2f(400.0, 400.0), 50.0, 50.0);
-  CollidableComponent* playerc = new CollidableComponent(sf::Vector2f(0.0,0.0), 50.0, 50.0);
-
   Entity wall = Entity(2);
+  GraphicsComponent* wallgc = new GraphicsComponent(sprite);
+  CollidableComponent* colc = new CollidableComponent(sf::Vector2f(400.0, 400.0), 50.0, 50.0);
   wall.addComponent(wallgc);
   wall.addComponent(colc);
   wall.setXY(sf::Vector2f(400.0, 400.0));
 
+  Entity wall2 = Entity(3);
+  wall2.setXY(sf::Vector2f(400.0, 420.0));
+  CollidableComponent* colc2 = new CollidableComponent(wall2.getXY(), 50.0, 50.0);
+  GraphicsComponent* wallgc2 = new GraphicsComponent(sprite);
+  wall2.addComponent(wallgc2);
+  wall2.addComponent(colc2);
+
   Entity helloEntity =  Entity(1); //random id for now
+  GraphicsComponent* gc = new GraphicsComponent(sprite);
+  ControllableComponent* cc = new ControllableComponent();
+  MoveableComponent* mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
+  CollidableComponent* playerc = new CollidableComponent(sf::Vector2f(0.0,0.0), 50.0, 50.0);
   helloEntity.addComponent(gc);
   helloEntity.addComponent(cc);
   helloEntity.addComponent(mc);
@@ -54,6 +57,7 @@ int main(int argc, char** argv)
 
   entityM->addEntity(helloEntity);
   entityM->addEntity(wall);
+  entityM->addEntity(wall2);
 
   sf::Clock graphicsTimer;
   sf::Clock inputTimer;
