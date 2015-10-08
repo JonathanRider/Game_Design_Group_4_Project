@@ -30,14 +30,17 @@ int main(int argc, char** argv)
   InputSystem* inputS = new InputSystem(entityM, MENU);
 
 
+
   GraphicsComponent* gc = new GraphicsComponent(sprite);
   ControllableComponent* cc = new ControllableComponent();
+  MoveableComponent* mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
 
 
 
   Entity helloEntity =  Entity(1); //random id for now
   helloEntity.addComponent(gc);
   helloEntity.addComponent(cc);
+  helloEntity.addComponent(mc);
   entityM->addEntity(helloEntity);
 
   sf::Clock graphicsTimer;

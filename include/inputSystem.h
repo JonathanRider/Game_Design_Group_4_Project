@@ -4,8 +4,8 @@
 
 //need to include pretty much all components as well
 #include "entityManager.h"
-#include "allComponents.h"
-
+#include "components/controllableComponent.h"
+#include "components/moveableComponent.h"
 #include "constants.h"
 
 class InputSystem

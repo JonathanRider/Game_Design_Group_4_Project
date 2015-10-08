@@ -1,5 +1,5 @@
-#ifndef _MOVEABLE_COMPONENT_H_
-#define _MOVEABLE_COMPONENT_H_
+#ifndef _CONTROLLABLE_COMPONENT_H_
+#define _CONTROLLABLE_COMPONENT_H_
 
 #include "components/component.h"
 #include "constants.h"

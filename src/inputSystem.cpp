@@ -15,7 +15,6 @@ void InputSystem::update(float time){
       ControllableComponent *cp = (ControllableComponent*)iterator->getComponent(CONTROLLABLE);
       if(iterator->hasComponent(MOVEABLE)){
         MoveableComponent *mp = (MoveableComponent*)iterator->getComponent(MOVEABLE);
-
         if(sf::Keyboard::isKeyPressed(cp->getKey(UP))){
             if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
               mp->setDirection(135.0);
