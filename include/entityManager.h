@@ -7,7 +7,7 @@
 class EntityManager
 {
 public:
-  EntityManager();
+  EntityManager(){nextID = 0;}
   ~EntityManager();
 
   void addEntity(Entity e);
@@ -19,7 +19,7 @@ public:
 
 private:
   std::list<Entity> entityList;
-  int nextId;
+  int nextID;
 
 };
 

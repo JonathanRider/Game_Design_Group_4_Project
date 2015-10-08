@@ -1,7 +1,10 @@
 #include "entityManager.h"
 
-EntityManager::EntityManager(){}
-
+int EntityManager::getNewID(){
+  int curID = nextID;
+  nextID ++;
+  return curID;
+}
 
 void EntityManager::addEntity(Entity e){
   entityList.push_back(e);
