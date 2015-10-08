@@ -21,4 +21,9 @@ Component* Entity::getComponent(ComponentType type){
 void Entity::setXY(sf::Vector2f newXY){
   xy.x = newXY.x;
   xy.y = newXY.y;
+  if(this->hasComponent(COLLIDABLE)){
+    CollidableComponent *cc = (CollidableComponent*)this->getComponent(COLLIDABLE);
+    cc->moveTo(xy);
+
+  }
 }

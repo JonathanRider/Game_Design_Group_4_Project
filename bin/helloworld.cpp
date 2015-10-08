@@ -32,16 +32,28 @@ int main(int argc, char** argv)
 
 
   GraphicsComponent* gc = new GraphicsComponent(sprite);
+  GraphicsComponent* wallgc = new GraphicsComponent(sprite);
   ControllableComponent* cc = new ControllableComponent();
   MoveableComponent* mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
 
+  CollidableComponent* colc = new CollidableComponent(sf::Vector2f(400.0, 400.0), 50.0, 50.0);
+  CollidableComponent* playerc = new CollidableComponent(sf::Vector2f(0.0,0.0), 50.0, 50.0);
 
+  Entity wall = Entity(2);
+  wall.addComponent(wallgc);
+  wall.addComponent(colc);
+  wall.setXY(sf::Vector2f(400.0, 400.0));
 
   Entity helloEntity =  Entity(1); //random id for now
   helloEntity.addComponent(gc);
   helloEntity.addComponent(cc);
   helloEntity.addComponent(mc);
+  helloEntity.addComponent(playerc);
+
+
+
   entityM->addEntity(helloEntity);
+  entityM->addEntity(wall);
 
   sf::Clock graphicsTimer;
   sf::Clock inputTimer;

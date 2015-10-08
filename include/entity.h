@@ -1,7 +1,8 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include "components/component.h"
+
+#include "allComponents.h"
 #include <map>
 #include <SFML/Graphics.hpp>
 class Entity
@@ -10,7 +11,7 @@ public:
   Entity(int id);
   ~Entity(){}
 
-  void getId();
+  int getID(){return id;}
   bool hasComponent(ComponentType type);
   void addComponent(Component* c);
   void removeComponent(ComponentType type); //eventually enum

@@ -1,7 +1,7 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-enum ComponentType {GRAPHICS, CONTROLLABLE, MOVEABLE};
+enum ComponentType {GRAPHICS, CONTROLLABLE, MOVEABLE, COLLIDABLE};
 
 enum GameState {MENU, PLAYING, PAUSED};
 

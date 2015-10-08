@@ -14,6 +14,11 @@ public:
   void update(float time);
 
 private:
+
+  void resolveCollisions(Entity* e);
+  bool intersecting(sf::FloatRect *a, sf::FloatRect *b);
+
+
   EntityManager* manager;
   GameState state;
 };

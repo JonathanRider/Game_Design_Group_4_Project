@@ -6,5 +6,6 @@
 #include "components/controllableComponent.h"
 #include "components/graphicsComponent.h"
 #include "components/moveableComponent.h"
+#include "components/collidableComponent.h"
 
 #endif
