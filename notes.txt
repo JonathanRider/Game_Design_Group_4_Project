@@ -1,0 +1,8 @@
+add triggerComponent
+
+maybe have the graphic component hold a name to the sprite not actually the
+sprite so we don't have to have texture when we create an entity?
+Or possibly load all of the textures into predetermined names when a level starts
+before we create the entitys then use an enum
+
+do we want entity manager to take in a pointer to an entity?
