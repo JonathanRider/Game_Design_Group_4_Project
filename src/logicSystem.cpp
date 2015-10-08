@@ -1,6 +1,6 @@
 #include "logicSystem.h"
 #include "allComponents.h"
-#include <math.h>
+#include <cmath>
 #include <iostream>
 
 
@@ -50,31 +50,53 @@ void LogicSystem::resolveCollisions(Entity *e){
         CollidableComponent *cc = (CollidableComponent*)iterator->getComponent(COLLIDABLE);
         sf::FloatRect *otherBB = cc->getBoundingBox();
         if(origBB->intersects(*otherBB)){
+          MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+          float reverseDirection = fmod((mc->getDirection() + 180),360);
+
+          float xRatio = cos(reverseDirection*PI/180.0);
+          float yRatio = sin(reverseDirection*PI/180.0);
+
+          float xOverlap;
           if(origBB->left < otherBB->left){
-            //need to move to left
-            e->setXY(sf::Vector2f(otherBB->left - origBB->width + origBB->width/2, e->getXY().y ));
-            //origBB->left = otherBB->left - origBB->width;
-          }
-          if(origBB->left > otherBB->left){
-            //need to move to the right
-            e->setXY(sf::Vector2f(otherBB->left + otherBB->width + origBB->width/2, e->getXY().y ));
-            // origBB->left = otherBB->left + otherBB->width;
-          }
-          if(origBB->top < otherBB->top){
-            //need to move up
-            e->setXY(sf::Vector2f(e->getXY().x, otherBB->top - origBB->height + origBB->height/2));
-            // origBB->top = otherBB->top - origBB->height;
-          if(origBB->top > otherBB->top){
-            //need to move down
-            e->setXY(sf::Vector2f(e->getXY().x, otherBB->top +otherBB->height + origBB->height/2));
-            // origBB->top = otherBB->top + otherBB->height;
-          }
+            //original is on the left
+            xOverlap = (origBB->width) - (otherBB->left - origBB->left);
+          }else{
+            //original is on the right
+            xOverlap = (otherBB->width) - (origBB->left - otherBB->left);
           }
 
+          float yOverlap;
+          if(origBB->top < otherBB->top){
+            //original on top
+            yOverlap = origBB->height - (otherBB->top - origBB->top);
+          }else{
+            //original on bottom
+            yOverlap = otherBB->height - (origBB->top - otherBB->top);
+          }
+
+          //find minimum distance to get out of the other object
+          float distance = std::min(fabs(yOverlap/yRatio), fabs(xOverlap/xRatio));
+          float dy = -distance*yRatio;
+          float dx = distance*xRatio;
+          sf::Vector2f newXY = sf::Vector2f(e->getXY().x + dx, e->getXY().y + dy);
+          e->setXY(newXY);
+
+          //code to allow sliding along the collisions
+          //move just x
+          e->setXY(sf::Vector2f(e->getXY().x -dx, e->getXY().y));
+          //reset if it intersects
+          if(origBB->intersects(*otherBB)){
+            e->setXY(newXY);
+          }else{
+            newXY.x = e->getXY().x;
+            newXY.y = e->getXY().y;
+          }
+          e->setXY(sf::Vector2f(e->getXY().x, e->getXY().y - dy));
+          if(origBB->intersects(*otherBB)){
+            e->setXY(newXY);
+          }
         }
       }
     }
-
-
   }
 }
