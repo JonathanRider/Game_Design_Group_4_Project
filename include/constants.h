@@ -9,6 +9,8 @@ enum Input {UP, DOWN, LEFT, RIGHT, ITEM, USE, NEXTITEM, PREVITEM};
 
 enum EntityType {PLAYER, WALL};
 
+enum TextureType {PLAYERT, WALLT};
+
 #define PI 3.14159265
 
 
