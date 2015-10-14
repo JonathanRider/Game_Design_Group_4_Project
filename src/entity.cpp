@@ -24,6 +24,10 @@ void Entity::setXY(sf::Vector2f newXY){
   if(this->hasComponent(COLLIDABLE)){
     CollidableComponent *cc = (CollidableComponent*)this->getComponent(COLLIDABLE);
     cc->moveTo(xy);
-
   }
+  if(this->hasComponent(BVISION)){
+    BlockVisionComponent *bsc = (BlockVisionComponent*)this->getComponent(BVISION);
+    bsc->moveTo(xy);
+  }
+
 }

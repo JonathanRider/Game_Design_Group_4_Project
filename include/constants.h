@@ -1,7 +1,7 @@
 #ifndef _CONSTANTS_H_
 #define _CONSTANTS_H_
 
-enum ComponentType {GRAPHICS, CONTROLLABLE, MOVEABLE, COLLIDABLE};
+enum ComponentType {GRAPHICS, CONTROLLABLE, MOVEABLE, COLLIDABLE, VISION, BVISION};
 
 enum GameState {MENU, PLAYING, PAUSED};
 
@@ -9,9 +9,10 @@ enum Input {UP, DOWN, LEFT, RIGHT, ITEM, USE, NEXTITEM, PREVITEM};
 
 enum EntityType {PLAYER, WALL};
 
-enum TextureType {PLAYERT, WALLT};
+
 
 #define PI 3.14159265
+#define WALLSIZE 50
 
 
 static const struct {

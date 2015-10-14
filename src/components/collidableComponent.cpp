@@ -4,6 +4,7 @@ CollidableComponent::CollidableComponent(sf::Vector2f xy, float height, float wi
 {
   this->setType(COLLIDABLE);
   boundingBox = new sf::FloatRect(xy.x - width/2, xy.y - height/2, width, height);
+  slideDirection = 0;
 }
 
 void CollidableComponent::moveTo(sf::Vector2f xy){

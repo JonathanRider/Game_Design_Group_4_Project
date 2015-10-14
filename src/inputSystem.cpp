@@ -1,9 +1,9 @@
 #include "inputSystem.h"
-
+#include <cmath>
 #include <iostream>
 
-InputSystem::InputSystem(EntityManager *m, GameState s)
-  :manager(m), state(s){}
+InputSystem::InputSystem(EntityManager *m, GameState s, sf::RenderWindow *w)
+  :manager(m), state(s), screen(w){}
 
 void InputSystem::update(float time){
 
@@ -43,6 +43,15 @@ void InputSystem::update(float time){
           mp->setAccelerating(false);
         }
       }
+    }
+    if(iterator->hasComponent(VISION)){
+      VisionComponent *vc = (VisionComponent*) iterator->getComponent(VISION);
+      sf::Vector2i  mp= sf::Mouse::getPosition(*screen);
+      float dy = iterator->getXY().y - mp.y;
+      float dx = iterator->getXY().x - mp.x;
+      atan2(dy, dx) * 180 / PI + 180;
+
+      vc->setDirection(atan2(dy, dx) * 180 / PI + 180);
     }
   }
 }
