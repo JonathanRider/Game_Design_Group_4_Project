@@ -11,13 +11,14 @@
 class InputSystem
 {
 public:
-  InputSystem(EntityManager *m, GameState state);
+  InputSystem(EntityManager *m, GameState state, sf::RenderWindow *w);
   ~InputSystem();
   void update(float time);
   void handleKeyPress(sf::Event e);
 
 private:
   EntityManager* manager;
+  sf::RenderWindow *screen;
   GameState state;
 };
 

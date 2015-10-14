@@ -6,3 +6,7 @@ Or possibly load all of the textures into predetermined names when a level start
 before we create the entitys then use an enum
 
 do we want entity manager to take in a pointer to an entity?
+
+We should rethink using wall tiles, as the more wall tiles we have, the slower the vision cones work.(unless we implement a bsp tree to sort the walls by position and refactor the visio cones, which will not be fun)
+
+Also, we should maybe think about splitting logicSystem up. Just from adding the vision cone code has made it huge. Or maybe we should just move grouped functions to different files?

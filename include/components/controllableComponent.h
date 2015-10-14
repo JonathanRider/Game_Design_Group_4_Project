@@ -9,10 +9,10 @@ class ControllableComponent : public Component
 {
 public:
 
-  ControllableComponent(bool active = true, sf::Keyboard::Key up = sf::Keyboard::Up ,
-                        sf::Keyboard::Key down = sf::Keyboard::Down ,
-                        sf::Keyboard::Key left = sf::Keyboard::Left ,
-                        sf::Keyboard::Key right = sf::Keyboard::Right ,
+  ControllableComponent(bool active = true, sf::Keyboard::Key up = sf::Keyboard::W ,
+                        sf::Keyboard::Key down = sf::Keyboard::S ,
+                        sf::Keyboard::Key left = sf::Keyboard::A ,
+                        sf::Keyboard::Key right = sf::Keyboard::D ,
                         sf::Keyboard::Key item = sf::Keyboard::F ,
                         sf::Keyboard::Key use = sf::Keyboard::R ,
                         sf::Keyboard::Key next = sf::Keyboard::E ,

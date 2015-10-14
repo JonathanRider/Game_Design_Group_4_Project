@@ -35,6 +35,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
   sprite->setTexture(*texture);
+  sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
@@ -42,10 +43,14 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
 
+  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 45, 90);
+  e->addComponent(vc);
+
   e->addComponent(gc);
   e->addComponent(conc);
   e->addComponent(mc);
   e->addComponent(colc);
+
 
   em->addEntity(*e);
 }
@@ -63,11 +68,19 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
   sprite->setTexture(*texture);
+  sprite->setOrigin(25, 25);
   ///////////////////////////////////////////////////////////
 
-  //GraphicsComponent *gc = new GraphicsComponent(sprite);
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
+  BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 50.0, 50.0);
 
-  //e->addComponent(gc);
+  // VisionComponent *vc = new VisionComponent(e->getXY(), 300, rand()%360, 90);
+  // e->addComponent(vc);
+
+  e->addComponent(bsc);
+  e->addComponent(gc);
   e->addComponent(colc);
+  em->addEntity(*e);
+
 }

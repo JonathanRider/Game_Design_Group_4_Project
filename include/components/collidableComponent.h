@@ -13,12 +13,15 @@ public:
   sf::FloatRect* getBoundingBox(){return boundingBox;}
   void setBoundingBox(sf::FloatRect *bb){boundingBox = bb;}
 
+  void setSlideDirection(int s){slideDirection = s;}
+  int getSlideDirection(){return slideDirection;}
+
   void moveTo(sf::Vector2f xy);
 
 
 private:
   sf::FloatRect *boundingBox;
-
+  int slideDirection;  //-1:y, 0 none, 1:x. Used to prevent sticking on walls when sliding along them
 
 };
 
