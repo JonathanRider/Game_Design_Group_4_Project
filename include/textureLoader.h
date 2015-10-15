@@ -6,6 +6,11 @@
 #include <string>
 #include "constants.h"
 
+enum TextureType {
+	TEXTURE_TYPE_1, //We need to rename it again
+	TEXTURE_TYPE_2,
+};
+
 class TextureLoader
 {
 public:
