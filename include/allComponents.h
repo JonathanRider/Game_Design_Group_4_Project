@@ -8,6 +8,6 @@
 #include "components/moveableComponent.h"
 #include "components/collidableComponent.h"
 #include "components/blockVisionComponent.h"
-#include "components/VisionComponent.h"
+#include "components/visionComponent.h"
 
 #endif

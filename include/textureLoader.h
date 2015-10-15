@@ -1,7 +1,7 @@
 #ifndef _TEXTURE_LOADER_H_
 #define _TEXTURE_LOADER_H_
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
 #include "constants.h"
