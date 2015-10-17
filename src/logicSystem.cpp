@@ -23,6 +23,7 @@ void LogicSystem::update(float time){
     }
   }
   this->updateVisionCones(time);
+
 }
 
 void LogicSystem::moveEntity(Entity* e, float time) {
@@ -124,6 +125,11 @@ void LogicSystem::resolveCollisions(Entity *e){
 
 
 void LogicSystem::updateVisionCones(float time){
+  //Let's get the player entity and its bounding box
+  Entity player_entity = manager->getPlayer();
+  CollidableComponent * player_cp = (CollidableComponent *) player_entity.getComponent(COLLIDABLE);
+  sf::FloatRect *player_box = player_cp->getBoundingBox();
+
   std::list<Entity>* eList = manager->getEntityList();
   std::list<Entity>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
@@ -209,6 +215,15 @@ void LogicSystem::updateVisionCones(float time){
       }
 
       tFan->resize(counter); //shrink it down to the right size
+
+      //Check whether the vision has caught our player
+      std::cout << "print something else here" <<std::endl;
+      for(int i = 0; i < tFan->getVertexCount(); i++){
+        if (player_box->contains((*tFan)[i].position)) {
+          std::cout <<"OMG, the player has been caught!"<<std::endl;
+        }
+      }
+
 
     }
   }

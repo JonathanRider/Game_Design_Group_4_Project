@@ -7,7 +7,7 @@ enum GameState {MENU, PLAYING, PAUSED};
 
 enum Input {UP, DOWN, LEFT, RIGHT, ITEM, USE, NEXTITEM, PREVITEM};
 
-enum EntityType {PLAYER, WALL};
+enum EntityType {PLAYER, WALL, ENEMY};
 
 
 

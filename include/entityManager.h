@@ -17,9 +17,13 @@ public:
 
   int getNewID();
 
+  Entity getPlayer() { return  *player_entity;}
+  void setPlayer(Entity *e) { player_entity = e;}
 private:
   std::list<Entity> entityList;
   int nextID;
+
+  Entity *player_entity; // it points to the player entity for easy reference
 
 };
 

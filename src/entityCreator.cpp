@@ -18,7 +18,11 @@ void EntityCreator::create(EntityType type, sf::Vector2f xy, sf::Texture *textur
     this->createPlayer(xy, texture);
   } else if (type == WALL) {
     this->createWall(xy, texture);
+  } else if (type ==  ENEMY) {
+    this->createEnemy(xy, texture);
   }
+
+
   //not valid entityType
 }
 
@@ -43,8 +47,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
 
-  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 45, 90);
-  e->addComponent(vc);
+
 
   e->addComponent(gc);
   e->addComponent(conc);
@@ -53,6 +56,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
 
 
   em->addEntity(*e);
+  em->setPlayer(e);
 }
 
 void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
@@ -81,6 +85,40 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
   e->addComponent(bsc);
   e->addComponent(gc);
   e->addComponent(colc);
+  em->addEntity(*e);
+
+}
+
+void EntityCreator::createEnemy(sf::Vector2f xy, sf::Texture *texture) {
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+
+  //////////////////this should probably be moved somewhere else
+  //load texture
+  // if(playerTexture == NULL){
+  //   playerTexture = new sf::Texture();
+  //   playerTexture->loadFromFile("resources/test.png");
+  // }
+  //create sprite
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture(*texture);
+  sprite->setOrigin(25,25);
+  ///////////////////////////////////////////////////////////
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  //ControllableComponent *conc = new ControllableComponent();
+  MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
+  CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
+
+  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 45, 90);
+  e->addComponent(vc);
+
+  e->addComponent(gc);
+  //e->addComponent(conc);
+  e->addComponent(mc);
+  e->addComponent(colc);
+
+
   em->addEntity(*e);
 
 }

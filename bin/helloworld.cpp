@@ -46,9 +46,13 @@ int main(int argc, char** argv)
     eCreator->create(WALL, sf::Vector2f(rand() % 500 + 200, rand() % 300 + 200), wallTex);
   }
 
-  sf::Texture *tex = new sf::Texture();
-  tex->loadFromFile("resources/test.png");
-  eCreator->create(PLAYER, sf::Vector2f(200,300), tex);
+  sf::Texture *tex_player = new sf::Texture();
+  tex_player->loadFromFile("resources/test.png");
+  eCreator->create(PLAYER, sf::Vector2f(200,300), tex_player);
+
+  sf::Texture *tex_enemy = new sf::Texture();
+  tex_enemy->loadFromFile("resources/dinasaur.png");
+  eCreator->create(ENEMY, sf::Vector2f(600,200), tex_enemy);
 
 
 
