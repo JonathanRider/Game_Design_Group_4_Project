@@ -1,5 +1,6 @@
 #include "logicSystem.h"
 #include "allComponents.h"
+#include "collisionDetection.h"
 #include <cmath>
 #include <iostream>
 #include <unistd.h>
@@ -218,8 +219,8 @@ void LogicSystem::updateVisionCones(float time){
 
       //Check whether the vision has caught our player
       std::cout << "print something else here" <<std::endl;
-      for(int i = 0; i < tFan->getVertexCount(); i++){
-        if (player_box->contains((*tFan)[i].position)) {
+      for(int i =1; i < tFan->getVertexCount()-1 ; i++){
+        if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box)) {
           std::cout <<"OMG, the player has been caught!"<<std::endl;
         }
       }
