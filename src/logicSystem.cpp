@@ -6,29 +6,29 @@
 #include <unistd.h>
 
 bool print = false;
-LogicSystem::LogicSystem(EntityManager *m, GameState s)
+LogicSystem::LogicSystem(EntityManager *m, GameState *s)
   :manager(m), state(s){}
 
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
 
+  if (state->getGameState() == PLAYING) {
+    std::list<Entity>* eList = manager->getEntityList();
+    std::list<Entity>::iterator iterator;
 
-  std::list<Entity>* eList = manager->getEntityList();
-  std::list<Entity>::iterator iterator;
-
-  for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-    if(iterator->hasComponent(MOVEABLE)){
-      this->moveEntity(&(*iterator), time);
-      if(iterator->hasComponent(ENEMY)) {
-        this->moveEnemies(&(*iterator));
-      }
-      if(iterator->hasComponent(COLLIDABLE)){
-        this->resolveCollisions(&(*iterator));
+    for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
+      if(iterator->hasComponent(MOVEABLE)){
+        this->moveEntity(&(*iterator), time);
+        if(iterator->hasComponent(ENEMY)) {
+          this->moveEnemies(&(*iterator));
+        }
+        if(iterator->hasComponent(COLLIDABLE)){
+          this->resolveCollisions(&(*iterator));
+        }
       }
     }
+    this->updateVisionCones(time);
   }
-  this->updateVisionCones(time);
-
 }
 
 void LogicSystem::moveEntity(Entity* e, float time) {

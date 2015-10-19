@@ -7,8 +7,9 @@ ControllableComponent::ControllableComponent(bool active, sf::Keyboard::Key up ,
                       sf::Keyboard::Key item,
                       sf::Keyboard::Key use,
                       sf::Keyboard::Key next,
-                      sf::Keyboard::Key prev)
-:isActive(active), upKey(up), downKey(down), leftKey(left), rightKey(right), useKey(use), itemKey(item), nextItemKey(next), prevItemKey(prev)
+                      sf::Keyboard::Key prev,
+                      sf::Keyboard::Key pause)
+:isActive(active), upKey(up), downKey(down), leftKey(left), rightKey(right), useKey(use), itemKey(item), nextItemKey(next), prevItemKey(prev), pauseKey(pause)
 {
   this->setType(CONTROLLABLE);
 }
@@ -24,6 +25,7 @@ void ControllableComponent::changeKey(Input i, sf::Keyboard::Key newKey){
     case USE: useKey = newKey; break;
     case NEXTITEM: nextItemKey = newKey; break;
     case PREVITEM: prevItemKey = newKey; break;
+    case PAUSE: prevItemKey = newKey; break;
   }
 
 
@@ -39,5 +41,6 @@ sf::Keyboard::Key ControllableComponent::getKey(Input i){
     case USE: return useKey;
     case NEXTITEM: return nextItemKey;
     case PREVITEM: return prevItemKey;
+    case PAUSE: return pauseKey;
   }
 }

@@ -16,7 +16,8 @@ public:
                         sf::Keyboard::Key item = sf::Keyboard::F ,
                         sf::Keyboard::Key use = sf::Keyboard::R ,
                         sf::Keyboard::Key next = sf::Keyboard::E ,
-                        sf::Keyboard::Key prev = sf::Keyboard::Q);
+                        sf::Keyboard::Key prev = sf::Keyboard::Q,
+                        sf::Keyboard::Key pause = sf::Keyboard::P);
   ~ControllableComponent();
 
   void changeKey(Input i, sf::Keyboard::Key newKey);
@@ -36,6 +37,7 @@ private:
   sf::Keyboard::Key useKey;
   sf::Keyboard::Key nextItemKey;
   sf::Keyboard::Key prevItemKey;
+  sf::Keyboard::Key pauseKey;
 
 };
 

@@ -4,6 +4,7 @@
 #include "logicSystem.h"
 #include "inputSystem.h"
 #include "entityCreator.h"
+#include "gameState.h"
 
 #include <SFML/Audio.hpp>
 #include <unistd.h>
@@ -19,14 +20,15 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   App.setIcon( rIcon.width,  rIcon.height,  rIcon.pixel_data );
 
+  GameState *gameState = new GameState(MENU);
+
   EntityManager* entityM = new EntityManager();
-  GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM, MENU);
-  LogicSystem* logicS = new LogicSystem(entityM, MENU);
-  InputSystem* inputS = new InputSystem(entityM, MENU, &App);
-
-
-
+  GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM, gameState);
+  LogicSystem* logicS = new LogicSystem(entityM, gameState);
+  InputSystem* inputS = new InputSystem(entityM, gameState, &App);
   EntityCreator* eCreator = new EntityCreator(entityM);
+
+
   sf::Texture *wallTex = new sf::Texture();
   wallTex->loadFromFile("resources/wall.png");
   // eCreator->create(WALL, sf::Vector2f(300,400), wallTex);
