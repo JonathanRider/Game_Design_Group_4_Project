@@ -19,7 +19,7 @@ private:
 
   void createPlayer(sf::Vector2f xy, sf::Texture *texture);
   void createWall(sf::Vector2f xy,  sf::Texture *texture);
-  void createEnemy(sf::Vector2f xy, sf::Texture *texture);
+  void createMovingEnemy(sf::Vector2f xy, sf::Texture *texture);
 
   EntityManager *em;
 };

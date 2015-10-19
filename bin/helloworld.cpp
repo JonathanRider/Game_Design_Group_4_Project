@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 
   sf::Texture *tex_enemy = new sf::Texture();
   tex_enemy->loadFromFile("resources/dinasaur.png");
-  eCreator->create(ENEMY, sf::Vector2f(600,200), tex_enemy);
+  eCreator->create(ENEMY_MOVING, sf::Vector2f(600,100), tex_enemy);
 
 
 

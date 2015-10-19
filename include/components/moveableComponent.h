@@ -6,7 +6,7 @@
 class MoveableComponent : public Component
 {
 public:
-  MoveableComponent(float a, float dec, float ms, float s = 0, float d = 0);
+  MoveableComponent(float a, float dec, float ms, float s = 0, float d = 0, float x = 9, float y = 0, float minx = 0, float miny = 0);
   ~MoveableComponent();
 
   void changeVelocity(float v);
@@ -18,6 +18,14 @@ public:
   float getDeceleration(){return deceleration;}
   void setDirection(float d){direction = d;}
   float getDirection(){return direction;}
+  float getMaxXPos(){return maxXPos;}
+  void setMaxXPos(float x){maxXPos = x;}
+  float getMaxYPos(){return maxYPos;}
+  void setMaxYPos(float y){maxYPos = y;}
+  float getMinXPos(){return minXPos;}
+  void setMinXPos(float x){minXPos = x;}
+  float getMinYPos(){return minYPos;}
+  void setMinYPos(float y){minYPos = y;}
 
   void setAccelerating(bool a){accelerating =a;}
   bool getAccelerating(){return accelerating;}
@@ -36,6 +44,10 @@ private:
   float maxVelocity;
   float direction;
   bool accelerating;
+  float maxXPos;
+  float maxYPos;
+  float minXPos;
+  float minYPos;
 
 
 };

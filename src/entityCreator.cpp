@@ -18,8 +18,8 @@ void EntityCreator::create(EntityType type, sf::Vector2f xy, sf::Texture *textur
     this->createPlayer(xy, texture);
   } else if (type == WALL) {
     this->createWall(xy, texture);
-  } else if (type ==  ENEMY) {
-    this->createEnemy(xy, texture);
+  } else if (type ==  ENEMY_MOVING) {
+    this->createMovingEnemy(xy, texture);
   }
 
 
@@ -89,7 +89,7 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
 
 }
 
-void EntityCreator::createEnemy(sf::Vector2f xy, sf::Texture *texture) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
@@ -104,15 +104,22 @@ void EntityCreator::createEnemy(sf::Vector2f xy, sf::Texture *texture) {
   sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
+  EnemyComponent *ec = new EnemyComponent();
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   //ControllableComponent *conc = new ControllableComponent();
-  MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
+  MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 100.0); //accel, decel, max speed
+  mc->setMaxXPos(e->getXY().x + 100);
+  mc->setMinXPos(e->getXY().x - 100);
+  mc->setMaxYPos(e->getXY().y);
+  mc->setMinYPos(e->getXY().y);
+  mc->setAccelerating(true);
+  mc->setDirection(180);
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
 
   VisionComponent *vc = new VisionComponent(e->getXY(), 300, 45, 90);
   e->addComponent(vc);
-
+  e->addComponent(ec);
   e->addComponent(gc);
   //e->addComponent(conc);
   e->addComponent(mc);

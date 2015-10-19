@@ -15,9 +15,13 @@ void LogicSystem::update(float time){
 
   std::list<Entity>* eList = manager->getEntityList();
   std::list<Entity>::iterator iterator;
+
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(iterator->hasComponent(MOVEABLE)){
       this->moveEntity(&(*iterator), time);
+      if(iterator->hasComponent(ENEMY)) {
+        this->moveEnemies(&(*iterator));
+      }
       if(iterator->hasComponent(COLLIDABLE)){
         this->resolveCollisions(&(*iterator));
       }
@@ -636,7 +640,16 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
       }
     }
   }
+}
 
-
-
+void LogicSystem::moveEnemies(Entity *e) {
+  MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+  std::cout << (mc->getMaxYPos());
+  std::cout << (mc->getMinYPos());
+  std::cout << (e->getXY().y) << "\n";
+  if (e->getXY().x <= mc->getMinXPos() && e->getXY().y <= mc->getMinYPos()) {
+    mc->setDirection(mc->getDirection() + 180);
+  } else if (e->getXY().x >= mc->getMaxXPos() && e->getXY().y >= mc->getMaxYPos()) {
+    mc->setDirection(mc->getDirection() + 180);
+  }
 }

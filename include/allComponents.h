@@ -9,5 +9,6 @@
 #include "components/collidableComponent.h"
 #include "components/blockVisionComponent.h"
 #include "components/visionComponent.h"
+#include "components/enemyComponent.h"
 
 #endif

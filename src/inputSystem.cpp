@@ -49,7 +49,7 @@ void InputSystem::update(float time){
       sf::Vector2i  mp= sf::Mouse::getPosition(*screen);
       float dy = iterator->getXY().y - mp.y;
       float dx = iterator->getXY().x - mp.x;
-      atan2(dy, dx) * 180 / PI + 180;
+      //atan2(dy, dx) * 180 / PI + 180;
 
       vc->setDirection(atan2(dy, dx) * 180 / PI + 180);
     }

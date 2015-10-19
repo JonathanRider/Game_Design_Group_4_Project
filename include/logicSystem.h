@@ -40,6 +40,8 @@ private:
   static float squareDist(sf::Vector2f a, sf::Vector2f b);
   static float calculateAngle(sf::Vector2f a, sf::Vector2f b);
 
+  void moveEnemies(Entity *e);
+
   EntityManager* manager;
   GameState state;
 };
