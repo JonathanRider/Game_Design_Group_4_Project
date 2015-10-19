@@ -109,15 +109,20 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   //ControllableComponent *conc = new ControllableComponent();
   MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 100.0); //accel, decel, max speed
-  mc->setMaxXPos(e->getXY().x + 100);
-  mc->setMinXPos(e->getXY().x - 100);
+  mc->setMaxXPos(e->getXY().x + 200);
+  mc->setMinXPos(e->getXY().x - 200);
   mc->setMaxYPos(e->getXY().y);
   mc->setMinYPos(e->getXY().y);
   mc->setAccelerating(true);
   mc->setDirection(180);
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
 
-  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 45, 90);
+    VisionComponent *vc = new VisionComponent(e->getXY(), 300, 270, 90);
+  if(xy.y < 400){
+
+    vc->setDirection(90);
+    // mc->setDirection(0);
+  }
   e->addComponent(vc);
   e->addComponent(ec);
   e->addComponent(gc);

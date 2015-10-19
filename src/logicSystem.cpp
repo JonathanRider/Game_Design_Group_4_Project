@@ -602,7 +602,7 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
       float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
       anglePoint ap;
       int pos = 1;
-      if(e->getXY().y > point.x){
+      if(e->getXY().y > point.y){
         pos = -1;
       }
       ap.point = sf::Vector2f(point.x, e->getXY().y + pos*distAlongLine);
@@ -644,9 +644,6 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
 
 void LogicSystem::moveEnemies(Entity *e) {
   MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
-  std::cout << (mc->getMaxYPos());
-  std::cout << (mc->getMinYPos());
-  std::cout << (e->getXY().y) << "\n";
   if (e->getXY().x <= mc->getMinXPos() && e->getXY().y <= mc->getMinYPos()) {
     mc->setDirection(mc->getDirection() + 180);
   } else if (e->getXY().x >= mc->getMaxXPos() && e->getXY().y >= mc->getMaxYPos()) {

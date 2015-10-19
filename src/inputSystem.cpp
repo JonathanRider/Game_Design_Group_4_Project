@@ -44,15 +44,15 @@ void InputSystem::update(float time){
         }
       }
     }
-    if(iterator->hasComponent(VISION)){
-      VisionComponent *vc = (VisionComponent*) iterator->getComponent(VISION);
-      sf::Vector2i  mp= sf::Mouse::getPosition(*screen);
-      float dy = iterator->getXY().y - mp.y;
-      float dx = iterator->getXY().x - mp.x;
-      //atan2(dy, dx) * 180 / PI + 180;
-
-      vc->setDirection(atan2(dy, dx) * 180 / PI + 180);
-    }
+    // if(iterator->hasComponent(VISION)){
+    //   VisionComponent *vc = (VisionComponent*) iterator->getComponent(VISION);
+    //   sf::Vector2i  mp= sf::Mouse::getPosition(*screen);
+    //   float dy = iterator->getXY().y - mp.y;
+    //   float dx = iterator->getXY().x - mp.x;
+    //   //atan2(dy, dx) * 180 / PI + 180;
+    //
+    //   vc->setDirection(atan2(dy, dx) * 180 / PI + 180);
+    // }
   }
 }
 

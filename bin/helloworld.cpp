@@ -29,8 +29,8 @@ int main(int argc, char** argv)
   EntityCreator* eCreator = new EntityCreator(entityM);
   sf::Texture *wallTex = new sf::Texture();
   wallTex->loadFromFile("resources/wall.png");
-  eCreator->create(WALL, sf::Vector2f(300,400), wallTex);
-  eCreator->create(WALL, sf::Vector2f(500,500), wallTex);
+  // eCreator->create(WALL, sf::Vector2f(300,400), wallTex);
+  // eCreator->create(WALL, sf::Vector2f(500,500), wallTex);
 
 
   for(int i = 0; i < 16; i++){
@@ -42,9 +42,29 @@ int main(int argc, char** argv)
     eCreator->create(WALL, sf::Vector2f(775 , 75+ i*50), wallTex);
   }
 
-  for(int i = 0; i < 15; i++){
-    eCreator->create(WALL, sf::Vector2f(rand() % 500 + 200, rand() % 300 + 200), wallTex);
-  }
+
+  eCreator->create(WALL, sf::Vector2f(125 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(125 , 225), wallTex);
+  eCreator->create(WALL, sf::Vector2f(75 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(75 , 225), wallTex);
+  eCreator->create(WALL, sf::Vector2f(200 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(200 , 225), wallTex);
+
+
+  eCreator->create(WALL, sf::Vector2f(325 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(325 , 225), wallTex);
+  eCreator->create(WALL, sf::Vector2f(375 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(375 , 225), wallTex);
+
+  eCreator->create(WALL, sf::Vector2f(725 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(675 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(600 , 375), wallTex);
+  eCreator->create(WALL, sf::Vector2f(675 , 225), wallTex);
+  eCreator->create(WALL, sf::Vector2f(600 , 225), wallTex);
+
+  // for(int i = 0; i < 15; i++){
+  //   eCreator->create(WALL, sf::Vector2f(rand() % 500 + 200, rand() % 300 + 200), wallTex);
+  // }
 
   sf::Texture *tex_player = new sf::Texture();
   tex_player->loadFromFile("resources/test.png");
@@ -52,7 +72,8 @@ int main(int argc, char** argv)
 
   sf::Texture *tex_enemy = new sf::Texture();
   tex_enemy->loadFromFile("resources/dinasaur.png");
-  eCreator->create(ENEMY_MOVING, sf::Vector2f(600,100), tex_enemy);
+  eCreator->create(ENEMY_MOVING, sf::Vector2f(400,500), tex_enemy);
+  eCreator->create(ENEMY_MOVING, sf::Vector2f(400,100), tex_enemy);
 
 
 
