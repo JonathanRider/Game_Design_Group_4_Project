@@ -74,7 +74,7 @@ int main(int argc, char** argv)
   tex_enemy->loadFromFile("resources/dinasaur.png");
   eCreator->create(ENEMY_MOVING, sf::Vector2f(400,500), tex_enemy);
   eCreator->create(ENEMY_MOVING, sf::Vector2f(400,100), tex_enemy);
-
+  ((MoveableComponent*)entityM->findEntity(68)->getComponent(MOVEABLE))->setMaxVelocity(75);
 
 
   float secondCounter = 0;

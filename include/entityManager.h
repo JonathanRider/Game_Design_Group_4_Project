@@ -12,7 +12,7 @@ public:
 
   void addEntity(Entity e);
   void removeEntity(int id);
-  Entity findEntity(int id);
+  Entity *findEntity(int id);
   std::list<Entity>* getEntityList();
 
   int getNewID();
