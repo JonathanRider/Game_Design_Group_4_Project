@@ -17,7 +17,8 @@ public:
   float getDirection(){return direction;}
   void setConeAngle(float a){coneAngle = a;}
   float getConeAngle(){return coneAngle;}
-
+  void setAlert(bool a){ alert = a;}
+  bool getAlert(){ return alert; }
   float getVisionResolution(){return visionResolution;}
 
   sf::VertexArray* getTriangles(){return triFan;}

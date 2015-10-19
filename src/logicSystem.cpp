@@ -218,10 +218,11 @@ void LogicSystem::updateVisionCones(float time){
       tFan->resize(counter); //shrink it down to the right size
 
       //Check whether the vision has caught our player
-      std::cout << "print something else here" <<std::endl;
+      vc->setAlert(false);
       for(int i =1; i < tFan->getVertexCount()-1 ; i++){
         if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box)) {
-          std::cout <<"OMG, the player has been caught!"<<std::endl;
+          vc->setAlert(true);
+          break;
         }
       }
 

@@ -24,8 +24,15 @@ void GraphicsSystem::update(float time){
 
       VisionComponent *vp = (VisionComponent*)iterator->getComponent(VISION);
       sf::VertexArray va= *(vp->getTriangles());
+
+      sf::Color vp_color;
+      if (vp->getAlert())
+        vp_color =sf::Color(255,0,0,128);
+      else
+        vp_color = sf::Color(0,255,0,128);
+
       for(int i = 0; i < va.getVertexCount(); i++){
-        va[i].color = sf::Color(255,0,0,128);
+        va[i].color = vp_color;
       }
 
 
