@@ -220,7 +220,7 @@ void LogicSystem::updateVisionCones(float time){
       }
 
       tFan->resize(counter); //shrink it down to the right size
-
+      delete pointList;
       //Check whether the vision has caught our player
       vc->setAlert(false);
       for(int i =1; i < tFan->getVertexCount()-1 ; i++){
