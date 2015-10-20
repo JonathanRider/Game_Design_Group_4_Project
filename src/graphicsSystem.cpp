@@ -12,6 +12,12 @@ void GraphicsSystem::update(float time){
 
   if (state->getGameState() == MENU) {
 
+    sf::Texture *menuTex = new sf::Texture();
+    menuTex->loadFromFile("resources/MainMenu.png");
+    sf::Sprite *menuSprite = new sf::Sprite();
+    menuSprite->setTexture(*menuTex);
+    screen->draw(*menuSprite);
+
   } else if (state->getGameState() == PLAYING || state->getGameState() == PAUSED) {
 
     //iterate through entityManager and update
@@ -41,6 +47,13 @@ void GraphicsSystem::update(float time){
         }
          screen->draw(va);
       }
+    }
+    if (state->getGameState() == PAUSED) {
+      sf::Texture *pausedTex = new sf::Texture();
+      pausedTex->loadFromFile("resources/paused.png");
+      sf::Sprite *pausedSprite = new sf::Sprite();
+      pausedSprite->setTexture(*pausedTex);
+      screen->draw(*pausedSprite);
     }
   }
 }
