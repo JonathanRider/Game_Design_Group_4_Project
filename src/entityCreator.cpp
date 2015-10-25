@@ -55,7 +55,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   e->addComponent(colc);
 
 
-  em->addEntity(*e);
+  em->addEntity(e);
   em->setPlayer(e);
 }
 
@@ -85,7 +85,7 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
   e->addComponent(bsc);
   e->addComponent(gc);
   e->addComponent(colc);
-  em->addEntity(*e);
+  em->addEntity(e);
 
 }
 
@@ -131,6 +131,6 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   e->addComponent(colc);
 
 
-  em->addEntity(*e);
+  em->addEntity(e);
 
 }

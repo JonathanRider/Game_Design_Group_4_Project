@@ -8,13 +8,13 @@ InputSystem::InputSystem(EntityManager *m, GameState *s, sf::RenderWindow *w)
 void InputSystem::update(float time){
 
   if (state->getGameState() == PLAYING) {
-    std::list<Entity>* eList = manager->getEntityList();
-    std::list<Entity>::iterator iterator;
+    std::list<Entity*>* eList = manager->getEntityList();
+    std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if(iterator->hasComponent(CONTROLLABLE)){
-        ControllableComponent *cp = (ControllableComponent*)iterator->getComponent(CONTROLLABLE);
-        if(iterator->hasComponent(MOVEABLE)){
-          MoveableComponent *mp = (MoveableComponent*)iterator->getComponent(MOVEABLE);
+      if((*iterator)->hasComponent(CONTROLLABLE)){
+        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(CONTROLLABLE);
+        if((*iterator)->hasComponent(MOVEABLE)){
+          MoveableComponent *mp = (MoveableComponent*)(*iterator)->getComponent(MOVEABLE);
           if(sf::Keyboard::isKeyPressed(cp->getKey(UP))){
               if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
                 mp->setDirection(135.0);
@@ -68,11 +68,11 @@ void InputSystem::handleKeyPress(sf::Event e){
       state->setGameState(PLAYING);
     }
   } else if (state->getGameState() == PLAYING) {
-    std::list<Entity>* eList = manager->getEntityList();
-    std::list<Entity>::iterator iterator;
+    std::list<Entity*>* eList = manager->getEntityList();
+    std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if(iterator->hasComponent(CONTROLLABLE)){
-        ControllableComponent *cp = (ControllableComponent*)iterator->getComponent(CONTROLLABLE);
+      if((*iterator)->hasComponent(CONTROLLABLE)){
+        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(CONTROLLABLE);
         if(e.key.code == cp->getKey(USE)){
           std::cout << "use\n";
         }else if(e.key.code == cp->getKey(ITEM)){

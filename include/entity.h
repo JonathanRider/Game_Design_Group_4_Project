@@ -9,7 +9,7 @@ class Entity
 {
 public:
   Entity(int id);
-  ~Entity(){}
+  ~Entity();
 
   int getID(){return id;}
   bool hasComponent(ComponentType type);

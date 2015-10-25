@@ -3,6 +3,13 @@
 
 Entity::Entity(int i) :id(i){}
 
+Entity::~Entity(){
+  std::map<ComponentType,Component*>::iterator it;
+  for( it = componentMap.begin(); it != componentMap.end(); it++) {
+      delete it->second;
+  }
+}
+
 void Entity::addComponent(Component* c){
   ComponentType componentType =  c->getType();
   componentMap.insert(std::pair<ComponentType, Component*>(componentType,c));
