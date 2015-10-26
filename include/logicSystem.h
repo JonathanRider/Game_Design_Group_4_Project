@@ -4,8 +4,8 @@
 
 //need to include pretty much all components as well
 #include "entityManager.h"
-#include "constants.h"
-#include "gameState.h"
+#include "config.h"
+
 
 struct anglePoint {
   anglePoint() :before(false), after(false), collision(true){}
@@ -19,7 +19,7 @@ struct anglePoint {
 class LogicSystem
 {
 public:
-  LogicSystem(EntityManager *m, GameState* state);
+  LogicSystem(EntityManager *m);
   ~LogicSystem();
   void update(float time);
 
@@ -43,7 +43,6 @@ private:
   void moveEnemies(Entity *e);
 
   EntityManager* manager;
-  GameState* state;
 };
 
 #endif

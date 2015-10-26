@@ -6,13 +6,13 @@
 #include <unistd.h>
 
 bool print = false;
-LogicSystem::LogicSystem(EntityManager *m, GameState *s)
-  :manager(m), state(s){}
+LogicSystem::LogicSystem(EntityManager *m)
+  :manager(m){}
 
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
 
-  if (state->getGameState() == PLAYING) {
+  if (config()->gameEngine.gameState == PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
 

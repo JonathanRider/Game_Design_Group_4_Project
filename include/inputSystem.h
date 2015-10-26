@@ -6,13 +6,13 @@
 #include "entityManager.h"
 #include "components/controllableComponent.h"
 #include "components/moveableComponent.h"
-#include "constants.h"
-#include "gameState.h"
+#include "config.h"
+
 
 class InputSystem
 {
 public:
-  InputSystem(EntityManager *m, GameState *state, sf::RenderWindow *w);
+  InputSystem(EntityManager *m, sf::RenderWindow *w);
   ~InputSystem();
   void update(float time);
   void handleKeyPress(sf::Event e);
@@ -20,7 +20,6 @@ public:
 private:
   EntityManager *manager;
   sf::RenderWindow *screen;
-  GameState *state;
 };
 
 #endif

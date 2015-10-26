@@ -4,7 +4,7 @@
 #include "logicSystem.h"
 #include "inputSystem.h"
 #include "entityCreator.h"
-#include "gameState.h"
+#include "config.h"
 
 #include <SFML/Audio.hpp>
 #include <unistd.h>
@@ -14,18 +14,20 @@
 
 int main(int argc, char** argv)
 {
+  Config::init();
+
   srand (time(NULL));
   // create main window
   sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
   App.setFramerateLimit(60);
   App.setIcon( rIcon.width,  rIcon.height,  rIcon.pixel_data );
 
-  GameState *gameState = new GameState(MENU);
+  config()->gameEngine.gameState = MENU;
 
   EntityManager* entityM = new EntityManager();
-  GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM, gameState);
-  LogicSystem* logicS = new LogicSystem(entityM, gameState);
-  InputSystem* inputS = new InputSystem(entityM, gameState, &App);
+  GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
+  LogicSystem* logicS = new LogicSystem(entityM);
+  InputSystem* inputS = new InputSystem(entityM, &App);
   EntityCreator* eCreator = new EntityCreator(entityM);
 
 
