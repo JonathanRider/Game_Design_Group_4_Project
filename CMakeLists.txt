@@ -14,7 +14,7 @@ link_libraries(${SFML_LIBRARIES})
 
 if(NOT SFML_FOUND)
   # SFML not found
-  message(FATAL_ERROR " * Make sure CMAKE_MODULE_PATH points to the cmake/Modules directory of your SFML install.\n * Make sure LIB includes the directory where the SFML libraries are installed.\n * Make sure INCLUDE includes the directory where the SFML header files are installed.")	
+  message(FATAL_ERROR " * Make sure CMAKE_MODULE_PATH points to the cmake/Modules directory of your SFML install.\n * Make sure LIB includes the directory where the SFML libraries are installed.\n * Make sure INCLUDE includes the directory where the SFML header files are installed.")
 endif()
 
 
@@ -33,7 +33,6 @@ list(REMOVE_DUPLICATES Foo_INCLUDE_DIRS)
 message("${Foo_INCLUDE_DIRS}\n")
 message("${Foo_SOURCES}\n")
 include_directories(${Foo_INCLUDE_DIRS})
-
 
 # set include dirs
 #include_directories(${pong_SOURCE_DIR}/include)

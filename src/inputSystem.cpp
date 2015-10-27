@@ -1,4 +1,5 @@
 #include "inputSystem.h"
+#include "global.h"
 #include <cmath>
 #include <iostream>
 
@@ -7,7 +8,7 @@ InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w)
 
 void InputSystem::update(float time){
 
-  if (config()->gameEngine.gameState == PLAYING) {
+  if (global()->gameEngine.gameState == PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
@@ -58,16 +59,16 @@ void InputSystem::update(float time){
 }
 
 void InputSystem::handleKeyPress(sf::Event e){
-  if (config()->gameEngine.gameState == MENU) {
+  if (global()->gameEngine.gameState == MENU) {
     if(e.key.code == sf::Keyboard::Up) {
       std::cout << "up\n";
     } else if(e.key.code == sf::Keyboard::Down) {
       std::cout << "down\n";
     }
     else if(e.key.code == sf::Keyboard::Return) {
-      config()->gameEngine.gameState = PLAYING;
+      global()->gameEngine.gameState = PLAYING;
     }
-  } else if (config()->gameEngine.gameState == PLAYING) {
+  } else if (global()->gameEngine.gameState == PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
@@ -82,13 +83,13 @@ void InputSystem::handleKeyPress(sf::Event e){
         }else if(e.key.code == cp->getKey(PREVITEM)){
           std::cout << "prev item\n";
         } else if(e.key.code == cp->getKey(PAUSE)){
-          config()->gameEngine.gameState = PAUSED;
+          global()->gameEngine.gameState = PAUSED;
         }
       }
     }
-  }else if (config()->gameEngine.gameState == PAUSED) {
+  }else if (global()->gameEngine.gameState == PAUSED) {
     if(e.key.code == sf::Keyboard::Return) {
-      config()->gameEngine.gameState = PLAYING;
+      global()->gameEngine.gameState = PLAYING;
     }
   }
 }

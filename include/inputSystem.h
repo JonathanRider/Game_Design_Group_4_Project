@@ -6,7 +6,7 @@
 #include "entityManager.h"
 #include "components/controllableComponent.h"
 #include "components/moveableComponent.h"
-#include "config.h"
+
 
 
 class InputSystem

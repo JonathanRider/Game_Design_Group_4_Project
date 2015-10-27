@@ -2,43 +2,26 @@
 #define _CONFIG_H_
 
 #include "constants.h"
-#include "entityManager.h"
-#include "graphicsSystem.h"
-#include "inputSystem.h"
-#include "logicSystem.h"
-#include <SFML/Graphics.hpp>
+#include <map>
+#include <string>
 
-class GraphicsSystem;
-//class InputSystem;
-//class LogicSystem;
 namespace config_internal { //this namespace is not supposed to use outside the file
-  class GameEngine {
-    public:
-      GameEngine(){}
-
-      GameState gameState;
-      EntityManager *entityM_P;
-      sf::RenderWindow *renderWindow_P;
-      //GraphicsSystem *graphicsSystem_P;
-      //LogicSystem *logicSystem_P;
-      //InputSystem *inputSystem_P;
+  class Appearance {
+  public:
+    Appearance():
+    window_height(600),window_width(800){}
+    int window_height;
+    int window_width;
   };
 }
 
 
 class Config {
 
-    static Config *singleton;
-
+    std::map<std::string, std::string> options;
+    void read_configfile(std::string &filename);
   public:
-    Config(){}
-    config_internal::GameEngine gameEngine;
-
-    static Config *getSingleton(){return singleton;}
-    static void init();
+    Config();
+    config_internal::Appearance appearance;
 };
-static Config *config(){
-  return Config::getSingleton();
-}
-
 #endif

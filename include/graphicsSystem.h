@@ -3,7 +3,6 @@
 
 #include "components/graphicsComponent.h"
 #include "entityManager.h"
-#include "config.h"
 #include <SFML/Graphics.hpp>
 
 class GraphicsSystem

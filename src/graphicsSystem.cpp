@@ -1,4 +1,5 @@
 #include "graphicsSystem.h"
+#include "global.h"
 #include <iostream>
 
 GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
@@ -9,7 +10,7 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
 
 void GraphicsSystem::update(float time){
 
-  if (config()->gameEngine.gameState == MENU) {
+  if (global()->gameEngine.gameState == MENU) {
 
     sf::Texture *menuTex = new sf::Texture();
     menuTex->loadFromFile("resources/MainMenu.png");
@@ -17,7 +18,7 @@ void GraphicsSystem::update(float time){
     menuSprite->setTexture(*menuTex);
     screen->draw(*menuSprite);
 
-  } else if (config()->gameEngine.gameState == PLAYING || config()->gameEngine.gameState == PAUSED) {
+  } else if (global()->gameEngine.gameState == PLAYING || global()->gameEngine.gameState == PAUSED) {
 
     //iterate through entityManager and update
     std::list<Entity*>* eList = manager->getEntityList();
@@ -47,7 +48,7 @@ void GraphicsSystem::update(float time){
          screen->draw(va);
       }
     }
-    if (config()->gameEngine.gameState == PAUSED) {
+    if (global()->gameEngine.gameState == PAUSED) {
       sf::Texture *pausedTex = new sf::Texture();
       pausedTex->loadFromFile("resources/paused.png");
       sf::Sprite *pausedSprite = new sf::Sprite();

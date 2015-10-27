@@ -4,7 +4,6 @@
 
 //need to include pretty much all components as well
 #include "entityManager.h"
-#include "config.h"
 
 
 struct anglePoint {

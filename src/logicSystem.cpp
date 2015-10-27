@@ -1,6 +1,7 @@
 #include "logicSystem.h"
 #include "allComponents.h"
 #include "collisionDetection.h"
+#include "global.h"
 #include <cmath>
 #include <iostream>
 #include <unistd.h>
@@ -12,7 +13,7 @@ LogicSystem::LogicSystem(EntityManager *m)
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
 
-  if (config()->gameEngine.gameState == PLAYING) {
+  if (global()->gameEngine.gameState == PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
 
