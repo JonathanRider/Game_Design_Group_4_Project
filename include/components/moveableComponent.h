@@ -7,7 +7,7 @@ class MoveableComponent : public Component
 {
 public:
   MoveableComponent(float a, float dec, float ms, float s = 0, float d = 0, float x = 9, float y = 0, float minx = 0, float miny = 0);
-  ~MoveableComponent();
+  ~MoveableComponent(){}
 
   void changeVelocity(float v);
   void setVelocity(float v){velocity = v;}

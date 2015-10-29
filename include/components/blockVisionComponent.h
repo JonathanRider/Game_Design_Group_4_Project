@@ -8,7 +8,7 @@ class BlockVisionComponent : public Component
 {
 public:
   BlockVisionComponent(sf::Vector2f xy, float height, float width);
-  ~BlockVisionComponent();
+  ~BlockVisionComponent(){}
 
   sf::VertexArray getTop(){return top;}
   sf::VertexArray getBottom(){return bottom;}

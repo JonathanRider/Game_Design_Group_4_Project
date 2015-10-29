@@ -12,11 +12,11 @@ void GraphicsSystem::update(float time){
 
   if (global()->gameEngine.gameState == MENU) {
 
-    sf::Texture *menuTex = new sf::Texture();
-    menuTex->loadFromFile("resources/MainMenu.png");
-    sf::Sprite *menuSprite = new sf::Sprite();
-    menuSprite->setTexture(*menuTex);
-    screen->draw(*menuSprite);
+    // sf::Texture *menuTex = new sf::Texture();
+    // menuTex->loadFromFile("resources/MainMenu.png");
+    // sf::Sprite *menuSprite = new sf::Sprite();
+    // menuSprite->setTexture(*menuTex);
+    // screen->draw(*menuSprite);
 
   } else if (global()->gameEngine.gameState == PLAYING || global()->gameEngine.gameState == PAUSED) {
 

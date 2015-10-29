@@ -19,14 +19,14 @@ class EnemyComponent : public Component
 {
 public:
   EnemyComponent(){this->setType(ENEMY);}
-  ~EnemyComponent();
+  ~EnemyComponent(){};
 };
 
 class BounceProjectileComponent : public Component
 {
 public:
   BounceProjectileComponent(){this->setType(BOUNCEPROJECTILE);}
-  ~BounceProjectileComponent();
+  ~BounceProjectileComponent(){};
 };
 
 

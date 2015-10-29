@@ -18,7 +18,7 @@ public:
                         sf::Keyboard::Key next = sf::Keyboard::E ,
                         sf::Keyboard::Key prev = sf::Keyboard::Q,
                         sf::Keyboard::Key pause = sf::Keyboard::P);
-  ~ControllableComponent();
+  ~ControllableComponent(){};
 
   void changeKey(Input i, sf::Keyboard::Key newKey);
   sf::Keyboard::Key getKey(Input i);

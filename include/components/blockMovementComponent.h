@@ -8,7 +8,7 @@ class BlockMovementComponent : public CollidableComponent
 {
 public:
   BlockMovementComponent(sf::Vector2f xy, float height, float width);
-  ~BlockMovementComponent();
+  ~BlockMovementComponent(){}
 };
 
 

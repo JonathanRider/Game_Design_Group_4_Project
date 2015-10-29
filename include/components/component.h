@@ -7,7 +7,7 @@ class Component
 {
 public:
   Component(){}
-  ~Component(){}
+  virtual ~Component(){}
 
   ComponentType getType(){return type;} //enum
   void setType(ComponentType t){type = t;}

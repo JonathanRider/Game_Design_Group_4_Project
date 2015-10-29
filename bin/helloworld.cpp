@@ -139,16 +139,16 @@ int main(int argc, char** argv)
 
     //uncomment for rapid fire
     //
-    // if((logicS->state->getGameState()) == PLAYING){
-    //
-    //   if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-    //     float dy = entityM->getPlayer()->getXY().y - sf::Mouse::getPosition(App).y;
-    //     float dx = entityM->getPlayer()->getXY().x - sf::Mouse::getPosition(App).x;
-    //     float direction =  180 - atan2(dy, dx) * 180 / PI;
-    //     eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
-    //
-    //   }
-    // }
+  
+
+      if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+        float dy = entityM->getPlayer()->getXY().y - sf::Mouse::getPosition(App).y;
+        float dx = entityM->getPlayer()->getXY().x - sf::Mouse::getPosition(App).x;
+        float direction =  180 - atan2(dy, dx) * 180 / PI;
+        eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
+
+      }
+
 
     inputS->update(dTime);
     dTime = logicTimer.restart().asSeconds();
