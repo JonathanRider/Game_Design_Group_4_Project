@@ -12,23 +12,4 @@
 #include "components/visionComponent.h"
 
 
-
-//empty components
-
-class EnemyComponent : public Component
-{
-public:
-  EnemyComponent(){this->setType(ENEMY);}
-  ~EnemyComponent(){};
-};
-
-class BounceProjectileComponent : public Component
-{
-public:
-  BounceProjectileComponent(){this->setType(BOUNCEPROJECTILE);}
-  ~BounceProjectileComponent(){};
-};
-
-
-
 #endif

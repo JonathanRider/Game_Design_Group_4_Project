@@ -105,7 +105,7 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
-  EnemyComponent *ec = new EnemyComponent();
+  Component *ec = new Component(ENEMY);
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   //ControllableComponent *conc = new ControllableComponent();
@@ -152,7 +152,7 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   mc->setVelocity(velocity);
   mc->setAccelerating(false);
 
-  BounceProjectileComponent *bpc = new BounceProjectileComponent();
+  Component *bpc = new Component(BOUNCEPROJECTILE);
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 10.0, 10.0);
 // BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 10.0, 10.0);
 // e->addComponent(bsc);
