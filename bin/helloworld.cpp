@@ -9,6 +9,8 @@
 #include <SFML/Audio.hpp>
 #include <unistd.h>
 #include <iostream>
+#include <cmath>
+
 
 
 
@@ -81,6 +83,8 @@ int main(int argc, char** argv)
   eCreator->create(ENEMY_MOVING, sf::Vector2f(400,100), tex_enemy);
   ((MoveableComponent*)entityM->findEntity(68)->getComponent(MOVEABLE))->setMaxVelocity(75);
 
+  sf::Texture *tex_bullet = new sf::Texture();
+  tex_bullet->loadFromFile("resources/bullet.png");
 
   float secondCounter = 0;
 
@@ -104,6 +108,22 @@ int main(int argc, char** argv)
         inputS->handleKeyPress(Event);
       }
 
+      //remove this once input system can handle it
+      if (Event.type == sf::Event::MouseButtonPressed){
+        if (Event.mouseButton.button == sf::Mouse::Left){
+
+
+          float dy = entityM->getPlayer()->getXY().y - Event.mouseButton.y;
+          float dx = entityM->getPlayer()->getXY().x - Event.mouseButton.x;
+          float direction =  180 - atan2(dy, dx) * 180 / PI;
+          eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
+
+
+
+        }
+        inputS->handleClick(Event);
+      }
+
     }
 
     // clear screen and fill with blue
@@ -115,6 +135,21 @@ int main(int argc, char** argv)
       secondCounter--;
       // std::cout << "fps: " << 1/dTime << std::endl;
     }
+
+
+    //uncomment for rapid fire
+    //
+    // if((logicS->state->getGameState()) == PLAYING){
+    //
+    //   if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+    //     float dy = entityM->getPlayer()->getXY().y - sf::Mouse::getPosition(App).y;
+    //     float dx = entityM->getPlayer()->getXY().x - sf::Mouse::getPosition(App).x;
+    //     float direction =  180 - atan2(dy, dx) * 180 / PI;
+    //     eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
+    //
+    //   }
+    // }
+
     inputS->update(dTime);
     dTime = logicTimer.restart().asSeconds();
     logicS->update(dTime);

@@ -23,6 +23,7 @@ public:
   void update(float time);
 
 
+  GameState* state;
 private:
 
   void resolveCollisions(Entity* e);

@@ -16,6 +16,7 @@ public:
   ~InputSystem();
   void update(float time);
   void handleKeyPress(sf::Event e);
+  void handleClick(sf::Event e);
 
 private:
   EntityManager *manager;

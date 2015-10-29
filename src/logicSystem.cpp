@@ -18,6 +18,7 @@ void LogicSystem::update(float time){
     std::list<Entity*>::iterator iterator;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
+      (*iterator)->hasComponent(MOVEABLE);
       if((*iterator)->hasComponent(MOVEABLE)){
         this->moveEntity((*iterator), time);
         if((*iterator)->hasComponent(ENEMY)) {
@@ -25,6 +26,17 @@ void LogicSystem::update(float time){
         }
         if((*iterator)->hasComponent(COLLIDABLE)){
           this->resolveCollisions((*iterator));
+        }
+      }
+
+
+      //cleanup projectiles
+      if((*iterator)->hasComponent(BOUNCEPROJECTILE)){
+        MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(MOVEABLE);
+        if(mc->getVelocity() == 0){
+          delete *iterator;
+          iterator = eList->erase(iterator);
+          iterator--;
         }
       }
     }
@@ -49,6 +61,11 @@ void LogicSystem::moveEntity(Entity* e, float time) {
 }
 
 void LogicSystem::resolveCollisions(Entity *e){
+  MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+  if(mc->getVelocity() == 0){
+    return;
+  }
+
   CollidableComponent *occ = (CollidableComponent*)e->getComponent(COLLIDABLE);
   sf::FloatRect *origBB = occ->getBoundingBox();
 
@@ -56,8 +73,8 @@ void LogicSystem::resolveCollisions(Entity *e){
   std::list<Entity*>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(e->getID() != (*iterator)->getID()){
-      if((*iterator)->hasComponent(COLLIDABLE)){
-        CollidableComponent *cc = (CollidableComponent*)(*iterator)->getComponent(COLLIDABLE);
+      if((*iterator)->hasComponent(BMOVEMENT)){
+        BlockMovementComponent *cc = (BlockMovementComponent*)(*iterator)->getComponent(BMOVEMENT);
         sf::FloatRect *otherBB = cc->getBoundingBox();
         if(origBB->intersects(*otherBB)){
           MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
@@ -101,6 +118,16 @@ void LogicSystem::resolveCollisions(Entity *e){
           sf::Vector2f newXY = sf::Vector2f(e->getXY().x + dx, e->getXY().y + dy);
           e->setXY(newXY);
 
+          if(e->hasComponent(BOUNCEPROJECTILE)){
+            MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+            if(fabs(yOverlap/yRatio) <= fabs(xOverlap/xRatio)){
+              mc->setDirection(360 - mc->getDirection());
+            }
+            if(fabs(yOverlap/yRatio) >= fabs(xOverlap/xRatio)){
+              mc->setDirection(540 - mc->getDirection());
+            }
+          }
+
           //code to allow sliding along the collisions
           //move just x
           e->setXY(sf::Vector2f(e->getXY().x -dx, e->getXY().y));
@@ -131,6 +158,7 @@ void LogicSystem::resolveCollisions(Entity *e){
 
 
 void LogicSystem::updateVisionCones(float time){
+
   //Let's get the player entity and its bounding box
   Entity *player_entity = manager->getPlayer();
   CollidableComponent * player_cp = (CollidableComponent *) player_entity->getComponent(COLLIDABLE);

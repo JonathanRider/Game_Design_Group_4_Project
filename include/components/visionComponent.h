@@ -9,7 +9,7 @@ class VisionComponent : public Component
 {
 public:
   VisionComponent(sf::Vector2f location, float l, float dir, float a);
-  ~VisionComponent();
+  ~VisionComponent(){delete triFan;}
 
   void setLength(float l){length = l;}
   float getLength(){return length;}

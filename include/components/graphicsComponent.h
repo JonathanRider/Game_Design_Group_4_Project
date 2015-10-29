@@ -8,7 +8,7 @@ class GraphicsComponent : public Component
 {
 public:
   GraphicsComponent(sf::Sprite* s, float a = 0, float al = 0);
-  ~GraphicsComponent();
+  ~GraphicsComponent(){delete sprite;}
 
   void setGraphics(sf::Sprite);
   void setRotation(float a);

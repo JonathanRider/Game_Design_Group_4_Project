@@ -93,3 +93,21 @@ void InputSystem::handleKeyPress(sf::Event e){
     }
   }
 }
+
+void InputSystem::handleClick(sf::Event e){
+
+  //needs access to entity creator work
+
+  // if (e.mouseButton.button == sf::Mouse::Left){
+  //
+  //
+  //   float dy = entityM->getPlayer()->getXY().y - e.mouseButton.y;
+  //   float dx = entityM->getPlayer()->getXY().x - e.mouseButton.x;
+  //   float direction =  180 - atan2(dy, dx) * 180 / PI;
+  //   eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
+  //
+  //
+  //
+  // }
+
+}

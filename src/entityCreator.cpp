@@ -1,4 +1,5 @@
 #include "entityCreator.h"
+#include <cmath>
 
 #include <iostream>
 
@@ -76,7 +77,7 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
   ///////////////////////////////////////////////////////////
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
-  CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
+  BlockMovementComponent *colc = new BlockMovementComponent(e->getXY(), 50.0, 50.0);
   BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 50.0, 50.0);
 
   // VisionComponent *vc = new VisionComponent(e->getXY(), 300, rand()%360, 90);
@@ -131,6 +132,37 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   e->addComponent(colc);
 
 
+
   em->addEntity(e);
+
+}
+
+void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, sf::Texture *texture){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture(*texture);
+  sprite->setOrigin(5,5);
+
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  MoveableComponent *mc = new MoveableComponent(999999,drag, velocity); //accel, decel, max speed
+  mc->setDirection(direction);
+  mc->setVelocity(velocity);
+  mc->setAccelerating(false);
+
+  BounceProjectileComponent *bpc = new BounceProjectileComponent();
+  CollidableComponent *colc = new CollidableComponent(e->getXY(), 10.0, 10.0);
+// BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 10.0, 10.0);
+// e->addComponent(bsc);
+
+  e->addComponent(gc);
+  e->addComponent(mc);
+  e->addComponent(colc);
+  e->addComponent(bpc);
+
+  em->addEntity(e);
+
 
 }
