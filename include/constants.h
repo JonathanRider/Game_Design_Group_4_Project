@@ -9,7 +9,7 @@ enum Input {UP, DOWN, LEFT, RIGHT, ITEM, USE, NEXTITEM, PREVITEM, PAUSE};
 
 enum EntityType {PLAYER, WALL, ENEMY_MOVING, ENEMY_STATIC};
 
-
+enum CharacterProperty {MOVING};
 
 #define PI 3.14159265
 #define WALLSIZE 50

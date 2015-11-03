@@ -19,8 +19,9 @@ endif()
 
 
 
-file(GLOB_RECURSE Foo_SOURCES "src/*.cpp")
-file(GLOB_RECURSE Foo_HEADERS "include/*.h")
+file(GLOB_RECURSE Foo_SOURCES "src/*.cpp" "lib/xmlParser/*.cpp")
+
+file(GLOB_RECURSE Foo_HEADERS "include/*.h" "lib/xmlParser/*.h")
 
 
 set (Foo_INCLUDE_DIRS "")
