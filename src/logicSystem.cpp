@@ -13,26 +13,26 @@ LogicSystem::LogicSystem(EntityManager *m)
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
 
-  if (global()->gameEngine.gameState == PLAYING) {
+  if (global()->gameEngine.gameState == constants::PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      (*iterator)->hasComponent(MOVEABLE);
-      if((*iterator)->hasComponent(MOVEABLE)){
+      (*iterator)->hasComponent(constants::MOVEABLE);
+      if((*iterator)->hasComponent(constants::MOVEABLE)){
         this->moveEntity((*iterator), time);
-        if((*iterator)->hasComponent(ENEMY)) {
+        if((*iterator)->hasComponent(constants::ENEMY)) {
           this->moveEnemies((*iterator));
         }
-        if((*iterator)->hasComponent(COLLIDABLE)){
+        if((*iterator)->hasComponent(constants::COLLIDABLE)){
           this->resolveCollisions((*iterator));
         }
       }
 
 
       //cleanup projectiles
-      if((*iterator)->hasComponent(BOUNCEPROJECTILE)){
-        MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(MOVEABLE);
+      if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
+        MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
         if(mc->getVelocity() == 0){
           delete *iterator;
           iterator = eList->erase(iterator);
@@ -45,7 +45,7 @@ void LogicSystem::update(float time){
 }
 
 void LogicSystem::moveEntity(Entity* e, float time) {
-  MoveableComponent *mp = (MoveableComponent*)e->getComponent(MOVEABLE);
+  MoveableComponent *mp = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
   if(mp->getAccelerating()){
     mp->changeVelocity(mp->getAcceleration()*time);
   }else{
@@ -61,23 +61,23 @@ void LogicSystem::moveEntity(Entity* e, float time) {
 }
 
 void LogicSystem::resolveCollisions(Entity *e){
-  MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+  MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
   if(mc->getVelocity() == 0){
     return;
   }
 
-  CollidableComponent *occ = (CollidableComponent*)e->getComponent(COLLIDABLE);
+  CollidableComponent *occ = (CollidableComponent*)e->getComponent(constants::COLLIDABLE);
   sf::FloatRect *origBB = occ->getBoundingBox();
 
   std::list<Entity*>* eList = manager->getEntityList();
   std::list<Entity*>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(e->getID() != (*iterator)->getID()){
-      if((*iterator)->hasComponent(BMOVEMENT)){
-        BlockMovementComponent *cc = (BlockMovementComponent*)(*iterator)->getComponent(BMOVEMENT);
+      if((*iterator)->hasComponent(constants::BMOVEMENT)){
+        BlockMovementComponent *cc = (BlockMovementComponent*)(*iterator)->getComponent(constants::BMOVEMENT);
         sf::FloatRect *otherBB = cc->getBoundingBox();
         if(origBB->intersects(*otherBB)){
-          MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+          MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
           float reverseDirection = fmod((mc->getDirection() + 180),360);
 
           float xRatio = cos(reverseDirection*PI/180.0);
@@ -118,8 +118,8 @@ void LogicSystem::resolveCollisions(Entity *e){
           sf::Vector2f newXY = sf::Vector2f(e->getXY().x + dx, e->getXY().y + dy);
           e->setXY(newXY);
 
-          if(e->hasComponent(BOUNCEPROJECTILE)){
-            MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+          if(e->hasComponent(constants::BOUNCEPROJECTILE)){
+            MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
             if(fabs(yOverlap/yRatio) <= fabs(xOverlap/xRatio)){
               mc->setDirection(360 - mc->getDirection());
             }
@@ -161,15 +161,15 @@ void LogicSystem::updateVisionCones(float time){
 
   //Let's get the player entity and its bounding box
   Entity *player_entity = manager->getPlayer();
-  CollidableComponent * player_cp = (CollidableComponent *) player_entity->getComponent(COLLIDABLE);
+  CollidableComponent * player_cp = (CollidableComponent *) player_entity->getComponent(constants::COLLIDABLE);
   sf::FloatRect *player_box = player_cp->getBoundingBox();
 
   std::list<Entity*>* eList = manager->getEntityList();
   std::list<Entity*>::iterator iterator;
 
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-    if((*iterator)->hasComponent(VISION)){
-      VisionComponent *vc = (VisionComponent*)(*iterator)->getComponent(VISION);
+    if((*iterator)->hasComponent(constants::VISION)){
+      VisionComponent *vc = (VisionComponent*)(*iterator)->getComponent(constants::VISION);
       //first, we need to sort all the vision blocking points by angle, starting with the start angle
 
       std::list<anglePoint> *pointList = this->sortPointsByAngle((*iterator));
@@ -195,7 +195,7 @@ void LogicSystem::updateVisionCones(float time){
         bool first = true;
         for(i = pointList->begin(); i != pointList->end(); ++i){
           if( (i->angle <=  highAngle && i->angle >= lowAngle )){
-            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, BVISION);
+            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, constants::BVISION);
             float angle = this->calculateAngle((*iterator)->getXY(), point);
             while(angle > prevAngle + vc->getVisionResolution() && !i->collision && !first){
               prevAngle += vc->getVisionResolution();
@@ -216,7 +216,7 @@ void LogicSystem::updateVisionCones(float time){
 
           if(  i->angle >= lowAngle){
 
-            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, BVISION);
+            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, constants::BVISION);
             float angle = this->calculateAngle((*iterator)->getXY(), point);
             while(angle > prevAngle + vc->getVisionResolution() && (!i->collision)){
               prevAngle += vc->getVisionResolution();
@@ -233,7 +233,7 @@ void LogicSystem::updateVisionCones(float time){
 
           if(  i->angle <= highAngle){
 
-            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, BVISION);
+            sf::Vector2f point = this->interSectLineAndRects((*iterator)->getXY(), i->point, constants::BVISION);
             float angle = this->calculateAngle((*iterator)->getXY(), point);
             while(angle > prevAngle + vc->getVisionResolution() && (!i->collision)){
               prevAngle += vc->getVisionResolution();
@@ -262,19 +262,19 @@ void LogicSystem::updateVisionCones(float time){
 }
 
 //takes a line segment and returns the closest point it intersects a rectangle. The endpoint otherwise
-sf::Vector2f LogicSystem::interSectLineAndRects(sf::Vector2f origin, sf::Vector2f endpoint, ComponentType type){
+sf::Vector2f LogicSystem::interSectLineAndRects(sf::Vector2f origin, sf::Vector2f endpoint, constants::ComponentType type){
   sf::Vector2f currentMinPoint = endpoint;
 
   int bottom = (origin.y > endpoint.y);
   int right = (origin.x > endpoint.x);
 
   float minLength = squareDist(origin, endpoint);  //(origin.x - endpoint.x)*(origin.x - endpoint.x) + (origin.y - endpoint.y)*(origin.y - endpoint.y);
-  if(type = BVISION){
+  if(type = constants::BVISION){
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if((*iterator)->hasComponent(BVISION)){
-        BlockVisionComponent *vc = (BlockVisionComponent*)(*iterator)->getComponent(BVISION);
+      if((*iterator)->hasComponent(constants::BVISION)){
+        BlockVisionComponent *vc = (BlockVisionComponent*)(*iterator)->getComponent(constants::BVISION);
 
 
         //depending on which direction the ray is coming from, we only need to look at 3 points of the rectangle.
@@ -375,7 +375,7 @@ bool compareAnglePoints(const anglePoint &lhs, const anglePoint &rhs)
 //So when you sweep from the entity starting on the right and going clockwise, the order at which
 //you would hit the points is the order of the list
 std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
-  VisionComponent *vc = (VisionComponent*)e->getComponent(VISION);
+  VisionComponent *vc = (VisionComponent*)e->getComponent(constants::VISION);
   std::list<anglePoint>* result = new std::list<anglePoint>();
 
   bool needZeroAnglePoint = false;
@@ -389,7 +389,7 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
   }
   sf::Vector2f infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
   sf::Vector2f origPoint = infPoint;
-  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
   if(infPoint == origPoint){
     ap.collision = false;
   }
@@ -407,7 +407,7 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
   }
   infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
   origPoint = infPoint;
-  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
   if(infPoint == origPoint){
     ap.collision = false;
   }else{
@@ -424,7 +424,7 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
     ap.angle = 0;
     infPoint = sf::Vector2f(e->getXY().x + vc->getLength(), e->getXY().y);
     origPoint = infPoint;
-    infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+    infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
     if(infPoint == origPoint){
       ap.collision = false;
     }else{
@@ -442,8 +442,8 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
   std::list<Entity*>* eList = manager->getEntityList();
   std::list<Entity*>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-    if((*iterator)->hasComponent(BVISION)){
-      BlockVisionComponent *bc = (BlockVisionComponent*)(*iterator)->getComponent(BVISION);
+    if((*iterator)->hasComponent(constants::BVISION)){
+      BlockVisionComponent *bc = (BlockVisionComponent*)(*iterator)->getComponent(constants::BVISION);
       this->addAnglePoints(e, result,  bc->getTopLeft(), true, true); // top left
       this->addAnglePoints(e, result,  bc->getTopRight(), true, false); //top right
       this->addAnglePoints(e, result,  bc->getBottomLeft(), false, true); //bottom left
@@ -460,7 +460,7 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
 
 
 void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool cornerTop, bool cornerLeft){
-  VisionComponent *vc = (VisionComponent*)e->getComponent(VISION);
+  VisionComponent *vc = (VisionComponent*)e->getComponent(constants::VISION);
   if(this->squareDist(e->getXY(), v) > vc->getLength()*vc->getLength()){
     return;
   }
@@ -546,7 +546,7 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
   }
   infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
   sf::Vector2f origPoint = infPoint;
-  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+  infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
   if(infPoint == origPoint){
     ap.collision = false;
   }
@@ -555,7 +555,7 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
 }
 
 void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool horizontal){
-  VisionComponent* vc = (VisionComponent*)e->getComponent(VISION);
+  VisionComponent* vc = (VisionComponent*)e->getComponent(constants::VISION);
 
 
   bool comingFromTop = e->getXY().y < v.y;
@@ -612,7 +612,7 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
         }
         infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
         sf::Vector2f origPoint = infPoint;
-        infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+        infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
         if(infPoint == origPoint){
           ap.collision = false;
         }
@@ -657,7 +657,7 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
         }
         infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
         sf::Vector2f origPoint = infPoint;
-        infPoint = this->interSectLineAndRects(e->getXY(), infPoint, BVISION);
+        infPoint = this->interSectLineAndRects(e->getXY(), infPoint, constants::BVISION);
         if(infPoint == origPoint){
           ap.collision = false;
         }
@@ -669,7 +669,7 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
 }
 
 void LogicSystem::moveEnemies(Entity *e) {
-  MoveableComponent *mc = (MoveableComponent*)e->getComponent(MOVEABLE);
+  MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
   if (e->getXY().x <= mc->getMinXPos() && e->getXY().y <= mc->getMinYPos()) {
     mc->setDirection(mc->getDirection() + 180);
   } else if (e->getXY().x >= mc->getMaxXPos() && e->getXY().y >= mc->getMaxYPos()) {

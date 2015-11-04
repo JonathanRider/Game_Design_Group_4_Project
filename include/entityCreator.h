@@ -13,7 +13,7 @@ public:
   EntityCreator(EntityManager *em):em(em){}
   ~EntityCreator();
 
-  void create(EntityType type, sf::Vector2f xy, sf::Texture *texture);
+  void create(constants::EntityType type, sf::Vector2f xy, sf::Texture *texture);
 
   void createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, sf::Texture *texture);
 private:

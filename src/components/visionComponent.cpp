@@ -4,7 +4,7 @@
 VisionComponent::VisionComponent(sf::Vector2f location, float l, float dir, float a)
 :xy(location), length(l), direction(dir), coneAngle(a)
 {
-  this->setType(VISION);
+  this->setType(constants::VISION);
   alert = false;
   visionResolution = 5;
 

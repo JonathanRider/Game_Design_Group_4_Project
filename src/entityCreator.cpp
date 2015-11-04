@@ -14,12 +14,12 @@ EntityCreator::~EntityCreator() {
   // delete conc;
 }
 
-void EntityCreator::create(EntityType type, sf::Vector2f xy, sf::Texture *texture) {
-  if (type == PLAYER) {
+void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, sf::Texture *texture) {
+  if (type == constants::PLAYER) {
     this->createPlayer(xy, texture);
-  } else if (type == WALL) {
+  } else if (type == constants::WALL) {
     this->createWall(xy, texture);
-  } else if (type ==  ENEMY_MOVING) {
+  } else if (type ==  constants::ENEMY_MOVING) {
     this->createMovingEnemy(xy, texture);
   }
 
@@ -105,7 +105,7 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
-  Component *ec = new Component(ENEMY);
+  Component *ec = new Component(constants::ENEMY);
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   //ControllableComponent *conc = new ControllableComponent();
@@ -152,7 +152,7 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   mc->setVelocity(velocity);
   mc->setAccelerating(false);
 
-  Component *bpc = new Component(BOUNCEPROJECTILE);
+  Component *bpc = new Component(constants::BOUNCEPROJECTILE);
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 10.0, 10.0);
 // BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 10.0, 10.0);
 // e->addComponent(bsc);

@@ -11,36 +11,36 @@ ControllableComponent::ControllableComponent(bool active, sf::Keyboard::Key up ,
                       sf::Keyboard::Key pause)
 :isActive(active), upKey(up), downKey(down), leftKey(left), rightKey(right), useKey(use), itemKey(item), nextItemKey(next), prevItemKey(prev), pauseKey(pause)
 {
-  this->setType(CONTROLLABLE);
+  this->setType(constants::CONTROLLABLE);
 }
 
 
-void ControllableComponent::changeKey(Input i, sf::Keyboard::Key newKey){
+void ControllableComponent::changeKey(constants::Input i, sf::Keyboard::Key newKey){
   switch(i){
-    case UP: upKey = newKey; break;
-    case DOWN: downKey = newKey; break;
-    case LEFT: leftKey = newKey; break;
-    case RIGHT: rightKey = newKey; break;
-    case ITEM: itemKey = newKey; break;
-    case USE: useKey = newKey; break;
-    case NEXTITEM: nextItemKey = newKey; break;
-    case PREVITEM: prevItemKey = newKey; break;
-    case PAUSE: prevItemKey = newKey; break;
+    case constants::UP: upKey = newKey; break;
+    case constants::DOWN: downKey = newKey; break;
+    case constants::LEFT: leftKey = newKey; break;
+    case constants::RIGHT: rightKey = newKey; break;
+    case constants::ITEM: itemKey = newKey; break;
+    case constants::USE: useKey = newKey; break;
+    case constants::NEXTITEM: nextItemKey = newKey; break;
+    case constants::PREVITEM: prevItemKey = newKey; break;
+    case constants::PAUSE: prevItemKey = newKey; break;
   }
 
 
 }
 
-sf::Keyboard::Key ControllableComponent::getKey(Input i){
+sf::Keyboard::Key ControllableComponent::getKey(constants::Input i){
   switch(i){
-    case UP: return upKey;
-    case DOWN: return downKey;
-    case LEFT: return leftKey;
-    case RIGHT: return rightKey;
-    case ITEM: return itemKey;
-    case USE: return useKey;
-    case NEXTITEM: return nextItemKey;
-    case PREVITEM: return prevItemKey;
-    case PAUSE: return pauseKey;
+    case constants::UP: return upKey;
+    case constants::DOWN: return downKey;
+    case constants::LEFT: return leftKey;
+    case constants::RIGHT: return rightKey;
+    case constants::ITEM: return itemKey;
+    case constants::USE: return useKey;
+    case constants::NEXTITEM: return nextItemKey;
+    case constants::PREVITEM: return prevItemKey;
+    case constants::PAUSE: return pauseKey;
   }
 }

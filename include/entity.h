@@ -12,17 +12,17 @@ public:
   ~Entity();
 
   int getID(){return id;}
-  bool hasComponent(ComponentType type);
+  bool hasComponent(constants::ComponentType type);
   void addComponent(Component* c);
-  void removeComponent(ComponentType type); //eventually enum
+  void removeComponent(constants::ComponentType type); //eventually enum
   void removeAllComponents();
-  Component* getComponent(ComponentType type);
+  Component* getComponent(constants::ComponentType type);
 
   void setXY(sf::Vector2f Newxy);
   sf::Vector2f getXY(){return xy;}
 
 private:
-  std::map<ComponentType, Component*> componentMap;
+  std::map<constants::ComponentType, Component*> componentMap;
   int id;
   sf::Vector2f xy;
 

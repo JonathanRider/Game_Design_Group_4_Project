@@ -20,8 +20,8 @@ public:
                         sf::Keyboard::Key pause = sf::Keyboard::P);
   ~ControllableComponent(){};
 
-  void changeKey(Input i, sf::Keyboard::Key newKey);
-  sf::Keyboard::Key getKey(Input i);
+  void changeKey(constants::Input i, sf::Keyboard::Key newKey);
+  sf::Keyboard::Key getKey(constants::Input i);
 
 
 

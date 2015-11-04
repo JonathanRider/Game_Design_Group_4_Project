@@ -8,7 +8,7 @@ namespace global_internal{ //this namespace is not supposed to use outside the f
     public:
       GameEngine(){}
 
-      GameState gameState;
+      constants::GameState gameState;
   };
 }
 

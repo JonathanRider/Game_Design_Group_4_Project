@@ -10,7 +10,7 @@ BlockVisionComponent::BlockVisionComponent(sf::Vector2f xy, float h, float w)
   right =  sf::VertexArray(sf::Lines, 2);
   bottom =  sf::VertexArray(sf::Lines, 2);
 
-  this->setType(BVISION);
+  this->setType(constants::BVISION);
   this->moveTo(xy);
 }
 

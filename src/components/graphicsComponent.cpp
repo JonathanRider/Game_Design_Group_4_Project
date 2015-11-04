@@ -4,5 +4,5 @@
 GraphicsComponent::GraphicsComponent(sf::Sprite* s, float a, float al)
   :sprite(s), angle(a), alpha(al)
 {
-  this->setType(GRAPHICS);
+  this->setType(constants::GRAPHICS);
 }

@@ -16,12 +16,12 @@
 namespace levelCreator_internal { //it is only used in this file
   class WorldComponent {
   public:
-    WorldComponent(EntityType i_t, float i_x, float i_y, std::set<int> *set_p = NULL)
+    WorldComponent(constants::EntityType i_t, float i_x, float i_y, std::set<int> *set_p = NULL)
       : type(i_t), x(i_x), y(i_y), property_set(set_p){}
     ~WorldComponent(){
       delete property_set;
     }
-    EntityType type;
+    constants::EntityType type;
     float x, y;
     std::set<int> * property_set;
   };

@@ -15,6 +15,7 @@ public:
   InputSystem(EntityManager *m, sf::RenderWindow *w);
   ~InputSystem();
   void update(float time);
+  void handleEvent(sf::Event e);
   void handleKeyPress(sf::Event e);
   void handleClick(sf::Event e);
 

@@ -11,7 +11,7 @@
 namespace {
   int getNumberProperty(std::string &str) {
     if ( strcmp(str.c_str(), "moving") == 0){
-      return MOVING;
+      return constants::MOVING;
     }
     return -1;
   }
@@ -75,14 +75,14 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
   for (int i=0; i < n; i++) {
     XMLNode xWall = xWalls.getChildNode(i);
     getPosition(xWall.getAttribute("position"), x, y);
-    creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
+    creation_list.push_back(new levelCreator_internal::WorldComponent(constants::WALL, x, y));
   }
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");
   //player
   XMLNode xPlayer=xChars.getChildNode("PLAYER");
   getPosition(xPlayer.getAttribute("position"), x, y);
-  creation_list.push_back(new levelCreator_internal::WorldComponent(PLAYER, x, y));
+  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::PLAYER, x, y));
 
   //enemy
   n = xChars.nChildNode("ENEMY");
@@ -91,11 +91,11 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     getPosition(xEnemy.getAttribute("position"), x, y);
     std::set<int> property_set;
     getPropertySet(xEnemy.getAttribute("property"), property_set);
-    if (property_set.find(MOVING) != property_set.end() ) {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(ENEMY_MOVING, x, y));
+    if (property_set.find(constants::MOVING) != property_set.end() ) {
+      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_MOVING, x, y));
     }
     else {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(ENEMY_STATIC, x, y));
+      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y));
     }
   }
 
@@ -106,17 +106,17 @@ void LevelCreator::createLevel() {
   for (int i=0; i < creation_list.size(); i++) {
     levelCreator_internal::WorldComponent *c = creation_list[i];
     switch(c->type) {
-      case WALL:
-        eCreator.create(WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), wallTex);
+      case constants::WALL:
+        eCreator.create(constants::WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), wallTex);
         break;
-      case PLAYER:
-        eCreator.create(PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_player);
+      case constants::PLAYER:
+        eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_player);
         break;
-      case ENEMY_MOVING:
-        eCreator.create(ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
+      case constants::ENEMY_MOVING:
+        eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
         break;
-      case ENEMY_STATIC:
-        eCreator.create(ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
+      case constants::ENEMY_STATIC:
+        eCreator.create(constants::ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
         break;
       default:
         //do nothing

@@ -7,15 +7,15 @@ class Component
 {
 public:
   Component(){}
-  Component(ComponentType t){type = t;}
+  Component(constants::ComponentType t){type = t;}
   virtual ~Component(){}
 
-  ComponentType getType(){return type;} //enum
-  void setType(ComponentType t){type = t;}
+  constants::ComponentType getType(){return type;} //enum
+  void setType(constants::ComponentType t){type = t;}
 
 
 private:
-  ComponentType type;
+  constants::ComponentType type;
 };
 
 #endif

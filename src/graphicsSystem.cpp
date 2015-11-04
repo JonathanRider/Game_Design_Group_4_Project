@@ -10,7 +10,7 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
 
 void GraphicsSystem::update(float time){
 
-  if (global()->gameEngine.gameState == MENU) {
+  if (global()->gameEngine.gameState == constants::MENU) {
 
     // sf::Texture *menuTex = new sf::Texture();
     // menuTex->loadFromFile("resources/MainMenu.png");
@@ -18,22 +18,22 @@ void GraphicsSystem::update(float time){
     // menuSprite->setTexture(*menuTex);
     // screen->draw(*menuSprite);
 
-  } else if (global()->gameEngine.gameState == PLAYING || global()->gameEngine.gameState == PAUSED) {
+  } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
 
     //iterate through entityManager and update
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if((*iterator)->hasComponent(GRAPHICS)){
+      if((*iterator)->hasComponent(constants::GRAPHICS)){
         //it is a graphics component, so we can cast it
-        GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(GRAPHICS);
+        GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
         gp->getSprite()->setPosition((*iterator)->getXY());
         //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
         screen->draw(*(gp->getSprite()));
       }
-      if((*iterator)->hasComponent(VISION)){
+      if((*iterator)->hasComponent(constants::VISION)){
 
-        VisionComponent *vp = (VisionComponent*)(*iterator)->getComponent(VISION);
+        VisionComponent *vp = (VisionComponent*)(*iterator)->getComponent(constants::VISION);
         sf::VertexArray va= *(vp->getTriangles());
 
         sf::Color vp_color;
@@ -48,7 +48,7 @@ void GraphicsSystem::update(float time){
          screen->draw(va);
       }
     }
-    if (global()->gameEngine.gameState == PAUSED) {
+    if (global()->gameEngine.gameState == constants::PAUSED) {
       sf::Texture *pausedTex = new sf::Texture();
       pausedTex->loadFromFile("resources/paused.png");
       sf::Sprite *pausedSprite = new sf::Sprite();

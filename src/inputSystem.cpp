@@ -8,36 +8,36 @@ InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w)
 
 void InputSystem::update(float time){
 
-  if (global()->gameEngine.gameState == PLAYING) {
+  if (global()->gameEngine.gameState == constants::PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if((*iterator)->hasComponent(CONTROLLABLE)){
-        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(CONTROLLABLE);
-        if((*iterator)->hasComponent(MOVEABLE)){
-          MoveableComponent *mp = (MoveableComponent*)(*iterator)->getComponent(MOVEABLE);
-          if(sf::Keyboard::isKeyPressed(cp->getKey(UP))){
-              if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
+      if((*iterator)->hasComponent(constants::CONTROLLABLE)){
+        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(constants::CONTROLLABLE);
+        if((*iterator)->hasComponent(constants::MOVEABLE)){
+          MoveableComponent *mp = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
+          if(sf::Keyboard::isKeyPressed(cp->getKey(constants::UP))){
+              if(sf::Keyboard::isKeyPressed(cp->getKey(constants::LEFT))){
                 mp->setDirection(135.0);
-              }else if(sf::Keyboard::isKeyPressed(cp->getKey(RIGHT))){
+              }else if(sf::Keyboard::isKeyPressed(cp->getKey(constants::RIGHT))){
                 mp->setDirection(45.0);
               }else{
                 mp->setDirection(90.0);
               }
               mp->setAccelerating(true);
-          }else if(sf::Keyboard::isKeyPressed(cp->getKey(DOWN))){
-            if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
+          }else if(sf::Keyboard::isKeyPressed(cp->getKey(constants::DOWN))){
+            if(sf::Keyboard::isKeyPressed(cp->getKey(constants::LEFT))){
               mp->setDirection(225.0);
-            }else if(sf::Keyboard::isKeyPressed(cp->getKey(RIGHT))){
+            }else if(sf::Keyboard::isKeyPressed(cp->getKey(constants::RIGHT))){
               mp->setDirection(315.0);
             }else{
               mp->setDirection(270.0);
             }
             mp->setAccelerating(true);
-          }else if(sf::Keyboard::isKeyPressed(cp->getKey(LEFT))){
+          }else if(sf::Keyboard::isKeyPressed(cp->getKey(constants::LEFT))){
             mp->setDirection(180.0);
             mp->setAccelerating(true);
-          }else if(sf::Keyboard::isKeyPressed(cp->getKey(RIGHT))){
+          }else if(sf::Keyboard::isKeyPressed(cp->getKey(constants::RIGHT))){
             mp->setDirection(0.0);
             mp->setAccelerating(true);
           }else{
@@ -57,39 +57,41 @@ void InputSystem::update(float time){
     }
   }
 }
+void InputSystem::handleEvent(sf::Event e){
 
+}
 void InputSystem::handleKeyPress(sf::Event e){
-  if (global()->gameEngine.gameState == MENU) {
+  if (global()->gameEngine.gameState == constants::MENU) {
     if(e.key.code == sf::Keyboard::Up) {
       std::cout << "up\n";
     } else if(e.key.code == sf::Keyboard::Down) {
       std::cout << "down\n";
     }
     else if(e.key.code == sf::Keyboard::Return) {
-      global()->gameEngine.gameState = PLAYING;
+      global()->gameEngine.gameState = constants::PLAYING;
     }
-  } else if (global()->gameEngine.gameState == PLAYING) {
+  } else if (global()->gameEngine.gameState == constants::PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      if((*iterator)->hasComponent(CONTROLLABLE)){
-        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(CONTROLLABLE);
-        if(e.key.code == cp->getKey(USE)){
+      if((*iterator)->hasComponent(constants::CONTROLLABLE)){
+        ControllableComponent *cp = (ControllableComponent*)(*iterator)->getComponent(constants::CONTROLLABLE);
+        if(e.key.code == cp->getKey(constants::USE)){
           std::cout << "use\n";
-        }else if(e.key.code == cp->getKey(ITEM)){
+        }else if(e.key.code == cp->getKey(constants::ITEM)){
           std::cout << "item\n";
-        }else if(e.key.code == cp->getKey(NEXTITEM)){
+        }else if(e.key.code == cp->getKey(constants::NEXTITEM)){
           std::cout << "nextItem\n";
-        }else if(e.key.code == cp->getKey(PREVITEM)){
+        }else if(e.key.code == cp->getKey(constants::PREVITEM)){
           std::cout << "prev item\n";
-        } else if(e.key.code == cp->getKey(PAUSE)){
-          global()->gameEngine.gameState = PAUSED;
+        } else if(e.key.code == cp->getKey(constants::PAUSE)){
+          global()->gameEngine.gameState = constants::PAUSED;
         }
       }
     }
-  }else if (global()->gameEngine.gameState == PAUSED) {
+  }else if (global()->gameEngine.gameState == constants::PAUSED) {
     if(e.key.code == sf::Keyboard::Return) {
-      global()->gameEngine.gameState = PLAYING;
+      global()->gameEngine.gameState = constants::PLAYING;
     }
   }
 }

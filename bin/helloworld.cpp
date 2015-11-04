@@ -25,9 +25,9 @@ int main(int argc, char** argv)
   sf::RenderWindow App(sf::VideoMode(global()->config.appearance.window_width,
     global()->config.appearance.window_height,32), "Hello World - SFML");
   App.setFramerateLimit(60);
-  App.setIcon( rIcon.width,  rIcon.height,  rIcon.pixel_data );
+  App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
-  global()->gameEngine.gameState = MENU;
+  global()->gameEngine.gameState = constants::MENU;
 
   EntityManager* entityM = new EntityManager();
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
