@@ -19,6 +19,11 @@ void GraphicsSystem::update(float time){
     // screen->draw(*menuSprite);
 
   } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
+    sf::View view;
+    view.setCenter(manager->getPlayer()->getXY());
+    view.setSize(sf::Vector2f(800, 600));
+
+    screen->setView(view);
 
     //iterate through entityManager and update
     std::list<Entity*>* eList = manager->getEntityList();

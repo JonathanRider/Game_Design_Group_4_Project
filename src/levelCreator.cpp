@@ -33,6 +33,22 @@ namespace {
     y = typeconvert::string2float(part);
   }
 
+  void getDimensions(const char *str, float &width, float &height) {
+    std::string line = str;
+    std::istringstream is(line);
+    std::string part;
+    if ( !std::getline(is, part, ';') ) {
+      std::cout << "Error: Dimension is set incorrectly." << std::endl;
+      return;
+    }
+    width = typeconvert::string2float(part);
+    if ( !std::getline(is, part, ';') ) {
+      std::cout << "Error: Dimension is set incorrectly." << std::endl;
+      return;
+    }
+    height = typeconvert::string2float(part);
+  }
+
   void getPropertySet(const char *str, std::set<int> &propertySet){
     std::string line = str;
     std::istringstream is(line);
@@ -63,7 +79,7 @@ LevelCreator::~LevelCreator(){
 
 void LevelCreator::loadLevelFile(std::string &fileName) {
   int n;
-  float x, y;
+  float x, y, width, height;
   clearList();
   XMLNode xMainNode=XMLNode::openFileHelper(fileName.c_str());
 
@@ -75,7 +91,9 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
   for (int i=0; i < n; i++) {
     XMLNode xWall = xWalls.getChildNode(i);
     getPosition(xWall.getAttribute("position"), x, y);
-    creation_list.push_back(new levelCreator_internal::WorldComponent(constants::WALL, x, y));
+    getDimensions(xWall.getAttribute("dimension"), width, height);
+    eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, wallTex);
+    // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");

@@ -18,7 +18,7 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, sf::Text
   if (type == constants::PLAYER) {
     this->createPlayer(xy, texture);
   } else if (type == constants::WALL) {
-    this->createWall(xy, texture);
+    // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
     this->createMovingEnemy(xy, texture);
   }
@@ -58,7 +58,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   em->setPlayer(e);
 }
 
-void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
+void EntityCreator::createWall(sf::Vector2f xy, float width, float height, sf::Texture *texture) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   //////////////////this should probably be moved somewhere else
@@ -70,13 +70,20 @@ void EntityCreator::createWall(sf::Vector2f xy, sf::Texture *texture) {
   // }
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
+  texture->setRepeated(true);
   sprite->setTexture(*texture);
   sprite->setOrigin(25, 25);
+  // sprite->getTexture()->setRepeated(true);
+  sf::IntRect ir;
+
+  ir.width = (int)width;
+  ir.height = (int)height;
+  sprite->setTextureRect(ir);
   ///////////////////////////////////////////////////////////
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
-  BlockMovementComponent *colc = new BlockMovementComponent(e->getXY(), 50.0, 50.0);
-  BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 50.0, 50.0);
+  BlockMovementComponent *colc = new BlockMovementComponent(e->getXY(), height, width);
+  BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), height, width);
 
   // VisionComponent *vc = new VisionComponent(e->getXY(), 300, rand()%360, 90);
   // e->addComponent(vc);

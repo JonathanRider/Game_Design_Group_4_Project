@@ -34,7 +34,7 @@ private:
   sf::Vector2f interSectLineAndRects(sf::Vector2f origin, sf::Vector2f endpoint, constants::ComponentType type);
 
   std::list<anglePoint>* sortPointsByAngle(Entity *e);
-  void addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool cornerTop, bool cornerLeft);
+  bool addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool cornerTop, bool cornerLeft);
   void addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v,bool horizontal);
 
   static sf::Vector2f intersectLines(sf::Vector2f a1, sf::Vector2f a2, sf::Vector2f b1, sf::Vector2f b2);
