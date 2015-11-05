@@ -1,48 +1,22 @@
 <LEVEL>
   <MAP>
     <WALLS>
-      <WALL position="5.5;7.5" />
-      <WALL position="7.5;7.5" />
-      <WALL position="0;0" />
-      <WALL position="1;0" />
-      <WALL position="2;0" />
-      <WALL position="3;0" />
-      <WALL position="4;0" />
-      <WALL position="5;0" />
-      <WALL position="6;0" />
-      <WALL position="7;0" />
-      <WALL position="8;0" />
-      <WALL position="9;0" />
-      <WALL position="10;0" />
-      <WALL position="11;0" />
-      <WALL position="12;0" />
-      <WALL position="13;0" />
-      <WALL position="14;0" />
-      <WALL position="15;0" />
-      <WALL position="0;11" />
-      <WALL position="1;11" />
-      <WALL position="2;11" />
-      <WALL position="3;11" />
-      <WALL position="4;11" />
-      <WALL position="5;11" />
-      <WALL position="6;11" />
-      <WALL position="7;11" />
-      <WALL position="8;11" />
-      <WALL position="9;11" />
-      <WALL position="10;11" />
-      <WALL position="11;11" />
-      <WALL position="12;11" />
-      <WALL position="13;11" />
-      <WALL position="14;11" />
-      <WALL position="15;11" />
+      <!-- <WALL position="5.5;7.5" dimension="1;1"/>
+      <WALL position="7.5;7.5" dimension="1;1"/> -->
 
-      <WALL position="2;7" />  <WALL position="2;4" />
-      <WALL position="1;7" />  <WALL position="1;4" />
-      <WALL position="3.5;7" />  <WALL position="3.5;4" />
-      <WALL position="6;7" /> <WALL position="6;4" />
-      <WALL position="7;7" /> <WALL position="7;4" />
-      <WALL position="14;7" /> <WALL position="13;7" /><WALL position="11.5;7" />
-      <WALL position="13;4" /><WALL position="11.5;4" />
+      <WALL position="0;0" dimension="15;1"/>
+      <WALL position="0;11" dimension="16;1"/>
+      <WALL position="0;0" dimension="1;11"/>
+      <WALL position="15;0" dimension="1;11"/>
+
+
+
+      <WALL dimension="2;1" position="1;7" />  <WALL dimension="2;1" position="1;4" />
+      <WALL dimension="1;1" position="3.5;7" />  <WALL dimension="1;1" position="3.5;4" />
+      <WALL dimension="2;1" position="6;7" /> <WALL dimension="2;1" position="6;4" />
+      <!-- <WALL dimension="1;1" position="7;7" /> <WALL dimension="1;1" position="7;4" /> -->
+      <WALL dimension="2;1" position="13;7" /><WALL dimension="1;1" position="11.5;7" />
+      <WALL dimension="2;1" position="13;4" /><WALL dimension="1;1" position="11.5;4" />
     </WALLS>
   </MAP>
   <CHARACTERS>

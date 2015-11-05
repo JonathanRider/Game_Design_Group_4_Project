@@ -19,7 +19,7 @@ public:
   void moveTo(sf::Vector2f xy);
 
 
-private:
+protected:
   sf::FloatRect *boundingBox;
   int slideDirection;  //-1:y, 0 none, 1:x. Used to prevent sticking on walls when sliding along them
 

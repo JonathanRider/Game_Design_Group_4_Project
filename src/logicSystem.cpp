@@ -435,7 +435,6 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
   }
 
 
-  //add in initial angle point
 
 
   //grab all of the visionBlocking Points
@@ -444,10 +443,115 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if((*iterator)->hasComponent(BVISION)){
       BlockVisionComponent *bc = (BlockVisionComponent*)(*iterator)->getComponent(BVISION);
-      this->addAnglePoints(e, result,  bc->getTopLeft(), true, true); // top left
-      this->addAnglePoints(e, result,  bc->getTopRight(), true, false); //top right
-      this->addAnglePoints(e, result,  bc->getBottomLeft(), false, true); //bottom left
-      this->addAnglePoints(e, result,  bc->getBottomRight(), false, false); //bottom right
+      bool tl = this->addAnglePoints(e, result,  bc->getTopLeft(), true, true); // top left
+      bool tr = this->addAnglePoints(e, result,  bc->getTopRight(), true, false); //top right
+      bool bl = this->addAnglePoints(e, result,  bc->getBottomLeft(), false, true); //bottom left
+      bool br = this->addAnglePoints(e, result,  bc->getBottomRight(), false, false); //bottom right
+
+      if(!tr){
+        //find the point it intersects the wall on the top
+        if(e->getXY().y < bc->getTopRight().y){
+
+          sf::Vector2f point = sf::Vector2f(bc->getTopRight().x, bc->getTopRight().y);
+          //use pythagorus
+          float triY = e->getXY().y - point.y;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triY*triY));
+          point = sf::Vector2f(e->getXY().x + (distAlongLine-0.01), point.y);
+
+          if(point.x < bc->getTopRight().x){
+            this->addAnglePoints(e, result,  point, true, false);
+          }
+        }
+        if(e->getXY().x > bc->getTopRight().x){
+
+          //find the point it intersects on the side
+          sf::Vector2f point = sf::Vector2f(bc->getTopRight().x, bc->getBottomRight().y);
+          //use pythagorus
+          float triX = e->getXY().x - point.x;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
+          point = sf::Vector2f(point.x, e->getXY().y -(distAlongLine-0.01));
+          if(point.y > bc->getTopRight().y){
+            this->addAnglePoints(e, result,  point, true, false);
+          }
+        }
+      }
+
+      if(!tl){
+        //find the point it intersects the wall on the top
+        if(e->getXY().y < bc->getTopLeft().y){
+
+          sf::Vector2f point = sf::Vector2f(bc->getTopLeft().x, bc->getTopLeft().y);
+          //use pythagorus
+          float triY = e->getXY().y - point.y;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triY*triY));
+          point = sf::Vector2f(e->getXY().x - (distAlongLine-0.01), point.y);
+          if(point.x > bc->getTopLeft().x){
+            this->addAnglePoints(e, result,  point, true, true);
+          }
+        }
+        if(e->getXY().x < bc->getTopLeft().x){
+          //find the point it intersects on the side
+          sf::Vector2f point = sf::Vector2f(bc->getTopLeft().x, bc->getBottomLeft().y);
+          //use pythagorus
+          float triX = e->getXY().x - point.x;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
+          point = sf::Vector2f(point.x, e->getXY().y -(distAlongLine-0.01));
+          if(point.y > bc->getTopLeft().y){
+            this->addAnglePoints(e, result,  point, true, true);
+          }
+        }
+      }
+      if(!bl){
+        //find the point it intersects the wall on the bottom
+        if(e->getXY().y > bc->getBottomLeft().y){
+          sf::Vector2f point = sf::Vector2f(bc->getBottomLeft().x, bc->getBottomLeft().y);
+          //use pythagorus
+          float triY = e->getXY().y - point.y;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triY*triY));
+          point = sf::Vector2f(e->getXY().x - (distAlongLine-0.01), point.y);
+          if(point.x > bc->getBottomLeft().x){
+            this->addAnglePoints(e, result,  point, false, true);
+          }
+        }
+        if(e->getXY().x < bc->getBottomLeft().x){
+          //find the point it intersects on the side
+          sf::Vector2f point = sf::Vector2f(bc->getBottomLeft().x, bc->getBottomRight().y);
+          //use pythagorus
+          float triX = e->getXY().x - point.x;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
+          point = sf::Vector2f(point.x, e->getXY().y +(distAlongLine-0.01));
+          if(point.y < bc->getBottomLeft().y){
+            this->addAnglePoints(e, result,  point, false, true);
+          }
+        }
+      }
+      if(!br){
+        //find the point it intersects the wall on the bottom
+        if(e->getXY().y > bc->getBottomRight().y){
+          sf::Vector2f point = sf::Vector2f(bc->getBottomRight().x, bc->getBottomRight().y);
+          //use pythagorus
+          float triY = e->getXY().y - point.y;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triY*triY));
+          point = sf::Vector2f(e->getXY().x + (distAlongLine-0.01), point.y);
+          if(point.x < bc->getBottomRight().x){
+            this->addAnglePoints(e, result,  point, false, false);
+          }
+
+        }
+        if(e->getXY().x > bc->getBottomRight().x){
+          //find the point it intersects on the side
+          sf::Vector2f point = sf::Vector2f(bc->getBottomRight().x, bc->getBottomRight().y);
+          //use pythagorus
+          float triX = e->getXY().x - point.x;
+          float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
+          point = sf::Vector2f(point.x, e->getXY().y +(distAlongLine-0.01));
+          if(point.y < bc->getBottomRight().y){
+            this->addAnglePoints(e, result,  point, false, false);
+          }
+        }
+      }
+
+
     }
   }
   //sort the points based on their angle
@@ -459,10 +563,10 @@ std::list<anglePoint>* LogicSystem::sortPointsByAngle(Entity *e){
 
 
 
-void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool cornerTop, bool cornerLeft){
+bool LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool cornerTop, bool cornerLeft){
   VisionComponent *vc = (VisionComponent*)e->getComponent(VISION);
   if(this->squareDist(e->getXY(), v) > vc->getLength()*vc->getLength()){
-    return;
+    return false;
   }
 
 
@@ -475,7 +579,7 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
 
   //ray is coming from the other side of the square, so it won't be visible.
   if((cornerTop == bottom && cornerLeft == right)){
-    return;
+    return true;
   }
 
 
@@ -492,9 +596,9 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
       lowAngle+= 360;
     }
     if( !over360 && (ap.angle < lowAngle || ap.angle > highAngle)){
-      return;
+      return false;
     }else if (over360 && (ap.angle > highAngle && ap.angle < lowAngle)){
-      return;
+      return false;
     }
 
   //depending on which corner of the box that the line hits, we need to either
@@ -509,6 +613,7 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
       ap.before = true;
     }
   }else if(cornerTop && !cornerLeft){
+
     //top right set
     if(bottom && right){
       ap.after = true;
@@ -542,7 +647,7 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
   }else{
     this->addAnglePointsMidWall(e, result, v,  true);
     this->addAnglePointsMidWall(e, result, v,  false);
-    return;
+    return true;
   }
   infPoint = sf::Vector2f(e->getXY().x + vc->getLength()*cos(ap.angle*PI/180), e->getXY().y + vc->getLength()*sin(ap.angle*PI/180));
   sf::Vector2f origPoint = infPoint;
@@ -552,6 +657,9 @@ void LogicSystem::addAnglePoints(Entity *e, std::list<anglePoint>* result,  sf::
   }
   ap.point = infPoint;
   result->push_back(ap);
+
+
+  return true;
 }
 
 void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result,  sf::Vector2f v, bool horizontal){

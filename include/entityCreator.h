@@ -16,11 +16,11 @@ public:
   void create(EntityType type, sf::Vector2f xy, sf::Texture *texture);
 
   void createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, sf::Texture *texture);
+  void createPlayer(sf::Vector2f xy, sf::Texture *texture);
+  void createWall(sf::Vector2f xy, float width, float height, sf::Texture *texture);
+  void createMovingEnemy(sf::Vector2f xy, sf::Texture *texture);
 private:
 
-  void createPlayer(sf::Vector2f xy, sf::Texture *texture);
-  void createWall(sf::Vector2f xy,  sf::Texture *texture);
-  void createMovingEnemy(sf::Vector2f xy, sf::Texture *texture);
 
 
   EntityManager *em;

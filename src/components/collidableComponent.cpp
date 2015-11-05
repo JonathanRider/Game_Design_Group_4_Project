@@ -3,7 +3,7 @@
 CollidableComponent::CollidableComponent(sf::Vector2f xy, float height, float width)
 {
   this->setType(COLLIDABLE);
-  boundingBox = new sf::FloatRect(xy.x - width/2, xy.y - height/2, width, height);
+  boundingBox = new sf::FloatRect(xy.x, xy.y, width, height);
   slideDirection = 0;
 }
 
