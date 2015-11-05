@@ -4,7 +4,6 @@
 
 //need to include pretty much all components as well
 #include "entityManager.h"
-#include "components/controllableComponent.h"
 #include "components/moveableComponent.h"
 
 
@@ -15,11 +14,12 @@ public:
   InputSystem(EntityManager *m, sf::RenderWindow *w);
   ~InputSystem();
   void update(float time);
-  void handleEvent(sf::Event e);
-  void handleKeyPress(sf::Event e);
-  void handleClick(sf::Event e);
+
 
 private:
+  enum InputCandidate {STATE_SWITCHER, PLAYER, UNKNOWN};
+  void handleKeyInput(sf::Event &e, constants::Input &input, InputCandidate &candidate);
+  void handleMouseInput(sf::Event &e, constants::Input &input, InputCandidate &candidate);
   EntityManager *manager;
   sf::RenderWindow *screen;
 };

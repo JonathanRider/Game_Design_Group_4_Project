@@ -18,17 +18,7 @@ void LogicSystem::update(float time){
     std::list<Entity*>::iterator iterator;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
-      (*iterator)->hasComponent(constants::MOVEABLE);
-      if((*iterator)->hasComponent(constants::MOVEABLE)){
-        this->moveEntity((*iterator), time);
-        if((*iterator)->hasComponent(constants::ENEMY)) {
-          this->moveEnemies((*iterator));
-        }
-        if((*iterator)->hasComponent(constants::COLLIDABLE)){
-          this->resolveCollisions((*iterator));
-        }
-      }
-
+      (*iterator)->move(time);
 
       //cleanup projectiles
       if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
@@ -40,25 +30,11 @@ void LogicSystem::update(float time){
         }
       }
     }
+    resolveCollisions(manager->getPlayer());
     this->updateVisionCones(time);
   }
 }
 
-void LogicSystem::moveEntity(Entity* e, float time) {
-  MoveableComponent *mp = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
-  if(mp->getAccelerating()){
-    mp->changeVelocity(mp->getAcceleration()*time);
-  }else{
-    mp->changeVelocity(-1*mp->getDeceleration()*time);
-  }
-  float v = mp->getVelocity();
-  float d = mp->getDirection();
-  float dx = time*(v*cos(d*PI/180.0));
-  float dy = -time*(v*sin(d*PI/180.0));
-
-  sf::Vector2f newXY = sf::Vector2f(e->getXY().x + dx, e->getXY().y + dy);
-  e->setXY(newXY);
-}
 
 void LogicSystem::resolveCollisions(Entity *e){
   MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
@@ -665,14 +641,5 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
         result->push_back(ap);
       }
     }
-  }
-}
-
-void LogicSystem::moveEnemies(Entity *e) {
-  MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
-  if (e->getXY().x <= mc->getMinXPos() && e->getXY().y <= mc->getMinYPos()) {
-    mc->setDirection(mc->getDirection() + 180);
-  } else if (e->getXY().x >= mc->getMaxXPos() && e->getXY().y >= mc->getMaxYPos()) {
-    mc->setDirection(mc->getDirection() + 180);
   }
 }

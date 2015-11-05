@@ -27,7 +27,8 @@ public:
 private:
 
   void resolveCollisions(Entity* e);
-  void moveEntity(Entity* e, float time);
+
+
   void updateVisionCones(float time);
 
   sf::Vector2f interSectLineAndRects(sf::Vector2f origin, sf::Vector2f endpoint, constants::ComponentType type);
@@ -39,8 +40,6 @@ private:
   static sf::Vector2f intersectLines(sf::Vector2f a1, sf::Vector2f a2, sf::Vector2f b1, sf::Vector2f b2);
   static float squareDist(sf::Vector2f a, sf::Vector2f b);
   static float calculateAngle(sf::Vector2f a, sf::Vector2f b);
-
-  void moveEnemies(Entity *e);
 
   EntityManager* manager;
 };

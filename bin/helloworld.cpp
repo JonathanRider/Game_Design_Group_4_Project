@@ -27,7 +27,8 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
-  global()->gameEngine.gameState = constants::MENU;
+  //global()->gameEngine.gameState = constants::MENU;
+  global()->gameEngine.gameState = constants::PLAYING;
 
   EntityManager* entityM = new EntityManager();
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
@@ -48,19 +49,14 @@ int main(int argc, char** argv)
   sf::Clock inputTimer;
   sf::Clock logicTimer;
   // start main loop
-  while(App.isOpen())
+
+  while(global()->gameEngine.gameState != constants::CLOSING)
   {
     // process events
-    sf::Event Event;
-    while(App.pollEvent(Event))
-    {
 
-      // Exit
-      if(Event.type == sf::Event::Closed)
-        App.close();
 
       //handle one time key presses
-      if (Event.type == sf::Event::KeyPressed){
+/*      if (Event.type == sf::Event::KeyPressed){
         inputS->handleKeyPress(Event);
       }
 
@@ -79,8 +75,7 @@ int main(int argc, char** argv)
         }
         inputS->handleClick(Event);
       }
-
-    }
+*/
 
     // clear screen and fill with blue
     App.clear(sf::Color::Blue);
@@ -116,7 +111,7 @@ int main(int argc, char** argv)
     // display
     App.display();
   }
-
+  App.close();
   // Done.
   return 0;
 }

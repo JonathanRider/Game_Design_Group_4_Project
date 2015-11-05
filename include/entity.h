@@ -17,9 +17,13 @@ public:
   void removeComponent(constants::ComponentType type); //eventually enum
   void removeAllComponents();
   Component* getComponent(constants::ComponentType type);
+  bool getComponent(constants::ComponentType type, Component * &component); //safer implementation of Component* getComponent();
 
   void setXY(sf::Vector2f Newxy);
   sf::Vector2f getXY(){return xy;}
+
+  void move(float time);
+  void receiveInput(constants::Input input);
 
 private:
   std::map<constants::ComponentType, Component*> componentMap;

@@ -44,14 +44,12 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   ///////////////////////////////////////////////////////////
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
-  ControllableComponent *conc = new ControllableComponent();
-  MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 300.0); //accel, decel, max speed
+  MoveableComponent *mc = new MoveableComponent(10000.0,80000.0, 300.0); //accel, decel, max speed
   CollidableComponent *colc = new CollidableComponent(e->getXY(), 50.0, 50.0);
 
 
 
   e->addComponent(gc);
-  e->addComponent(conc);
   e->addComponent(mc);
   e->addComponent(colc);
 
