@@ -27,24 +27,24 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
-  //global()->gameEngine.gameState = constants::MENU;
-  global()->gameEngine.gameState = constants::PLAYING;
+  global()->gameEngine.gameState = constants::MENU;
+  //global()->gameEngine.gameState = constants::PLAYING;
+  global()->gameEngine.mainMenuState = 0;
+  global()->gameEngine.levelMenuState = 0;
+  global()->gameEngine.optionsMenuState = 0;
 
   EntityManager* entityM = new EntityManager();
+  LevelCreator *lCreator = new LevelCreator(entityM);
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
   LogicSystem* logicS = new LogicSystem(entityM);
   global()->gameEngine.logicSystem = logicS;
-  InputSystem* inputS = new InputSystem(entityM, &App);
+  InputSystem* inputS = new InputSystem(entityM, &App, lCreator);;
   EntityCreator* eCreator = new EntityCreator(entityM);
   global()->gameEngine.entityCreator = eCreator;
-  LevelCreator *lCreator = new LevelCreator(entityM);
-  std::string fileName = "resources/levels/level_01.xml";
-  lCreator->loadLevelFile(fileName);
-  lCreator->createLevel();
 
-  sf::Texture *tex_bullet = new sf::Texture();
-  tex_bullet->loadFromFile("resources/bullet.png");
-
+//  std::string fileName = "resources/levels/level_01.xml";
+//  lCreator->loadLevelFile(fileName);
+//  lCreator->createLevel();
   float secondCounter = 0;
 
   sf::Clock graphicsTimer;
@@ -64,11 +64,12 @@ int main(int argc, char** argv)
     }
 
     inputS->update(dTime);
+
     dTime = logicTimer.restart().asSeconds();
     logicS->update(dTime);
+
     dTime = graphicsTimer.restart().asSeconds();
     graphicsS->update(dTime);
-    //App.draw(shape);
 
     // display
     App.display();

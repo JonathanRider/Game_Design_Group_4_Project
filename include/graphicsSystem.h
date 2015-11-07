@@ -15,6 +15,8 @@ public:
 private:
   sf::RenderWindow* screen;
   EntityManager* manager;
+  std::vector<sf::Sprite*> mainMenuSprites;
+  std::vector<sf::Sprite*> levelMenuSprites;
 };
 
 #endif

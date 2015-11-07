@@ -12,6 +12,9 @@ namespace global_internal{ //this namespace is not supposed to use outside the f
       LogicSystem *logicSystem;
       EntityCreator *entityCreator;
       constants::GameState gameState;
+      int mainMenuState;
+      int levelMenuState;
+      int optionsMenuState;
   };
 }
 
