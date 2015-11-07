@@ -59,13 +59,14 @@ void InputSystem::update(float time){
             break;
           case constants::INPUT_CONFIRM:
           std::cout << "confirm";
-            switch(global()->gameEngine.levelMenuState) {
+            switch(global()->gameEngine.mainMenuState) {
               case 0: //first menu option
                 std::cout << "levelMenu";
                 global()->gameEngine.gameState = constants::LEVELMENU;
                 break;
               case 1:  //second menu option
                 global()->gameEngine.gameState = constants::OPTIONSMENU;
+                std::cout << "options";
                 break;
               default:
                 break;
