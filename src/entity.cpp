@@ -65,14 +65,13 @@ void Entity::move(float time){
 
     sf::Vector2f newXY = sf::Vector2f(this->getXY().x + dx, this->getXY().y + dy);
     this->setXY(newXY);
-    mp->setAccelerating(false);
+
     if (this->getComponent(constants::ENEMY, c)) {
       if (this->getXY().x <= mp->getMinXPos() && this->getXY().y <= mp->getMinYPos()) {
         mp->setDirection(mp->getDirection() + 180);
       } else if (this->getXY().x >= mp->getMaxXPos() && this->getXY().y >= mp->getMaxYPos()) {
         mp->setDirection(mp->getDirection() + 180);
       }
-      mp->setAccelerating(true);
     }
   }
 }
@@ -116,6 +115,7 @@ void Entity::receiveInput(constants::Input input){
         mp->setAccelerating(true);
       break;
       default:
+        mp->setAccelerating(false);
       break;
     }
 

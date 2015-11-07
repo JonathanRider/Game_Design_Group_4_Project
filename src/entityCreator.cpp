@@ -3,6 +3,16 @@
 
 #include <iostream>
 
+EntityCreator::EntityCreator(EntityManager *em):em(em){
+  for(int i=0; i < NUM_OF_TEXTURES; i++) {
+    texture_table.push_back(new sf::Texture());
+  }
+  texture_table[WALL]->loadFromFile("resources/wall.png");
+  texture_table[PLAYER]->loadFromFile("resources/test.png");
+  texture_table[ENEMY]->loadFromFile("resources/dinasaur.png");
+  texture_table[BULLET]->loadFromFile("resources/bullet.png");
+}
+
 EntityCreator::~EntityCreator() {
   // delete em;
   //
@@ -14,20 +24,20 @@ EntityCreator::~EntityCreator() {
   // delete conc;
 }
 
-void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, sf::Texture *texture) {
+void EntityCreator::create(constants::EntityType type, sf::Vector2f xy) {
   if (type == constants::PLAYER) {
-    this->createPlayer(xy, texture);
+    this->createPlayer(xy);
   } else if (type == constants::WALL) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
-    this->createMovingEnemy(xy, texture);
+    this->createMovingEnemy(xy);
   }
 
 
   //not valid entityType
 }
 
-void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
+void EntityCreator::createPlayer(sf::Vector2f xy) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
@@ -39,7 +49,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   // }
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture);
+  sprite->setTexture(* texture_table[PLAYER]);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
 
@@ -58,7 +68,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, sf::Texture *texture) {
   em->setPlayer(e);
 }
 
-void EntityCreator::createWall(sf::Vector2f xy, float width, float height, sf::Texture *texture) {
+void EntityCreator::createWall(sf::Vector2f xy, float width, float height) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   //////////////////this should probably be moved somewhere else
@@ -70,8 +80,8 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height, sf::T
   // }
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  texture->setRepeated(true);
-  sprite->setTexture(*texture);
+  texture_table[WALL]->setRepeated(true);
+  sprite->setTexture(* texture_table[WALL]);
   sprite->setOrigin(25, 25);
   // sprite->getTexture()->setRepeated(true);
   sf::IntRect ir;
@@ -95,7 +105,7 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height, sf::T
 
 }
 
-void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
@@ -107,7 +117,7 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
   // }
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture);
+  sprite->setTexture(*texture_table[ENEMY]);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
   Component *ec = new Component(constants::ENEMY);
@@ -142,12 +152,12 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, sf::Texture *texture) {
 
 }
 
-void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, sf::Texture *texture){
+void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float velocity, float drag){
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture);
+  sprite->setTexture(*texture_table[BULLET]);
   sprite->setOrigin(5,5);
 
 

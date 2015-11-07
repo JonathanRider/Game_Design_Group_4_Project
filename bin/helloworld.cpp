@@ -33,8 +33,10 @@ int main(int argc, char** argv)
   EntityManager* entityM = new EntityManager();
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
   LogicSystem* logicS = new LogicSystem(entityM);
+  global()->gameEngine.logicSystem = logicS;
   InputSystem* inputS = new InputSystem(entityM, &App);
   EntityCreator* eCreator = new EntityCreator(entityM);
+  global()->gameEngine.entityCreator = eCreator;
   LevelCreator *lCreator = new LevelCreator(entityM);
   std::string fileName = "resources/levels/level_01.xml";
   lCreator->loadLevelFile(fileName);
@@ -52,27 +54,6 @@ int main(int argc, char** argv)
 
   while(global()->gameEngine.gameState != constants::CLOSING)
   {
-    // process events
-
-
-      //handle one time key presses
-/*      if (Event.type == sf::Event::KeyPressed){
-        inputS->handleKeyPress(Event);
-      }
-
-      //remove this once input system can handle it
-      if (Event.type == sf::Event::MouseButtonPressed){
-        if (Event.mouseButton.button == sf::Mouse::Left){
-          float dy = 300 - Event.mouseButton.y;
-          float dx = 400 - Event.mouseButton.x;
-          float direction =  180 - atan2(dy, dx) * 180 / PI;
-          eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
-        }
-        inputS->handleClick(Event);
-      }
-*/
-
-    // clear screen and fill with blue
     App.clear(sf::Color::Blue);
 
     float dTime = inputTimer.restart().asSeconds();
@@ -81,17 +62,6 @@ int main(int argc, char** argv)
       secondCounter--;
       // std::cout << "fps: " << 1/dTime << std::endl;
     }
-
-
-    //uncomment for rapid fire
-    //
-    // if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-    //   float dy = 300 - sf::Mouse::getPosition(App).y;
-    //   float dx = 400 - sf::Mouse::getPosition(App).x;
-    //   float direction =  180 - atan2(dy, dx) * 180 / PI;
-    //   eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
-    // }
-
 
     inputS->update(dTime);
     dTime = logicTimer.restart().asSeconds();

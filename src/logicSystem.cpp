@@ -35,7 +35,23 @@ void LogicSystem::update(float time){
   }
 }
 
+void LogicSystem::receveInput(constants::Input input, void *extra_data) {
+  switch(input) {
+    case constants::INPUT_SHOOT :
+      {
+        sf::Vector2f position = *(sf::Vector2f*)extra_data;
+      //create bullets
+      float dx = 400 - position.x;
+      float dy = 300 - position.y;
+      float direction =  180 - atan2(dy, dx) * 180 / PI;
 
+      global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, 1000, 500);
+      }
+      return;
+    default:
+      return;
+  }
+}
 void LogicSystem::resolveCollisions(Entity *e){
   MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
   if(mc->getVelocity() == 0){

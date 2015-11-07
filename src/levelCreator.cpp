@@ -92,7 +92,7 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     XMLNode xWall = xWalls.getChildNode(i);
     getPosition(xWall.getAttribute("position"), x, y);
     getDimensions(xWall.getAttribute("dimension"), width, height);
-    eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, wallTex);
+    eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale);
     // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
 
@@ -125,16 +125,16 @@ void LevelCreator::createLevel() {
     levelCreator_internal::WorldComponent *c = creation_list[i];
     switch(c->type) {
       case constants::WALL:
-        eCreator.create(constants::WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), wallTex);
+        eCreator.create(constants::WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
         break;
       case constants::PLAYER:
-        eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_player);
+        eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
         break;
       case constants::ENEMY_MOVING:
-        eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
+        eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
         break;
       case constants::ENEMY_STATIC:
-        eCreator.create(constants::ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), tex_enemy);
+        eCreator.create(constants::ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
         break;
       default:
         //do nothing

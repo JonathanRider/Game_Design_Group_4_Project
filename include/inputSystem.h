@@ -18,6 +18,15 @@ public:
 
 private:
   enum InputCandidate {STATE_SWITCHER, PLAYER, UNKNOWN};
+
+
+
+  constants::Input interprertForPlayer(unsigned long input);
+  constants::Input interpretForLogicSystem(unsigned long input);
+  unsigned long getKeyInput();
+  unsigned long getMouseInput(sf::Vector2f &position);
+
+
   void handleKeyInput(sf::Event &e, constants::Input &input, InputCandidate &candidate);
   void handleMouseInput(sf::Event &e, constants::Input &input, InputCandidate &candidate);
   EntityManager *manager;
