@@ -4,8 +4,8 @@
 #include <iostream>
 
 
-InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w)
-  :manager(m), screen(w){}
+InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
+  :manager(m), screen(w), lCreator(lc){}
 
 void InputSystem::update(float time){
 
@@ -39,9 +39,106 @@ void InputSystem::update(float time){
     case STATE_SWITCHER:
       //
       break;
-     default:
-      //do nothing
+    case MAINMENU:
+        switch (input) {
+          case constants::INPUT_UP:
+            std::cout << "up";
+            if (global()->gameEngine.mainMenuState <= 0) {
+              global()->gameEngine.mainMenuState = 1; //max number of options
+            } else {
+              global()->gameEngine.mainMenuState -= 1;
+            }
+            break;
+          case constants::INPUT_DOWN:
+          std::cout << "down";
+            if (global()->gameEngine.mainMenuState >= 1) {//max number of options
+              global()->gameEngine.mainMenuState = 0;
+            } else {
+              global()->gameEngine.mainMenuState += 1;
+            }
+            break;
+          case constants::INPUT_CONFIRM:
+          std::cout << "confirm";
+            switch(global()->gameEngine.levelMenuState) {
+              case 0: //first menu option
+                std::cout << "levelMenu";
+                global()->gameEngine.gameState = constants::LEVELMENU;
+                break;
+              case 1:  //second menu option
+                global()->gameEngine.gameState = constants::OPTIONSMENU;
+                break;
+              default:
+                break;
+            }
+            break;
+          default:
+            break;
+        }
       break;
+    case LEVELMENU:
+      switch (input) {
+        case constants::INPUT_UP:
+          if (global()->gameEngine.levelMenuState <= 0) {
+            global()->gameEngine.levelMenuState = 1; //max number of options
+          } else {
+            global()->gameEngine.levelMenuState -= 1;
+          }
+          break;
+        case constants::INPUT_DOWN:
+          if (global()->gameEngine.levelMenuState >= 1) {//max number of options
+            global()->gameEngine.levelMenuState = 0;
+          } else {
+            global()->gameEngine.levelMenuState += 1;
+          }
+          break;
+        case constants::INPUT_CONFIRM:
+          {
+          std::cout << "confirm";
+          std::string fileName = ""; //change based on what level is selected
+          switch(global()->gameEngine.levelMenuState) {
+            case 0: //level 0
+              fileName = "resources/levels/level_01.xml";
+              break;
+            case 1:  //level 1
+              fileName = "resources/levels/level_01.xml";
+              break;
+            default:
+              fileName = "resources/levels/level_01.xml";
+              break;
+          }
+          lCreator->loadLevelFile(fileName);
+          lCreator->createLevel();
+          global()->gameEngine.gameState = constants::PLAYING;
+        } //end of confirm case
+      default:
+        break;
+      }
+    case OPTIONSMENU:
+      switch (input) {
+        case constants::INPUT_UP:
+          if (global()->gameEngine.optionsMenuState <= 0) {
+            global()->gameEngine.optionsMenuState = 1; //max number of options
+          } else {
+            global()->gameEngine.optionsMenuState -= 1;
+          }
+          break;
+        case constants::INPUT_DOWN:
+          if (global()->gameEngine.optionsMenuState >= 1) {//max number of options
+            global()->gameEngine.optionsMenuState = 0;
+          } else {
+            global()->gameEngine.optionsMenuState += 1;
+          }
+          break;
+        case constants::INPUT_CONFIRM:
+          //do something
+          break;
+        default:
+          break;
+      }
+      break;
+    default:
+      //do nothing
+    break;
    }
 
 
@@ -80,20 +177,60 @@ void InputSystem::handleKeyInput(sf::Event &e,  constants::Input &input, InputCa
   if (global()->gameEngine.gameState == constants::MENU) {
     switch(e.key.code){
       case sf::Keyboard::Up:
-        input = constants::INPUT_PREVITEM;
-        //candidate = ?;
+        input = constants::INPUT_UP;
+        candidate = MAINMENU;
         return;
       case sf::Keyboard::Down:
-        input = constants::INPUT_NEXTITEM;
-        //candidate = ?;
+        input = constants::INPUT_DOWN;
+        candidate = MAINMENU;
         return;
       case sf::Keyboard::Return:
         input = constants::INPUT_CONFIRM;
-        //candidate = ?;
+        candidate = MAINMENU;
         return;
       default:
         input = constants::INPUT_UNKNOWN;
         candidate = UNKNOWN;
+        return;
+    }
+  }
+  else if (global()->gameEngine.gameState == constants::LEVELMENU) {
+    switch(e.key.code){
+      case sf::Keyboard::Up:
+        input = constants::INPUT_UP;
+        candidate = LEVELMENU;
+        return;
+      case sf::Keyboard::Down:
+        input = constants::INPUT_DOWN;
+        candidate = LEVELMENU;
+        return;
+      case sf::Keyboard::Return:
+        input = constants::INPUT_CONFIRM;
+        candidate = LEVELMENU;
+        return;
+      default:
+        input = constants::INPUT_UNKNOWN;
+        candidate = LEVELMENU;
+        return;
+    }
+  }
+  else if (global()->gameEngine.gameState == constants::OPTIONSMENU) {
+    switch(e.key.code){
+      case sf::Keyboard::Up:
+        input = constants::INPUT_UP;
+        candidate = OPTIONSMENU;
+        return;
+      case sf::Keyboard::Down:
+        input = constants::INPUT_DOWN;
+        candidate = OPTIONSMENU;
+        return;
+      case sf::Keyboard::Return:
+        input = constants::INPUT_CONFIRM;
+        candidate = OPTIONSMENU;
+        return;
+      default:
+        input = constants::INPUT_UNKNOWN;
+        candidate = OPTIONSMENU;
         return;
     }
   }

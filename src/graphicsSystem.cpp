@@ -5,6 +5,32 @@
 GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   screen = w;
   manager = m;
+
+  //Menu stuff will be moved eventually
+  sf::Texture *main_menu0 = new sf::Texture();
+  main_menu0->loadFromFile("resources/MainMenu0.png");
+  sf::Sprite *main_menu0_sprite = new sf::Sprite;
+  main_menu0_sprite->setTexture(*main_menu0);
+  mainMenuSprites.push_back(main_menu0_sprite);
+
+  sf::Texture *main_menu1 = new sf::Texture();
+  main_menu1->loadFromFile("resources/MainMenu1.png");
+  sf::Sprite *main_menu1_sprite = new sf::Sprite;
+  main_menu1_sprite->setTexture(*main_menu1);
+  mainMenuSprites.push_back(main_menu1_sprite);
+
+  sf::Texture *level_menu0 = new sf::Texture();
+  level_menu0->loadFromFile("resources/LevelMenu0.png");
+  sf::Sprite *level_menu0_sprite = new sf::Sprite;
+  level_menu0_sprite->setTexture(*level_menu0);
+  levelMenuSprites.push_back(level_menu0_sprite);
+
+  sf::Texture *level_menu1 = new sf::Texture();
+  level_menu1->loadFromFile("resources/LevelMenu1.png");
+  sf::Sprite *level_menu1_sprite = new sf::Sprite;
+  level_menu1_sprite->setTexture(*level_menu1);
+  levelMenuSprites.push_back(level_menu1_sprite);
+
 }
 
 
@@ -17,6 +43,11 @@ void GraphicsSystem::update(float time){
     // sf::Sprite *menuSprite = new sf::Sprite();
     // menuSprite->setTexture(*menuTex);
     // screen->draw(*menuSprite);
+    screen->draw(*mainMenuSprites[global()->gameEngine.mainMenuState]);
+
+  } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
+
+    screen->draw(*levelMenuSprites[global()->gameEngine.levelMenuState]);
 
   } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
     sf::View view;
