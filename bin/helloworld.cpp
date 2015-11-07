@@ -27,18 +27,21 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
-  //global()->gameEngine.gameState = constants::MENU;
-  global()->gameEngine.gameState = constants::PLAYING;
+  global()->gameEngine.gameState = constants::MENU;
+  //global()->gameEngine.gameState = constants::PLAYING;
+  global()->gameEngine.mainMenuState = 0;
+  global()->gameEngine.levelMenuState = 0;
+  global()->gameEngine.optionsMenuState = 0;
 
   EntityManager* entityM = new EntityManager();
+  LevelCreator *lCreator = new LevelCreator(entityM);
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
   LogicSystem* logicS = new LogicSystem(entityM);
-  InputSystem* inputS = new InputSystem(entityM, &App);
+  InputSystem* inputS = new InputSystem(entityM, &App, lCreator);
   EntityCreator* eCreator = new EntityCreator(entityM);
-  LevelCreator *lCreator = new LevelCreator(entityM);
-  std::string fileName = "resources/levels/level_01.xml";
-  lCreator->loadLevelFile(fileName);
-  lCreator->createLevel();
+  //std::string fileName = "resources/levels/level_01.xml";
+  //lCreator->loadLevelFile(fileName);
+  //lCreator->createLevel();
 
   sf::Texture *tex_bullet = new sf::Texture();
   tex_bullet->loadFromFile("resources/bullet.png");
@@ -59,19 +62,13 @@ int main(int argc, char** argv)
 /*      if (Event.type == sf::Event::KeyPressed){
         inputS->handleKeyPress(Event);
       }
-
       //remove this once input system can handle it
       if (Event.type == sf::Event::MouseButtonPressed){
         if (Event.mouseButton.button == sf::Mouse::Left){
-
-
           float dy = entityM->getPlayer()->getXY().y - Event.mouseButton.y;
           float dx = entityM->getPlayer()->getXY().x - Event.mouseButton.x;
           float direction =  180 - atan2(dy, dx) * 180 / PI;
           eCreator->createGrenade(entityM->getPlayer()->getXY(), direction, 1000, 500, tex_bullet);
-
-
-
         }
         inputS->handleClick(Event);
       }
