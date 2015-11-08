@@ -7,7 +7,6 @@
 #include "components/moveableComponent.h"
 #include "components/collidableComponent.h"
 #include "components/blockVisionComponent.h"
-#include "components/blockMovementComponent.h"
 #include "components/visionComponent.h"
 
 

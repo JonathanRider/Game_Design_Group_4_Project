@@ -16,10 +16,10 @@ BlockVisionComponent::BlockVisionComponent(sf::Vector2f xy, float h, float w)
 
 void BlockVisionComponent::moveTo(sf::Vector2f xy){
 
-  this->setTopLeft(sf::Vector2f(xy.x - WALLSIZE/2, xy.y - WALLSIZE/2));
-  this->setTopRight(sf::Vector2f(xy.x + width-WALLSIZE/2, xy.y - WALLSIZE/2));
-  this->setBottomLeft(sf::Vector2f(xy.x - WALLSIZE/2, xy.y + height-WALLSIZE/2));
-  this->setBottomRight(sf::Vector2f(xy.x + width - WALLSIZE/2, xy.y + height -WALLSIZE/2));
+  this->setTopLeft(sf::Vector2f(xy.x - this->width/2, xy.y - this->height/2));
+  this->setTopRight(sf::Vector2f(xy.x + this->width/2, xy.y - this->height/2));
+  this->setBottomLeft(sf::Vector2f(xy.x - this->width/2, xy.y + this->height/2));
+  this->setBottomRight(sf::Vector2f(xy.x + this->width/2, xy.y + this->height/2));
 }
 
 void BlockVisionComponent::setTopLeft(sf::Vector2f tl){

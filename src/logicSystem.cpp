@@ -37,7 +37,7 @@ void LogicSystem::update(float time){
   }
 }
 
-void LogicSystem::receveInput(constants::Input input, void *extra_data) {
+void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
   switch(input) {
     case constants::INPUT_SHOOT :
       {
@@ -46,7 +46,7 @@ void LogicSystem::receveInput(constants::Input input, void *extra_data) {
       float dx = 400 - position.x;
       float dy = 300 - position.y;
       float direction =  180 - atan2(dy, dx) * 180 / PI;
-
+      
       global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, 1000, 500);
       }
       return;
@@ -61,15 +61,14 @@ void LogicSystem::resolveCollisions(Entity *e){
   }
 
   CollidableComponent *occ = (CollidableComponent*)e->getComponent(constants::COLLIDABLE);
-  sf::FloatRect *origBB = occ->getBoundingBox();
+  sf::FloatRect *origBB = e->getBoundingBox();
 
   std::list<Entity*>* eList = manager->getEntityList();
   std::list<Entity*>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(e->getID() != (*iterator)->getID()){
       if((*iterator)->hasComponent(constants::BMOVEMENT)){
-        BlockMovementComponent *cc = (BlockMovementComponent*)(*iterator)->getComponent(constants::BMOVEMENT);
-        sf::FloatRect *otherBB = cc->getBoundingBox();
+        sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
         if(origBB->intersects(*otherBB)){
           MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
           float reverseDirection = fmod((mc->getDirection() + 180),360);
@@ -145,6 +144,25 @@ void LogicSystem::resolveCollisions(Entity *e){
         }else{
           occ->setSlideDirection(0);//not sliding
         }
+
+      }
+
+      if(e->hasComponent(constants::DEADLY)){
+        if((*iterator)->hasComponent(constants::KILLABLE)){
+          sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+          if(origBB->intersects(*otherBB)){
+            delete *iterator;
+            iterator = eList->erase(iterator);
+            iterator--;
+
+            //make bulllet ready to be destroyed
+            Component *c;
+            if(e->getComponent(constants::MOVEABLE, c)){
+              MoveableComponent *mp = (MoveableComponent*)c;
+              mc->setVelocity(0);
+            }
+          }
+        }
       }
     }
   }
@@ -154,9 +172,9 @@ void LogicSystem::resolveCollisions(Entity *e){
 void LogicSystem::updateVisionCones(float time){
 
   //Let's get the player entity and its bounding box
-  Entity *player_entity = manager->getPlayer();
-  CollidableComponent * player_cp = (CollidableComponent *) player_entity->getComponent(constants::COLLIDABLE);
-  sf::FloatRect *player_box = player_cp->getBoundingBox();
+  // Entity *player_entity = manager->getPlayer();
+  // CollidableComponent * player_cp = (CollidableComponent *) player_entity->getComponent(constants::COLLIDABLE);
+  sf::FloatRect *player_box = manager->getPlayer()->getBoundingBox();
 
   std::list<Entity*>* eList = manager->getEntityList();
   std::list<Entity*>::iterator iterator;

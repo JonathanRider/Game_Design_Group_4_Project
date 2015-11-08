@@ -42,7 +42,7 @@ void InputSystem::update(float time){
   //feed the input to every possible parties...
   if (global()->gameEngine.gameState == constants::PLAYING){
     manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
-    global()->gameEngine.logicSystem->receveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
+    global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
   }
   handleMenu(interpretForMenu(input_container));
 }

@@ -24,11 +24,15 @@ public:
 
   void move(float time);
   void receiveInput(constants::Input input);
+  
+  sf::FloatRect* getBoundingBox(){return boundingBox;}
+  void setBoundingBox(sf::FloatRect *bb){delete boundingBox; boundingBox = bb;}
 
 private:
   std::map<constants::ComponentType, Component*> componentMap;
   int id;
   sf::Vector2f xy;
+  sf::FloatRect *boundingBox;
 
 };
 

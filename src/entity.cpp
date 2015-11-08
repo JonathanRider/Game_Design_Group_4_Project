@@ -1,13 +1,16 @@
 #include "entity.h"
 #include <cmath>
 #include <iostream>
-Entity::Entity(int i) :id(i){}
+Entity::Entity(int i) :id(i){
+  boundingBox = new sf::FloatRect();
+}
 
 Entity::~Entity(){
   std::map<constants::ComponentType,Component*>::iterator it;
   for( it = componentMap.begin(); it != componentMap.end(); it++) {
       delete it->second;
   }
+  delete boundingBox;
 }
 
 void Entity::addComponent(Component* c){
@@ -40,14 +43,18 @@ bool Entity::getComponent(constants::ComponentType type, Component * &component)
 void Entity::setXY(sf::Vector2f newXY){
   xy.x = newXY.x;
   xy.y = newXY.y;
-  if(this->hasComponent(constants::COLLIDABLE)){
-    CollidableComponent *cc = (CollidableComponent*)this->getComponent(constants::COLLIDABLE);
-    cc->moveTo(xy);
-  }
+
+
   if(this->hasComponent(constants::BVISION)){
     BlockVisionComponent *bsc = (BlockVisionComponent*)this->getComponent(constants::BVISION);
     bsc->moveTo(xy);
   }
+
+
+  boundingBox->top = xy.y - boundingBox->height/2;
+  boundingBox->left = xy.x - boundingBox->width/2;
+
+
 }
 void Entity::move(float time){
   Component *c;
@@ -74,6 +81,8 @@ void Entity::move(float time){
       }
     }
   }
+
+
 }
 
 void Entity::receiveInput(constants::Input input){

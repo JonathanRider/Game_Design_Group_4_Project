@@ -22,7 +22,7 @@ public:
   ~LogicSystem();
   void update(float time);
 
-  void receveInput(constants::Input input, void *extra_data); 
+  void receiveInput(constants::Input input, void *extra_data); 
 
 
   constants::GameState* state;
