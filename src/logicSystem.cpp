@@ -29,8 +29,10 @@ void LogicSystem::update(float time){
           iterator--;
         }
       }
+      if((*iterator)->hasComponent(constants::COLLIDABLE) && (*iterator)->hasComponent(constants::MOVEABLE)){
+        resolveCollisions((*iterator));
+      }
     }
-    resolveCollisions(manager->getPlayer());
     this->updateVisionCones(time);
   }
 }
