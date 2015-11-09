@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 
   while(global()->gameEngine.gameState != constants::CLOSING)
   {
-    App.clear(sf::Color::Black);
+    App.clear(sf::Color::Blue);
 
     float dTime = inputTimer.restart().asSeconds();
     secondCounter += dTime;

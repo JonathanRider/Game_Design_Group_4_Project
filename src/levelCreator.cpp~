@@ -68,7 +68,7 @@ LevelCreator::LevelCreator(EntityManager *m)
   {
     wallTex->loadFromFile("resources/wall.png");
     tex_player->loadFromFile("resources/roy.png");
-    tex_enemy->loadFromFile("resources/soldier.png");
+    tex_enemy->loadFromFile("resources/dinasaur.png");
   }
 
 LevelCreator::~LevelCreator(){

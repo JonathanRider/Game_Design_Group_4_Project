@@ -9,7 +9,7 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   }
   texture_table[WALL]->loadFromFile("resources/wall.png");
   texture_table[PLAYER]->loadFromFile("resources/roy.png");
-  texture_table[ENEMY]->loadFromFile("resources/soldier.png");
+  texture_table[ENEMY]->loadFromFile("resources/dinasaur.png");
   texture_table[BULLET]->loadFromFile("resources/bullet.png");
 }
 
