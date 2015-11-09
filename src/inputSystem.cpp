@@ -18,13 +18,13 @@
 #define KEY_DOWN_PRESSED 1<<12
 
 InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
-  :manager(m), screen(w), lCreator(lc){}
+  :manager(m), screen(w), lCreator(lc){  }
 
 void InputSystem::update(float time){
-
   sf::Event event;
   //get the event
   screen->pollEvent(event);
+
 
   if(event.type == sf::Event::Closed ) {
     //we should shut down the game now..
@@ -35,19 +35,22 @@ void InputSystem::update(float time){
   unsigned long input_container = 0;
   sf::Vector2f mouse_position;
 
-
-  input_container |= getKeyInput();
-  input_container |= getMouseInput(mouse_position);
-
   //feed the input to every possible parties...
   if (global()->gameEngine.gameState == constants::PLAYING){
+    input_container |= getKeyInputPolling();
+    input_container |= getMouseInputPolling(mouse_position);
     manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
     global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
   }
-  handleMenu(interpretForMenu(input_container));
+
+  else {
+    input_container |= getKeyInputEvent(event);
+    handleMenu(interpretForMenu(input_container));
+  }
+
 }
 
-unsigned long InputSystem::getKeyInput() {
+unsigned long InputSystem::getKeyInputPolling() {
   unsigned long ret_val = 0;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
     ret_val |= KEY_W_PRESSED;
@@ -87,12 +90,31 @@ unsigned long InputSystem::getKeyInput() {
   }
   return ret_val;
 }
-unsigned long InputSystem::getMouseInput(sf::Vector2f &position) {
+unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
   unsigned long ret_val = 0;
   if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
     ret_val |= MOUSE_LEFT_PRESSED;
     position.x = sf::Mouse::getPosition(*screen).x;
     position.y = sf::Mouse::getPosition(*screen).y;
+  }
+  return ret_val;
+}
+unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
+  unsigned long ret_val = 0;
+  if ( event.type != sf::Event::KeyPressed ) {
+    return ret_val;
+  }
+  switch(event.key.code){
+    case sf::Keyboard::Return:
+      ret_val |= KEY_ENTER_PRESSED;
+      break;
+    case sf::Keyboard::Up:
+      ret_val |= KEY_UP_PRESSED;
+      break;
+    case sf::Keyboard::Down:
+      ret_val |= KEY_DOWN_PRESSED;
+    default:
+      break;
   }
   return ret_val;
 }

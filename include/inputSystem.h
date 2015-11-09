@@ -20,9 +20,9 @@ public:
 private:
   constants::Input interprertForPlayer(unsigned long input);
   constants::Input interpretForLogicSystem(unsigned long input);
-  unsigned long getKeyInput();
-  unsigned long getMouseInput(sf::Vector2f &position);
-
+  unsigned long getKeyInputPolling();
+  unsigned long getMouseInputPolling(sf::Vector2f &position);
+  unsigned long getKeyInputEvent(sf::Event &event);
 
   constants::Input interpretForMenu(unsigned long input);
   void handleMenu(constants::Input input);
