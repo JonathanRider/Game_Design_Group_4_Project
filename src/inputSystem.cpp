@@ -38,7 +38,7 @@ void InputSystem::update(float time){
   //feed the input to every possible parties...
   if (global()->gameEngine.gameState == constants::PLAYING){
     input_container |= getKeyInputPolling();
-    input_container |= getMouseInputPolling(mouse_position);
+    input_container |= getMouseInputEvent(event, mouse_position);
     manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
     global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
   }
@@ -118,6 +118,19 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
   }
   return ret_val;
 }
+unsigned long InputSystem::getMouseInputEvent(sf::Event &event, sf::Vector2f &position){
+  unsigned long ret_val = 0;
+  if ( event.type != sf::Event::MouseButtonPressed ) {
+    return ret_val;
+  }
+  if (event.mouseButton.button == sf::Mouse::Left){
+      ret_val |= MOUSE_LEFT_PRESSED;
+      position.x = sf::Mouse::getPosition(*screen).x;
+      position.y = sf::Mouse::getPosition(*screen).y;
+  }
+  return ret_val;
+}
+
 
 constants::Input InputSystem::interprertForPlayer(unsigned long input){
   unsigned long key_pressed = input & (KEY_A_PRESSED | KEY_W_PRESSED | KEY_S_PRESSED | KEY_D_PRESSED);

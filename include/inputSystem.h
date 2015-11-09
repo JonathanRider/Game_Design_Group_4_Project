@@ -23,6 +23,7 @@ private:
   unsigned long getKeyInputPolling();
   unsigned long getMouseInputPolling(sf::Vector2f &position);
   unsigned long getKeyInputEvent(sf::Event &event);
+  unsigned long getMouseInputEvent(sf::Event &event, sf::Vector2f &position);
 
   constants::Input interpretForMenu(unsigned long input);
   void handleMenu(constants::Input input);
