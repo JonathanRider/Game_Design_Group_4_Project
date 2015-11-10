@@ -46,3 +46,7 @@ Entity *EntityManager::findEntity(int id) {
     }
   }
 }
+
+void EntityManager::clearAll() {
+  entityList.clear();
+}

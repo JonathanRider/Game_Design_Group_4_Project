@@ -13,6 +13,7 @@ public:
   void addEntity(Entity *e);
   void removeEntity(int id);
   void removeEntity(Entity *e);
+  void clearAll();
   Entity *findEntity(int id);
   std::list<Entity *>* getEntityList();
 

@@ -7,8 +7,8 @@
 #include <unistd.h>
 
 bool print = false;
-LogicSystem::LogicSystem(EntityManager *m)
-  :manager(m){}
+LogicSystem::LogicSystem(EntityManager *m, LevelCreator *lc)
+  :manager(m), lCreator(lc){}
 
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
@@ -46,7 +46,7 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
       float dx = 400 - position.x;
       float dy = 300 - position.y;
       float direction =  180 - atan2(dy, dx) * 180 / PI;
-      
+
       global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, 1000, 500);
       }
       return;
@@ -67,8 +67,19 @@ void LogicSystem::resolveCollisions(Entity *e){
   std::list<Entity*>::iterator iterator;
   for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
     if(e->getID() != (*iterator)->getID()){
+
+      sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+      //finished level
+      if((*iterator)->hasComponent(constants::FINISH_COMP)) {
+        if(origBB->intersects(*otherBB)){
+          global()->gameEngine.gameState = constants::LEVELMENU;
+          std::cout << global()->gameEngine.gameState;
+          manager->clearAll();
+          //lCreator->clearList();
+        }
+      }
       if((*iterator)->hasComponent(constants::BMOVEMENT)){
-        sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+
         if(origBB->intersects(*otherBB)){
           MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
           float reverseDirection = fmod((mc->getDirection() + 180),360);

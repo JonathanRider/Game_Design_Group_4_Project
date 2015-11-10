@@ -46,7 +46,7 @@ void GraphicsSystem::update(float time){
     screen->draw(*mainMenuSprites[global()->gameEngine.mainMenuState]);
 
   } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
-
+    screen->setView(screen->getDefaultView()); //reset view
     screen->draw(*levelMenuSprites[global()->gameEngine.levelMenuState]);
 
   } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {

@@ -36,7 +36,7 @@ int main(int argc, char** argv)
   EntityManager* entityM = new EntityManager();
   LevelCreator *lCreator = new LevelCreator(entityM);
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
-  LogicSystem* logicS = new LogicSystem(entityM);
+  LogicSystem* logicS = new LogicSystem(entityM, lCreator);
   global()->gameEngine.logicSystem = logicS;
   InputSystem* inputS = new InputSystem(entityM, &App, lCreator);;
   EntityCreator* eCreator = new EntityCreator(entityM);

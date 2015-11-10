@@ -31,6 +31,8 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
     this->createMovingEnemy(xy);
+  } else if (type == constants::FINISH) {
+    this->createFinish(xy);
   }
 
 
@@ -181,4 +183,21 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   em->addEntity(e);
 
 
+}
+
+void EntityCreator::createFinish(sf::Vector2f xy) {
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
+  Component *fc = new Component(constants::FINISH_COMP);
+  e->addComponent(fc);
+
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture(*texture_table[WALL]);
+  sprite->setOrigin(25,25);
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+  em->addEntity(e);
+  
 }

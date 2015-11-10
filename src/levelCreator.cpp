@@ -95,6 +95,11 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale);
     // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
+  //finish
+  XMLNode xFinish = xMap.getChildNode("FINISH");
+  getPosition(xFinish.getAttribute("position"), x, y);
+  //getDimensions(xWall.getAttribute("dimension"), width, height);
+  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::FINISH, x, y));
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");
   //player
@@ -116,7 +121,7 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
       creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y));
     }
   }
-
+  
 }
 
 
@@ -129,6 +134,9 @@ void LevelCreator::createLevel() {
         break;
       case constants::PLAYER:
         eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        break;
+      case constants::FINISH:
+        eCreator.create(constants::FINISH, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
         break;
       case constants::ENEMY_MOVING:
         eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));

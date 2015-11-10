@@ -20,6 +20,7 @@ public:
   void createPlayer(sf::Vector2f xy);
   void createWall(sf::Vector2f xy, float width, float height);
   void createMovingEnemy(sf::Vector2f xy);
+  void createFinish(sf::Vector2f xy);
 private:
   enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, NUM_OF_TEXTURES};//only for texture_table
   std::vector<sf::Texture *> texture_table;

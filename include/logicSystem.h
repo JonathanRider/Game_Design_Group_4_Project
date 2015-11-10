@@ -4,6 +4,7 @@
 
 //need to include pretty much all components as well
 #include "entityManager.h"
+#include "levelCreator.h"
 
 
 struct anglePoint {
@@ -18,11 +19,11 @@ struct anglePoint {
 class LogicSystem
 {
 public:
-  LogicSystem(EntityManager *m);
+  LogicSystem(EntityManager *m, LevelCreator *lc);
   ~LogicSystem();
   void update(float time);
 
-  void receiveInput(constants::Input input, void *extra_data); 
+  void receiveInput(constants::Input input, void *extra_data);
 
 
   constants::GameState* state;
@@ -44,6 +45,7 @@ private:
   static float calculateAngle(sf::Vector2f a, sf::Vector2f b);
 
   EntityManager* manager;
+  LevelCreator* lCreator;
 };
 
 #endif

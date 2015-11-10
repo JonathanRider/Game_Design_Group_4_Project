@@ -251,6 +251,7 @@ void InputSystem::handleMenu(constants::Input input){
               }
               lCreator->loadLevelFile(fileName);
               lCreator->createLevel();
+
               global()->gameEngine.gameState = constants::PLAYING;
             } //end of confirm case
           default:
