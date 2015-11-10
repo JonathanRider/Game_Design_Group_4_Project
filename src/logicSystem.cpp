@@ -31,6 +31,9 @@ void LogicSystem::update(float time){
       }
       if((*iterator)->hasComponent(constants::COLLIDABLE) && (*iterator)->hasComponent(constants::MOVEABLE)){
         resolveCollisions((*iterator));
+        if(global()->gameEngine.gameState == constants::LEVELMENU){
+          return;
+        }
       }
     }
     this->updateVisionCones(time);
@@ -75,6 +78,7 @@ void LogicSystem::resolveCollisions(Entity *e){
           global()->gameEngine.gameState = constants::LEVELMENU;
           std::cout << global()->gameEngine.gameState;
           manager->clearAll();
+          return;
           //lCreator->clearList();
         }
       }
