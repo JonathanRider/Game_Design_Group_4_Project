@@ -62,9 +62,9 @@ void GraphicsSystem::update(float time){
     background->setRepeated(true);
     sf::Sprite *background_sprite = new sf::Sprite;
     background_sprite->setTexture(*background);
-    background_sprite->setTextureRect(sf::IntRect(0,0,800,600));
+    background_sprite->setTextureRect(sf::IntRect(0,0,10000,10000));
     background_sprite->setOrigin(25.0f, 25.0f);
-    background_sprite->setPosition(50.0f, 50.0f);
+    background_sprite->setPosition(-5000.0f, -5000.0f);
     screen->draw(*background_sprite);
 
     //iterate through entityManager and update

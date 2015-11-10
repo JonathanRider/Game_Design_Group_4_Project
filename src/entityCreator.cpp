@@ -11,6 +11,8 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   texture_table[PLAYER]->loadFromFile("resources/roy.png");
   texture_table[ENEMY]->loadFromFile("resources/soldier.png");
   texture_table[BULLET]->loadFromFile("resources/bullet.png");
+  texture_table[EXIT]->loadFromFile("resources/portal.png");
+  texture_table[BOX]->loadFromFile("resources/box.png");
 }
 
 EntityCreator::~EntityCreator() {
@@ -33,6 +35,8 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy) {
     this->createMovingEnemy(xy);
   } else if (type == constants::FINISH) {
     this->createFinish(xy);
+  }else if (type== constants::ENEMY_STATIC){
+    this->createStaticEnemy(xy);
   }
 
 
@@ -108,6 +112,30 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height) {
 
 }
 
+void EntityCreator::createBox(sf::Vector2f xy) {
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
+  //create sprite
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture(*texture_table[BOX]);
+  sprite->setOrigin(25,25);
+  ///////////////////////////////////////////////////////////
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+  Component *bmc = new Component(constants::BMOVEMENT);
+  e->addComponent(bmc);
+  BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), 50, 50);
+  e->addComponent(bsc);
+
+  Component *kc = new Component(constants::KILLABLE);
+  e->addComponent(kc);
+
+  em->addEntity(e);
+
+}
+
 void EntityCreator::createMovingEnemy(sf::Vector2f xy) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
@@ -146,6 +174,33 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy) {
   Component *kc = new Component(constants::KILLABLE);
   e->addComponent(kc);
   //e->addComponent(conc);
+
+
+
+  em->addEntity(e);
+
+}
+void EntityCreator::createStaticEnemy(sf::Vector2f xy) {
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
+  //create sprite
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture(*texture_table[ENEMY]);
+  sprite->setOrigin(25,25);
+  ///////////////////////////////////////////////////////////
+  Component *ec = new Component(constants::ENEMY);
+  e->addComponent(ec);
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+  VisionComponent *vc = new VisionComponent(e->getXY(), 100, 180, 90);
+
+  e->addComponent(vc);
+
+  Component *kc = new Component(constants::KILLABLE);
+  e->addComponent(kc);
 
 
 
@@ -193,11 +248,11 @@ void EntityCreator::createFinish(sf::Vector2f xy) {
   e->addComponent(fc);
 
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[WALL]);
+  sprite->setTexture(*texture_table[EXIT]);
   sprite->setOrigin(25,25);
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
 
   em->addEntity(e);
-  
+
 }

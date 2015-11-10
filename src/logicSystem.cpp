@@ -82,6 +82,24 @@ void LogicSystem::resolveCollisions(Entity *e){
           //lCreator->clearList();
         }
       }
+      if(e->hasComponent(constants::DEADLY)){
+        if((*iterator)->hasComponent(constants::KILLABLE)){
+          sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+          if(origBB->intersects(*otherBB)){
+            delete *iterator;
+            iterator = eList->erase(iterator);
+            iterator--;
+
+            //make bulllet ready to be destroyed
+            Component *c;
+            if(e->getComponent(constants::MOVEABLE, c)){
+              MoveableComponent *mp = (MoveableComponent*)c;
+              mc->setVelocity(0);
+            }
+            continue;
+          }
+        }
+      }
       if((*iterator)->hasComponent(constants::BMOVEMENT)){
 
         if(origBB->intersects(*otherBB)){
@@ -162,23 +180,6 @@ void LogicSystem::resolveCollisions(Entity *e){
 
       }
 
-      if(e->hasComponent(constants::DEADLY)){
-        if((*iterator)->hasComponent(constants::KILLABLE)){
-          sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
-          if(origBB->intersects(*otherBB)){
-            delete *iterator;
-            iterator = eList->erase(iterator);
-            iterator--;
-
-            //make bulllet ready to be destroyed
-            Component *c;
-            if(e->getComponent(constants::MOVEABLE, c)){
-              MoveableComponent *mp = (MoveableComponent*)c;
-              mc->setVelocity(0);
-            }
-          }
-        }
-      }
     }
   }
 }

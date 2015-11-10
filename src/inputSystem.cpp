@@ -243,7 +243,7 @@ void InputSystem::handleMenu(constants::Input input){
                   fileName = "resources/levels/level_01.xml";
                   break;
                 case 1:  //level 1
-                  fileName = "resources/levels/level_01.xml";
+                  fileName = "resources/levels/level_02.xml";
                   break;
                 default:
                   fileName = "resources/levels/level_01.xml";

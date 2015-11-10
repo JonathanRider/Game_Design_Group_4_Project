@@ -95,6 +95,17 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale);
     // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
+
+  //destroyable boxes
+  XMLNode xBoxes=xMap.getChildNode("BOXES");
+  n = xBoxes.nChildNode();
+  for (int i=0; i < n; i++) {
+    XMLNode xBox = xBoxes.getChildNode(i);
+    getPosition(xBox.getAttribute("position"), x, y);
+    eCreator.createBox(sf::Vector2f( x * scale + 25, y * scale + 25));
+    // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
+  }
+
   //finish
   XMLNode xFinish = xMap.getChildNode("FINISH");
   getPosition(xFinish.getAttribute("position"), x, y);
@@ -121,7 +132,7 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
       creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y));
     }
   }
-  
+
 }
 
 
