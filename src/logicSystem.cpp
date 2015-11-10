@@ -74,12 +74,14 @@ void LogicSystem::resolveCollisions(Entity *e){
       sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
       //finished level
       if((*iterator)->hasComponent(constants::FINISH_COMP)) {
-        if(origBB->intersects(*otherBB)){
-          global()->gameEngine.gameState = constants::LEVELMENU;
-          std::cout << global()->gameEngine.gameState;
-          manager->clearAll();
-          return;
-          //lCreator->clearList();
+        if(e->getID() == manager->getPlayer()->getID()){
+          if(origBB->intersects(*otherBB)){
+            global()->gameEngine.gameState = constants::LEVELMENU;
+            std::cout << global()->gameEngine.gameState;
+            manager->clearAll();
+            return;
+            //lCreator->clearList();
+          }
         }
       }
       if(e->hasComponent(constants::DEADLY)){
