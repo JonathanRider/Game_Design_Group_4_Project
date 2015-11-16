@@ -30,6 +30,7 @@ public:
 private:
 
   void resolveCollisions(Entity* e);
+  void resolveTimer(Entity* e);
 
 
   void updateVisionCones(float time);
@@ -43,6 +44,7 @@ private:
   static sf::Vector2f intersectLines(sf::Vector2f a1, sf::Vector2f a2, sf::Vector2f b1, sf::Vector2f b2);
   static float squareDist(sf::Vector2f a, sf::Vector2f b);
   static float calculateAngle(sf::Vector2f a, sf::Vector2f b);
+  static float calculateShootingSpeed(float distance, float deceleration);
 
   EntityManager* manager;
   LevelCreator* lCreator;

@@ -8,6 +8,7 @@
 #include "components/collidableComponent.h"
 #include "components/blockVisionComponent.h"
 #include "components/visionComponent.h"
+#include "components/timerComponent.h"
 
 
 #endif

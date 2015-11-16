@@ -13,6 +13,7 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   texture_table[BULLET]->loadFromFile("resources/bullet.png");
   texture_table[EXIT]->loadFromFile("resources/portal.png");
   texture_table[BOX]->loadFromFile("resources/box.png");
+  texture_table[SMOKE]->loadFromFile("resources/smoke.png");
 }
 
 EntityCreator::~EntityCreator() {
@@ -233,6 +234,9 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   e->addComponent(colc);
 
+  TimerComponent *tc = new TimerComponent(2, constants::TSMOKESCREEN);
+  e->addComponent(tc);
+
 
 
   em->addEntity(e);
@@ -254,5 +258,31 @@ void EntityCreator::createFinish(sf::Vector2f xy) {
   e->addComponent(gc);
 
   em->addEntity(e);
+
+}
+
+
+void EntityCreator::createSmokeScreen(sf::Vector2f xy){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+
+  float size = 80;
+
+  e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
+  sf::Sprite *sprite = new sf::Sprite();
+
+  sprite->setTexture(*texture_table[SMOKE]);
+  sprite->setOrigin(size/2, size/2);
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+  BlockVisionComponent *bsc = new BlockVisionComponent(e->getXY(), size, size);
+  e->addComponent(bsc);
+
+  TimerComponent *tc = new TimerComponent(10, constants::TNOTHING);
+  e->addComponent(tc);
+
+  em->addEntity(e);
+
 
 }

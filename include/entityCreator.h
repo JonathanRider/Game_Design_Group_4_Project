@@ -23,8 +23,9 @@ public:
   void createMovingEnemy(sf::Vector2f xy);
   void createStaticEnemy(sf::Vector2f xy);
   void createFinish(sf::Vector2f xy);
+  void createSmokeScreen(sf::Vector2f xy);
 private:
-  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, EXIT, BOX, NUM_OF_TEXTURES};//only for texture_table
+  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, EXIT, BOX, SMOKE, NUM_OF_TEXTURES};//only for texture_table
   std::vector<sf::Texture *> texture_table;
 
 

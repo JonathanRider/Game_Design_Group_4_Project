@@ -21,14 +21,30 @@ void LogicSystem::update(float time){
       (*iterator)->move(time);
 
       //cleanup projectiles
-      if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
-        MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
-        if(mc->getVelocity() == 0){
+      // if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
+      //   MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
+      //   if(mc->getVelocity() == 0){
+      //     delete *iterator;
+      //     iterator = eList->erase(iterator);
+      //     iterator--;
+      //     continue;
+      //   }
+      // }
+
+      //Timer updates
+      if((*iterator)->hasComponent(constants::TIMER)){
+        TimerComponent *tc = (TimerComponent*)(*iterator)->getComponent(constants::TIMER);
+        tc->updateTime(time);
+        if(tc->getTime() < 0){
+          this->resolveTimer((*iterator));
           delete *iterator;
           iterator = eList->erase(iterator);
           iterator--;
+          continue;
         }
       }
+
+      //movement Collission detection
       if((*iterator)->hasComponent(constants::COLLIDABLE) && (*iterator)->hasComponent(constants::MOVEABLE)){
         resolveCollisions((*iterator));
         if(global()->gameEngine.gameState == constants::LEVELMENU){
@@ -49,8 +65,8 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
       float dx = 400 - position.x;
       float dy = 300 - position.y;
       float direction =  180 - atan2(dy, dx) * 180 / PI;
-
-      global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, 1000, 500);
+      float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
+      global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
       }
       return;
     default:
@@ -186,6 +202,16 @@ void LogicSystem::resolveCollisions(Entity *e){
   }
 }
 
+void LogicSystem::resolveTimer(Entity *e){
+  Component *c;
+  if(e->getComponent(constants::TIMER, c)){
+    TimerComponent *tc = (TimerComponent*)c;
+    switch (tc->getTimerEntity()) {
+      case constants::TSMOKESCREEN: global()->gameEngine.entityCreator->createSmokeScreen(e->getXY()); break;
+      case constants::TWALL: global()->gameEngine.entityCreator->createWall(e->getXY(), 50, 50); break;
+    }
+  }
+}
 
 void LogicSystem::updateVisionCones(float time){
 
@@ -699,8 +725,6 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
   bool comingFromTop = e->getXY().y < v.y;
   bool comingFromLeft = e->getXY().x < v.x;
 
-  // std::cout << cornerTop << "  " << comingFromTop << std::endl;
-  // std::cout << cornerLeft << "  " << comingFromLeft << std::endl << std::endl;
 
   //find the 2 connecting points
   // (cornerLeft*2-1) gives 1 for true, -1 for false
@@ -760,7 +784,6 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
     }
   }else{
     if(this->squareDist(e->getXY(), point) > vc->getLength()*vc->getLength()){
-      if(print)std::cout << "test\n";
       //use pythagorus
       float triX = e->getXY().x - point.x;
       float distAlongLine = sqrt((vc->getLength()*vc->getLength() - triX*triX));
@@ -804,4 +827,8 @@ void LogicSystem::addAnglePointsMidWall(Entity *e, std::list<anglePoint>* result
       }
     }
   }
+}
+
+float LogicSystem::calculateShootingSpeed(float distance, float deceleration){
+  return sqrt(deceleration*2*distance);
 }

@@ -184,7 +184,7 @@ void InputSystem::handleMenu(constants::Input input){
     case constants::MENU:
             switch (input) {
               case constants::INPUT_UP:
-                std::cout << "up";
+                std::cout << "up" << std::endl;
                 if (global()->gameEngine.mainMenuState <= 0) {
                   global()->gameEngine.mainMenuState = 1; //max number of options
                 } else {
@@ -192,7 +192,7 @@ void InputSystem::handleMenu(constants::Input input){
                 }
                 break;
               case constants::INPUT_DOWN:
-              std::cout << "down";
+              std::cout << "down" << std::endl;
                 if (global()->gameEngine.mainMenuState >= 1) {//max number of options
                   global()->gameEngine.mainMenuState = 0;
                 } else {
@@ -200,15 +200,15 @@ void InputSystem::handleMenu(constants::Input input){
                 }
                 break;
               case constants::INPUT_CONFIRM:
-              std::cout << "confirm";
+              std::cout << "confirm" << std::endl;
                 switch(global()->gameEngine.mainMenuState) {
                   case 0: //first menu option
-                    std::cout << "levelMenu";
+                    std::cout << "levelMenu" << std::endl;
                     global()->gameEngine.gameState = constants::LEVELMENU;
                     break;
                   case 1:  //second menu option
                     global()->gameEngine.gameState = constants::OPTIONSMENU;
-                    std::cout << "options";
+                    std::cout << "options" << std::endl;
                     break;
                   default:
                     break;
@@ -236,7 +236,7 @@ void InputSystem::handleMenu(constants::Input input){
               break;
             case constants::INPUT_CONFIRM:
               {
-              std::cout << "confirm";
+              std::cout << "confirm" << std::endl;
               std::string fileName = ""; //change based on what level is selected
               switch(global()->gameEngine.levelMenuState) {
                 case 0: //level 0
