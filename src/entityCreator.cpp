@@ -3,17 +3,52 @@
 
 #include <iostream>
 
-EntityCreator::EntityCreator(EntityManager *em):em(em){
-  for(int i=0; i < NUM_OF_TEXTURES; i++) {
-    texture_table.push_back(new sf::Texture());
+
+EntityCreator::TextureManager::~TextureManager(){
+  for(std::map<std::string, sf::Texture *>::iterator it = name_to_texture.begin(); it != name_to_texture.end(); ++it) {
+    delete it->second;
   }
-  texture_table[WALL]->loadFromFile("resources/wall.png");
-  texture_table[PLAYER]->loadFromFile("resources/roy.png");
-  texture_table[ENEMY]->loadFromFile("resources/soldier.png");
-  texture_table[BULLET]->loadFromFile("resources/bullet.png");
-  texture_table[EXIT]->loadFromFile("resources/portal.png");
-  texture_table[BOX]->loadFromFile("resources/box.png");
-  texture_table[SMOKE]->loadFromFile("resources/smoke.png");
+}
+void EntityCreator::TextureManager::addTexture(std::string &file_name, int index){
+  if (name_to_texture.count(file_name) < 1) {
+    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
+    sf::Texture *texture_tmp = new sf::Texture();
+    texture_tmp->loadFromFile(file_name.c_str());
+    name_to_texture[file_name] = texture_tmp;
+    if (index >= 0) {
+      index_to_name[index] = file_name;
+    }
+  }
+}
+void EntityCreator::TextureManager::addTexture(const char *file_name, int index){
+  std::string string_tmp = file_name;
+  addTexture(string_tmp, index);
+}
+sf::Texture *EntityCreator::TextureManager::getTexture(std::string &file_name){
+  if (name_to_texture.count(file_name) >=1 ) {
+    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
+    return it->second;
+  }
+  addTexture(file_name);
+  std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
+  return it->second;
+}
+sf::Texture *EntityCreator::TextureManager::getTexture(int index){
+  if ( index_to_name.count(index) >= 1) {
+    std::map<int,std::string>::iterator it = index_to_name.find(index);
+    return getTexture(it->second);
+  }
+  return NULL;
+}
+
+EntityCreator::EntityCreator(EntityManager *em):em(em){
+  textureManager.addTexture("resources/wall.png", WALL);
+  textureManager.addTexture("resources/roy.png",PLAYER);
+  textureManager.addTexture("resources/soldier.png",ENEMY);
+  textureManager.addTexture("resources/bullet.png",BULLET);
+  textureManager.addTexture("resources/portal.png",EXIT);
+  textureManager.addTexture("resources/box.png",BOX);
+  textureManager.addTexture("resources/smoke.png",SMOKE);
 }
 
 EntityCreator::~EntityCreator() {
@@ -27,24 +62,24 @@ EntityCreator::~EntityCreator() {
   // delete conc;
 }
 
-void EntityCreator::create(constants::EntityType type, sf::Vector2f xy) {
+void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::string sprite_file_name) {
   if (type == constants::PLAYER) {
-    this->createPlayer(xy);
+    this->createPlayer(xy, sprite_file_name);
   } else if (type == constants::WALL) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
-    this->createMovingEnemy(xy);
+    this->createMovingEnemy(xy, sprite_file_name);
   } else if (type == constants::FINISH) {
-    this->createFinish(xy);
+    this->createFinish(xy, sprite_file_name);
   }else if (type== constants::ENEMY_STATIC){
-    this->createStaticEnemy(xy);
+    this->createStaticEnemy(xy, sprite_file_name);
   }
 
 
   //not valid entityType
 }
 
-void EntityCreator::createPlayer(sf::Vector2f xy) {
+void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -58,7 +93,8 @@ void EntityCreator::createPlayer(sf::Vector2f xy) {
   // }
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(* texture_table[PLAYER]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(PLAYER):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(* texture);
   sprite->setOrigin(25,25);
   sprite->setRotation(90.0f);
   ///////////////////////////////////////////////////////////
@@ -79,7 +115,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy) {
   em->setPlayer(e);
 }
 
-void EntityCreator::createWall(sf::Vector2f xy, float width, float height) {
+void EntityCreator::createWall(sf::Vector2f xy, float width, float height, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   xy.x += width/2;
   xy.y += height/2;
@@ -88,8 +124,9 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height) {
 
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  texture_table[WALL]->setRepeated(true);
-  sprite->setTexture(* texture_table[WALL]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(WALL):textureManager.getTexture(sprite_file_name);
+  texture->setRepeated(true);
+  sprite->setTexture(* texture);
   sprite->setOrigin(width/2, height/2);
   // sprite->getTexture()->setRepeated(true);
   sf::IntRect ir;
@@ -113,13 +150,14 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height) {
 
 }
 
-void EntityCreator::createBox(sf::Vector2f xy) {
+void EntityCreator::createBox(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[BOX]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BOX):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
   GraphicsComponent *gc = new GraphicsComponent(sprite);
@@ -137,13 +175,14 @@ void EntityCreator::createBox(sf::Vector2f xy) {
 
 }
 
-void EntityCreator::createMovingEnemy(sf::Vector2f xy) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[ENEMY]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(ENEMY):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
   Component *ec = new Component(constants::ENEMY);
@@ -181,13 +220,14 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy) {
   em->addEntity(e);
 
 }
-void EntityCreator::createStaticEnemy(sf::Vector2f xy) {
+void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
   //create sprite
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[ENEMY]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(ENEMY):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   ///////////////////////////////////////////////////////////
   Component *ec = new Component(constants::ENEMY);
@@ -209,13 +249,14 @@ void EntityCreator::createStaticEnemy(sf::Vector2f xy) {
 
 }
 
-void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float velocity, float drag){
+void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, std::string sprite_file_name){
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
   // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[BULLET]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(5,5);
 
 
@@ -244,7 +285,7 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
 
 }
 
-void EntityCreator::createFinish(sf::Vector2f xy) {
+void EntityCreator::createFinish(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -252,7 +293,8 @@ void EntityCreator::createFinish(sf::Vector2f xy) {
   e->addComponent(fc);
 
   sf::Sprite *sprite = new sf::Sprite();
-  sprite->setTexture(*texture_table[EXIT]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(EXIT):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(25,25);
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
@@ -262,7 +304,7 @@ void EntityCreator::createFinish(sf::Vector2f xy) {
 }
 
 
-void EntityCreator::createSmokeScreen(sf::Vector2f xy){
+void EntityCreator::createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name){
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
@@ -270,8 +312,8 @@ void EntityCreator::createSmokeScreen(sf::Vector2f xy){
 
   e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
   sf::Sprite *sprite = new sf::Sprite();
-
-  sprite->setTexture(*texture_table[SMOKE]);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(SMOKE):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
   sprite->setOrigin(size/2, size/2);
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);

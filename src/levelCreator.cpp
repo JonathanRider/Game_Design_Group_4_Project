@@ -15,8 +15,6 @@ namespace {
     }
     return -1;
   }
-
-
   void getPosition(const char *str, float &x, float &y) {
     std::string line = str;
     std::istringstream is(line);
@@ -80,6 +78,7 @@ LevelCreator::~LevelCreator(){
 void LevelCreator::loadLevelFile(std::string &fileName) {
   int n;
   float x, y, width, height;
+  std::string sprite_file_name;
   clearList();
   XMLNode xMainNode=XMLNode::openFileHelper(fileName.c_str());
 
@@ -92,7 +91,8 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     XMLNode xWall = xWalls.getChildNode(i);
     getPosition(xWall.getAttribute("position"), x, y);
     getDimensions(xWall.getAttribute("dimension"), width, height);
-    eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale);
+    sprite_file_name = xWall.getAttribute("sprite") == NULL?"": xWall.getAttribute("sprite");
+    eCreator.createWall(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, sprite_file_name);
     // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
 
@@ -102,34 +102,38 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
   for (int i=0; i < n; i++) {
     XMLNode xBox = xBoxes.getChildNode(i);
     getPosition(xBox.getAttribute("position"), x, y);
-    eCreator.createBox(sf::Vector2f( x * scale + 25, y * scale + 25));
+    sprite_file_name = xBox.getAttribute("sprite") == NULL?"": xBox.getAttribute("sprite");
+    eCreator.createBox(sf::Vector2f( x * scale + 25, y * scale + 25), sprite_file_name);
     // creation_list.push_back(new levelCreator_internal::WorldComponent(WALL, x, y));
   }
 
   //finish
   XMLNode xFinish = xMap.getChildNode("FINISH");
   getPosition(xFinish.getAttribute("position"), x, y);
+  sprite_file_name = xFinish.getAttribute("sprite") == NULL?"": xFinish.getAttribute("sprite");
   //getDimensions(xWall.getAttribute("dimension"), width, height);
-  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::FINISH, x, y));
+  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::FINISH, x, y, sprite_file_name));
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");
   //player
   XMLNode xPlayer=xChars.getChildNode("PLAYER");
   getPosition(xPlayer.getAttribute("position"), x, y);
-  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::PLAYER, x, y));
+  sprite_file_name = xPlayer.getAttribute("sprite") == NULL?"": xPlayer.getAttribute("sprite");
+  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::PLAYER, x, y, sprite_file_name));
 
   //enemy
   n = xChars.nChildNode("ENEMY");
   for (int i=0; i < n; i++) {
     XMLNode xEnemy = xChars.getChildNode("ENEMY", i);
     getPosition(xEnemy.getAttribute("position"), x, y);
+    sprite_file_name = xEnemy.getAttribute("sprite") == NULL?"": xEnemy.getAttribute("sprite");
     std::set<int> property_set;
     getPropertySet(xEnemy.getAttribute("property"), property_set);
     if (property_set.find(constants::MOVING) != property_set.end() ) {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_MOVING, x, y));
+      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_MOVING, x, y, sprite_file_name));
     }
     else {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y));
+      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y, sprite_file_name));
     }
   }
 
@@ -141,19 +145,19 @@ void LevelCreator::createLevel() {
     levelCreator_internal::WorldComponent *c = creation_list[i];
     switch(c->type) {
       case constants::WALL:
-        eCreator.create(constants::WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        eCreator.create(constants::WALL, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
       case constants::PLAYER:
-        eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        eCreator.create(constants::PLAYER, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
       case constants::FINISH:
-        eCreator.create(constants::FINISH, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        eCreator.create(constants::FINISH, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
       case constants::ENEMY_MOVING:
-        eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
       case constants::ENEMY_STATIC:
-        eCreator.create(constants::ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25));
+        eCreator.create(constants::ENEMY_STATIC, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
       default:
         //do nothing
