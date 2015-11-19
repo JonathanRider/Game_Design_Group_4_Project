@@ -222,13 +222,13 @@ void InputSystem::handleMenu(constants::Input input){
           switch (input) {
             case constants::INPUT_UP:
               if (global()->gameEngine.levelMenuState <= 0) {
-                global()->gameEngine.levelMenuState = 1; //max number of options
+                global()->gameEngine.levelMenuState = 2; //max number of options
               } else {
                 global()->gameEngine.levelMenuState -= 1;
               }
               break;
             case constants::INPUT_DOWN:
-              if (global()->gameEngine.levelMenuState >= 1) {//max number of options
+              if (global()->gameEngine.levelMenuState >= 2) {//max number of options
                 global()->gameEngine.levelMenuState = 0;
               } else {
                 global()->gameEngine.levelMenuState += 1;
@@ -244,6 +244,9 @@ void InputSystem::handleMenu(constants::Input input){
                   break;
                 case 1:  //level 1
                   fileName = "resources/levels/level_02.xml";
+                  break;
+                case 2:  //level 2
+                  fileName = "resources/levels/level_03.xml";
                   break;
                 default:
                   fileName = "resources/levels/level_01.xml";

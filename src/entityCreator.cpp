@@ -84,7 +84,7 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
 void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
-  e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
+  e->setBoundingBox(new sf::FloatRect(xy.x-12.5, xy.y-12.5, 25, 25));
 
 
   //////////////////this should probably be moved somewhere else
@@ -238,7 +238,7 @@ void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_n
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
 
-  VisionComponent *vc = new VisionComponent(e->getXY(), 100, 180, 90);
+  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 180, 90);
 
   e->addComponent(vc);
 
@@ -272,8 +272,8 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
 
   Component *bpc = new Component(constants::BOUNCEPROJECTILE);
   e->addComponent(bpc);
-  Component *dc = new Component(constants::DEADLY);
-  e->addComponent(dc);
+  // Component *dc = new Component(constants::DEADLY);
+  // e->addComponent(dc);
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   e->addComponent(colc);
 

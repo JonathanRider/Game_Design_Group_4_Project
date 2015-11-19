@@ -1,0 +1,38 @@
+<LEVEL>
+  <MAP>
+    <WALLS>
+      <!-- <WALL position="5.5;7.5" dimension="1;1"/>
+      <WALL position="7.5;7.5" dimension="1;1"/> -->
+
+      <WALL position="0;0" dimension="16;1"/>
+      <WALL position="0;12" dimension="16;1"/>
+      <WALL position="0;1" dimension="1;11"/>
+      <WALL position="15;1" dimension="1;11"/>
+
+      <WALL position="1;2" dimension="11;1"/>
+      <WALL position="13;2" dimension="2;2"/>
+
+      <WALL position="2;4" dimension="13;2"/>
+      <WALL position="7;6" dimension="8;1"/>
+
+      <WALL position="2;7" dimension="14;1"/>
+      <WALL position="2;8" dimension="14;1"/>
+      <WALL position="1;10" dimension="3;2"/>
+      <WALL position="5;10" dimension="11;1"/>
+      <WALL position="7;9" dimension="8;1"/>
+
+
+
+
+    </WALLS>
+    <FINISH position="14.5;11.5" />
+    <TRAP position="999;999"/>
+  </MAP>
+  <CHARACTERS>
+    <PLAYER position="5.5;1.5"  />
+
+    <ENEMY position="6;6.5" property="static" />
+    <ENEMY position="6;9.5" property="static" />
+    <ENEMY position="14.5;1.5" property="static" />
+  </CHARACTERS>
+</LEVEL>

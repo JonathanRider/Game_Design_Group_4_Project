@@ -31,6 +31,11 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   level_menu1_sprite->setTexture(*level_menu1);
   levelMenuSprites.push_back(level_menu1_sprite);
 
+  sf::Texture *level_menu2 = new sf::Texture();
+  level_menu2->loadFromFile("resources/LevelMenu2.png");
+  sf::Sprite *level_menu2_sprite = new sf::Sprite;
+  level_menu2_sprite->setTexture(*level_menu2);
+  levelMenuSprites.push_back(level_menu2_sprite);
 }
 
 
@@ -47,7 +52,7 @@ void GraphicsSystem::update(float time){
 
   } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
     screen->setView(screen->getDefaultView()); //reset view
-    screen->draw(*levelMenuSprites[global()->gameEngine.levelMenuState]);
+    screen->draw(*levelMenuSprites.at(global()->gameEngine.levelMenuState));
 
   } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
     sf::View view;
