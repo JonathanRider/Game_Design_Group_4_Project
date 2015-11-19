@@ -116,9 +116,12 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
 
   //traps
   XMLNode xTRAP = xMap.getChildNode("TRAP");
-  getPosition(xTRAP.getAttribute("position"), x, y);
-  sprite_file_name = xFinish.getAttribute("sprite") == NULL?"": xTRAP.getAttribute("sprite");
-  creation_list.push_back(new levelCreator_internal::WorldComponent(constants::TRAP, x, y, sprite_file_name));
+  n = xTRAP.nChildNode();
+  for (int i=0; i < n; i++) {
+    getPosition(xTRAP.getAttribute("position"), x, y);
+    sprite_file_name = xTRAP.getAttribute("sprite") == NULL?"": xTRAP.getAttribute("sprite");
+    creation_list.push_back(new levelCreator_internal::WorldComponent(constants::TRAP, x, y, sprite_file_name));
+  }
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");
   //player
@@ -161,6 +164,7 @@ void LevelCreator::createLevel() {
         break;
       case constants::TRAP:
         eCreator.create(constants::TRAP, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
+        break;
       case constants::ENEMY_MOVING:
         eCreator.create(constants::ENEMY_MOVING, sf::Vector2f( c->x * scale + 25, c->y * scale + 25), c->sprite_file_name);
         break;
