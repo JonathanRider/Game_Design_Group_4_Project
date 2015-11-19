@@ -9,6 +9,7 @@
 #include "components/blockVisionComponent.h"
 #include "components/visionComponent.h"
 #include "components/timerComponent.h"
+#include "components/trapComponent.h"
 
 
 #endif

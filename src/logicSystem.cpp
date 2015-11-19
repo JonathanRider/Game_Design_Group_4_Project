@@ -31,6 +31,8 @@ void LogicSystem::update(float time){
       //   }
       // }
 
+
+
       //Timer updates
       if((*iterator)->hasComponent(constants::TIMER)){
         TimerComponent *tc = (TimerComponent*)(*iterator)->getComponent(constants::TIMER);
@@ -204,11 +206,17 @@ void LogicSystem::resolveCollisions(Entity *e){
 
 void LogicSystem::resolveTimer(Entity *e){
   Component *c;
+  Component *c2;
   if(e->getComponent(constants::TIMER, c)){
     TimerComponent *tc = (TimerComponent*)c;
     switch (tc->getTimerEntity()) {
       case constants::TSMOKESCREEN: global()->gameEngine.entityCreator->createSmokeScreen(e->getXY()); break;
       case constants::TWALL: global()->gameEngine.entityCreator->createWall(e->getXY(), 50, 50); break;
+      case constants::TTRAP:
+        if (e->getComponent(constants::TRAPC, c2)){
+          TrapComponent *trc = (TrapComponent*)c2;
+          global()->gameEngine.entityCreator->createTrap(e->getXY(), !trc->getVisibility());
+        }
     }
   }
 }

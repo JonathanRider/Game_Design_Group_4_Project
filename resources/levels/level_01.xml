@@ -19,6 +19,7 @@
       <WALL dimension="2;1" position="13;4" /><WALL dimension="1;1" position="11.5;4" />
     </WALLS>
     <FINISH position="14;9" />
+    <TRAP position="12;9"/>
   </MAP>
   <CHARACTERS>
     <PLAYER position="3.5;5.5"  />

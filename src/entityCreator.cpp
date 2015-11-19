@@ -73,6 +73,8 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
     this->createFinish(xy, sprite_file_name);
   }else if (type== constants::ENEMY_STATIC){
     this->createStaticEnemy(xy, sprite_file_name);
+  } else if (type == constants::TRAP) {
+    this->createTrap(xy, true, sprite_file_name);
   }
 
 
@@ -326,5 +328,29 @@ void EntityCreator::createSmokeScreen(sf::Vector2f xy, std::string sprite_file_n
 
   em->addEntity(e);
 
+
+}
+
+void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+
+  float size = 50;
+
+  e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(SMOKE):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
+  sprite->setOrigin(size/2, size/2);
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+  TrapComponent *trc = new TrapComponent(isVisible);
+  e->addComponent(trc);
+
+  TimerComponent *tc = new TimerComponent(10, constants::TTRAP);
+  e->addComponent(tc);
+
+  em->addEntity(e);
 
 }

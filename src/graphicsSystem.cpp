@@ -72,11 +72,23 @@ void GraphicsSystem::update(float time){
     std::list<Entity*>::iterator iterator;
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
       if((*iterator)->hasComponent(constants::GRAPHICS)){
-        //it is a graphics component, so we can cast it
-        GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
-        gp->getSprite()->setPosition((*iterator)->getXY());
-        //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
-        screen->draw(*(gp->getSprite()));
+        if((*iterator)->hasComponent(constants::TRAPC)) {
+          TrapComponent *trc = (TrapComponent*)(*iterator)->getComponent(constants::TRAPC);
+          //only draw if trap is visible
+          if(trc->getVisibility()) {
+            //it is a graphics component, so we can cast it
+            GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
+            gp->getSprite()->setPosition((*iterator)->getXY());
+            //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
+            screen->draw(*(gp->getSprite()));
+          }
+        } else {
+          //it is a graphics component, so we can cast it
+          GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
+          gp->getSprite()->setPosition((*iterator)->getXY());
+          //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
+          screen->draw(*(gp->getSprite()));
+        }
       }
       if((*iterator)->hasComponent(constants::VISION)){
 
