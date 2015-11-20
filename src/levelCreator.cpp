@@ -115,11 +115,12 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
   creation_list.push_back(new levelCreator_internal::WorldComponent(constants::FINISH, x, y, sprite_file_name));
 
   //traps
-  XMLNode xTRAP = xMap.getChildNode("TRAP");
-  n = xTRAP.nChildNode();
+  XMLNode xTraps = xMap.getChildNode("TRAPS");
+  n = xTraps.nChildNode("TRAP");
   for (int i=0; i < n; i++) {
-    getPosition(xTRAP.getAttribute("position"), x, y);
-    sprite_file_name = xTRAP.getAttribute("sprite") == NULL?"": xTRAP.getAttribute("sprite");
+    XMLNode xTrap = xTraps.getChildNode(i);
+    getPosition(xTrap.getAttribute("position"), x, y);
+    sprite_file_name = xTrap.getAttribute("sprite") == NULL?"": xTrap.getAttribute("sprite");
     creation_list.push_back(new levelCreator_internal::WorldComponent(constants::TRAP, x, y, sprite_file_name));
   }
 
