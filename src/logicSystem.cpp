@@ -96,11 +96,22 @@ void LogicSystem::resolveCollisions(Entity *e){
       if((*iterator)->hasComponent(constants::FINISH_COMP)) {
         if(e->getID() == manager->getPlayer()->getID()){
           if(origBB->intersects(*otherBB)){
-            global()->gameEngine.gameState = constants::LEVELMENU;
-            std::cout << global()->gameEngine.gameState;
-            manager->clearAll();
+            global()->gameEngine.gameState = constants::WIN;
+            //manager->clearAll();
             return;
             //lCreator->clearList();
+          }
+        }
+      }
+      //trap hit
+      if((*iterator)->hasComponent(constants::TRAPC)) {
+        TrapComponent *trc = (TrapComponent*)(*iterator)->getComponent(constants::TRAPC);
+        if(trc->getVisibility()) {
+          if(e->getID() == manager->getPlayer()->getID()){
+            if(origBB->intersects(*otherBB)){
+              global()->gameEngine.gameState = constants::GAMEOVER;
+              return;
+            }
           }
         }
       }
@@ -320,6 +331,8 @@ void LogicSystem::updateVisionCones(float time){
       for(int i =1; i < tFan->getVertexCount()-1 ; i++){
         if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box)) {
           vc->setAlert(true);
+          //caught end game
+          global()->gameEngine.gameState = constants::GAMEOVER;
           break;
         }
       }

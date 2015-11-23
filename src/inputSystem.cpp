@@ -252,6 +252,7 @@ void InputSystem::handleMenu(constants::Input input){
                   fileName = "resources/levels/level_01.xml";
                   break;
               }
+              manager->clearAll();
               lCreator->loadLevelFile(fileName);
               lCreator->createLevel();
 
@@ -284,6 +285,24 @@ void InputSystem::handleMenu(constants::Input input){
               break;
           }
           return;
+    case constants::GAMEOVER:
+      switch (input) {
+        case constants::INPUT_CONFIRM:
+          global()->gameEngine.gameState = constants::LEVELMENU;
+          break;
+        default:
+          break;
+      }
+      return;
+    case constants::WIN:
+      switch (input) {
+        case constants::INPUT_CONFIRM:
+          global()->gameEngine.gameState = constants::LEVELMENU;
+          break;
+        default:
+          break;
+      }
+      return;
     default:
       return;
   }

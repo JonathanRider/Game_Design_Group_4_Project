@@ -36,6 +36,17 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   sf::Sprite *level_menu2_sprite = new sf::Sprite;
   level_menu2_sprite->setTexture(*level_menu2);
   levelMenuSprites.push_back(level_menu2_sprite);
+
+  sf::Texture *gameOverTexture = new sf::Texture();
+  gameOverTexture->loadFromFile("resources/GameOver.png");
+  gameOverSprite = new sf::Sprite;
+  gameOverSprite->setTexture(*gameOverTexture);
+
+  sf::Texture *winTexture = new sf::Texture();
+  winTexture->loadFromFile("resources/Win.png");
+  winSprite = new sf::Sprite;
+  winSprite->setTexture(*winTexture);
+
 }
 
 
@@ -49,7 +60,12 @@ void GraphicsSystem::update(float time){
     // menuSprite->setTexture(*menuTex);
     // screen->draw(*menuSprite);
     screen->draw(*mainMenuSprites[global()->gameEngine.mainMenuState]);
-
+  } else if (global()->gameEngine.gameState == constants::WIN) {
+    screen->setView(screen->getDefaultView()); //reset view
+    screen->draw(*winSprite);
+  } else if (global()->gameEngine.gameState == constants::GAMEOVER) {
+    screen->setView(screen->getDefaultView()); //reset view
+    screen->draw(*gameOverSprite);
   } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
     screen->setView(screen->getDefaultView()); //reset view
     screen->draw(*levelMenuSprites.at(global()->gameEngine.levelMenuState));
