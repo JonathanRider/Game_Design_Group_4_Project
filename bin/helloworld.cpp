@@ -6,8 +6,8 @@
 #include "entityCreator.h"
 #include "global.h"
 #include "levelCreator.h"
+#include "audioSystem.h"
 
-#include <SFML/Audio.hpp>
 #include <unistd.h>
 #include <iostream>
 #include <cmath>
@@ -19,6 +19,11 @@
 int main(int argc, char** argv)
 {
   Global::init();
+  global()->gameEngine.gameState = constants::MENU;
+  //global()->gameEngine.gameState = constants::PLAYING;
+  global()->gameEngine.mainMenuState = 0;
+  global()->gameEngine.levelMenuState = 0;
+  global()->gameEngine.optionsMenuState = 0;
 
   srand (time(NULL));
   // create main window
@@ -27,15 +32,15 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
-  global()->gameEngine.gameState = constants::MENU;
-  //global()->gameEngine.gameState = constants::PLAYING;
-  global()->gameEngine.mainMenuState = 0;
-  global()->gameEngine.levelMenuState = 0;
-  global()->gameEngine.optionsMenuState = 0;
+
 
   EntityManager* entityM = new EntityManager();
   LevelCreator *lCreator = new LevelCreator(entityM);
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
+  AudioSystem* audioS = new AudioSystem();
+  global()->gameEngine.audioSystem = audioS;
+
+
   LogicSystem* logicS = new LogicSystem(entityM, lCreator);
   global()->gameEngine.logicSystem = logicS;
   InputSystem* inputS = new InputSystem(entityM, &App, lCreator);;
@@ -71,10 +76,15 @@ int main(int argc, char** argv)
     dTime = graphicsTimer.restart().asSeconds();
     graphicsS->update(dTime);
 
+    audioS->update();
+
     // display
     App.display();
   }
   App.close();
+
+
+  delete audioS;
   // Done.
   return 0;
 }

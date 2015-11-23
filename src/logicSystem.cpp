@@ -69,6 +69,8 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
       float direction =  180 - atan2(dy, dx) * 180 / PI;
       float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
       global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
+      //play the sound
+      global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING);
       }
       return;
     default:

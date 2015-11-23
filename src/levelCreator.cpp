@@ -1,6 +1,7 @@
 #include "levelCreator.h"
 #include "xmlParser.h"
 #include "typeConversion.h"
+#include "global.h"
 
 #include <string.h>
 
@@ -47,6 +48,14 @@ namespace {
     height = typeconvert::string2float(part);
   }
 
+  void getStringList(const char *str, std::vector<std::string> &string_list) {
+    std::string line = str;
+    std::istringstream is(line);
+    std::string part;
+    while ( std::getline(is, part, ';') ) {
+      string_list.push_back(part);
+    }
+  }
   void getPropertySet(const char *str, std::set<int> &propertySet){
     std::string line = str;
     std::istringstream is(line);
@@ -81,6 +90,17 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
   std::string sprite_file_name;
   clearList();
   XMLNode xMainNode=XMLNode::openFileHelper(fileName.c_str());
+
+  //music
+  { //don't want to contaminate other variables
+    XMLNode xMusic=xMainNode.getChildNode("MUSIC");
+    std::vector<std::string> string_list;
+    getStringList(xMusic.getAttribute("file"), string_list);
+    global()->gameEngine.audioSystem->reset();
+    global()->gameEngine.audioSystem->clearMusicList();
+    global()->gameEngine.audioSystem->addMusicList(string_list);
+  }
+
 
   //walls
   XMLNode xMap=xMainNode.getChildNode("MAP");

@@ -1,4 +1,6 @@
 <LEVEL>
+  <MUSIC file="resources/audio/music/Super_Mario_Bros_Ground_Theme.wav" />
+  <!-- add multiple files, use ; to seperate -->
   <MAP>
     <WALLS>
       <!-- <WALL position="5.5;7.5" dimension="1;1"/>
