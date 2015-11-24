@@ -307,10 +307,21 @@ void EntityCreator::createFinish(sf::Vector2f xy, std::string sprite_file_name) 
 
 
 void EntityCreator::createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name){
+  if(fmod(xy.x,50) < 25){
+    xy.x = xy.x - fmod(xy.x,50);
+  }else{
+    xy.x = xy.x + 50- fmod(xy.x,50);
+  }
+  if(fmod(xy.y,50) < 25){
+    xy.y = xy.y - fmod(xy.y,50);
+  }else{
+    xy.y = xy.y + 50- fmod(xy.y,50);
+  }
+
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
-  float size = 80;
+  float size = 50;
 
   e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
   sf::Sprite *sprite = new sf::Sprite();
