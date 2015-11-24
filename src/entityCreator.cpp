@@ -42,13 +42,13 @@ sf::Texture *EntityCreator::TextureManager::getTexture(int index){
 }
 
 EntityCreator::EntityCreator(EntityManager *em):em(em){
-  textureManager.addTexture("resources/wall.png", WALL);
-  textureManager.addTexture("resources/roy.png",PLAYER);
-  textureManager.addTexture("resources/soldier.png",ENEMY);
-  textureManager.addTexture("resources/bullet.png",BULLET);
-  textureManager.addTexture("resources/portal.png",EXIT);
-  textureManager.addTexture("resources/box.png",BOX);
-  textureManager.addTexture("resources/smoke.png",SMOKE);
+  textureManager.addTexture("resources/graphics/sprite/wall.png", WALL);
+  textureManager.addTexture("resources/graphics/sprite/roy.png",PLAYER);
+  textureManager.addTexture("resources/graphics/sprite/soldier.png",ENEMY);
+  textureManager.addTexture("resources/graphics/sprite/bullet.png",BULLET);
+  textureManager.addTexture("resources/graphics/sprite/portal.png",EXIT);
+  textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
+  textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
 }
 
 EntityCreator::~EntityCreator() {

@@ -39,9 +39,6 @@ public:
   void createLevel();
 private:
   std::vector<levelCreator_internal::WorldComponent *> creation_list;
-  sf::Texture *wallTex;
-  sf::Texture *tex_player;
-  sf::Texture *tex_enemy;
 
   EntityManager * manager;
   EntityCreator eCreator;

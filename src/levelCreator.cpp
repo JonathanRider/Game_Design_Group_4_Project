@@ -68,19 +68,10 @@ namespace {
 }
 
 LevelCreator::LevelCreator(EntityManager *m)
-  :manager(m), scale(50), eCreator(EntityCreator(m)),
-  wallTex(new sf::Texture()),
-  tex_player(new sf::Texture()),
-  tex_enemy(new sf::Texture())
-  {
-    wallTex->loadFromFile("resources/wall.png");
-    tex_player->loadFromFile("resources/roy.png");
-    tex_enemy->loadFromFile("resources/soldier.png");
-  }
+  :manager(m), scale(50), eCreator(EntityCreator(m)){}
 
 LevelCreator::~LevelCreator(){
   clearList();
-  delete wallTex;
 }
 
 

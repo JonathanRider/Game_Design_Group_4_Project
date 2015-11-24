@@ -8,42 +8,42 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
 
   //Menu stuff will be moved eventually
   sf::Texture *main_menu0 = new sf::Texture();
-  main_menu0->loadFromFile("resources/MainMenu0.png");
+  main_menu0->loadFromFile("resources/graphics/image/MainMenu0.png");
   sf::Sprite *main_menu0_sprite = new sf::Sprite;
   main_menu0_sprite->setTexture(*main_menu0);
   mainMenuSprites.push_back(main_menu0_sprite);
 
   sf::Texture *main_menu1 = new sf::Texture();
-  main_menu1->loadFromFile("resources/MainMenu1.png");
+  main_menu1->loadFromFile("resources/graphics/image/MainMenu1.png");
   sf::Sprite *main_menu1_sprite = new sf::Sprite;
   main_menu1_sprite->setTexture(*main_menu1);
   mainMenuSprites.push_back(main_menu1_sprite);
 
   sf::Texture *level_menu0 = new sf::Texture();
-  level_menu0->loadFromFile("resources/LevelMenu0.png");
+  level_menu0->loadFromFile("resources/graphics/image/LevelMenu0.png");
   sf::Sprite *level_menu0_sprite = new sf::Sprite;
   level_menu0_sprite->setTexture(*level_menu0);
   levelMenuSprites.push_back(level_menu0_sprite);
 
   sf::Texture *level_menu1 = new sf::Texture();
-  level_menu1->loadFromFile("resources/LevelMenu1.png");
+  level_menu1->loadFromFile("resources/graphics/image/LevelMenu1.png");
   sf::Sprite *level_menu1_sprite = new sf::Sprite;
   level_menu1_sprite->setTexture(*level_menu1);
   levelMenuSprites.push_back(level_menu1_sprite);
 
   sf::Texture *level_menu2 = new sf::Texture();
-  level_menu2->loadFromFile("resources/LevelMenu2.png");
+  level_menu2->loadFromFile("resources/graphics/image/LevelMenu2.png");
   sf::Sprite *level_menu2_sprite = new sf::Sprite;
   level_menu2_sprite->setTexture(*level_menu2);
   levelMenuSprites.push_back(level_menu2_sprite);
 
   sf::Texture *gameOverTexture = new sf::Texture();
-  gameOverTexture->loadFromFile("resources/GameOver.png");
+  gameOverTexture->loadFromFile("resources/graphics/image/GameOver.png");
   gameOverSprite = new sf::Sprite;
   gameOverSprite->setTexture(*gameOverTexture);
 
   sf::Texture *winTexture = new sf::Texture();
-  winTexture->loadFromFile("resources/Win.png");
+  winTexture->loadFromFile("resources/graphics/image/Win.png");
   winSprite = new sf::Sprite;
   winSprite->setTexture(*winTexture);
 
@@ -79,7 +79,7 @@ void GraphicsSystem::update(float time){
 
     //This is definitely the wrong place to create the background, but trying to create an entity crashed it....
     sf::Texture *background = new sf::Texture();
-    background->loadFromFile("resources/floor.png");
+    background->loadFromFile("resources/graphics/sprite/floor.png");
     background->setRepeated(true);
     sf::Sprite *background_sprite = new sf::Sprite;
     background_sprite->setTexture(*background);
