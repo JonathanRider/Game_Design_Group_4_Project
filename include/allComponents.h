@@ -10,6 +10,7 @@
 #include "components/visionComponent.h"
 #include "components/timerComponent.h"
 #include "components/trapComponent.h"
+#include "components/inventoryComponent.h"
 
 
 #endif

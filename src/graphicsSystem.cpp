@@ -58,17 +58,17 @@ void GraphicsSystem::update(float time){
     // menuTex->loadFromFile("resources/MainMenu.png");
     // sf::Sprite *menuSprite = new sf::Sprite();
     // menuSprite->setTexture(*menuTex);
-    // screen->draw(*menuSprite);
-    screen->draw(*mainMenuSprites[global()->gameEngine.mainMenuState]);
+    // draw(*menuSprite);
+    draw(mainMenuSprites[global()->gameEngine.mainMenuState]);
   } else if (global()->gameEngine.gameState == constants::WIN) {
     screen->setView(screen->getDefaultView()); //reset view
-    screen->draw(*winSprite);
+    draw(winSprite);
   } else if (global()->gameEngine.gameState == constants::GAMEOVER) {
     screen->setView(screen->getDefaultView()); //reset view
-    screen->draw(*gameOverSprite);
+    draw(gameOverSprite);
   } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
     screen->setView(screen->getDefaultView()); //reset view
-    screen->draw(*levelMenuSprites.at(global()->gameEngine.levelMenuState));
+    draw(levelMenuSprites.at(global()->gameEngine.levelMenuState));
 
   } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
     sf::View view;
@@ -86,7 +86,7 @@ void GraphicsSystem::update(float time){
     background_sprite->setTextureRect(sf::IntRect(0,0,10000,10000));
     background_sprite->setOrigin(25.0f, 25.0f);
     background_sprite->setPosition(-5000.0f, -5000.0f);
-    screen->draw(*background_sprite);
+    draw(background_sprite);
 
     //iterate through entityManager and update
     std::list<Entity*>* eList = manager->getEntityList();
@@ -101,14 +101,14 @@ void GraphicsSystem::update(float time){
             GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
             gp->getSprite()->setPosition((*iterator)->getXY());
             //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
-            screen->draw(*(gp->getSprite()));
+            draw((gp->getSprite()));
           }
         } else {
           //it is a graphics component, so we can cast it
           GraphicsComponent *gp = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
           gp->getSprite()->setPosition((*iterator)->getXY());
           //gp->getSprite()->setPosition(sf::Vector2f(iterator->getXY().x - gp->getSprite()->getLocalBounds().width/2, iterator->getXY().y - gp->getSprite()->getLocalBounds().height/2)) ;
-          screen->draw(*(gp->getSprite()));
+          draw((gp->getSprite()));
         }
       }
       if((*iterator)->hasComponent(constants::VISION)){
@@ -125,7 +125,7 @@ void GraphicsSystem::update(float time){
         for(int i = 0; i < va.getVertexCount(); i++){
           va[i].color = vp_color;
         }
-         screen->draw(va);
+        draw(&va);
       }
     }
     if (global()->gameEngine.gameState == constants::PAUSED) {
@@ -133,7 +133,14 @@ void GraphicsSystem::update(float time){
       pausedTex->loadFromFile("resources/paused.png");
       sf::Sprite *pausedSprite = new sf::Sprite();
       pausedSprite->setTexture(*pausedTex);
-      screen->draw(*pausedSprite);
+      draw(pausedSprite);
     }
   }
+}
+
+void GraphicsSystem::draw(sf::Drawable *drawable){
+  screen->draw(*drawable);
+}
+void GraphicsSystem::draw(void (*callback)(sf::RenderWindow* w)) {
+  callback(this->screen);
 }

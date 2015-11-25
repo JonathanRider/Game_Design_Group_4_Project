@@ -11,6 +11,8 @@ public:
   GraphicsSystem(sf::RenderWindow* w, EntityManager *m);
   ~GraphicsSystem();
   void update(float time);
+  void draw(sf::Drawable *drawable);
+  void draw(void (*callback)(sf::RenderWindow* w));
 
 private:
   sf::RenderWindow* screen;
