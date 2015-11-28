@@ -7,6 +7,7 @@
 #include "global.h"
 #include "levelCreator.h"
 #include "audioSystem.h"
+#include "resourceManager.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -33,6 +34,8 @@ int main(int argc, char** argv)
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
 
+  ResourceManager *resourceM = new ResourceManager();
+  global()->gameEngine.resourceManager = resourceM;
 
   EntityManager* entityM = new EntityManager();
   LevelCreator *lCreator = new LevelCreator(entityM);
@@ -84,7 +87,9 @@ int main(int argc, char** argv)
   App.close();
 
 
+
   delete audioS;
+  delete resourceM;
   // Done.
   return 0;
 }

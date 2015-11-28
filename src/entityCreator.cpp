@@ -1,23 +1,12 @@
 #include "entityCreator.h"
+#include "global.h"
 #include <cmath>
-
 #include <iostream>
 
 
-EntityCreator::TextureManager::~TextureManager(){
-  for(std::map<std::string, sf::Texture *>::iterator it = name_to_texture.begin(); it != name_to_texture.end(); ++it) {
-    delete it->second;
-  }
-}
 void EntityCreator::TextureManager::addTexture(std::string &file_name, int index){
-  if (name_to_texture.count(file_name) < 1) {
-    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-    sf::Texture *texture_tmp = new sf::Texture();
-    texture_tmp->loadFromFile(file_name.c_str());
-    name_to_texture[file_name] = texture_tmp;
     if (index >= 0) {
       index_to_name[index] = file_name;
-    }
   }
 }
 void EntityCreator::TextureManager::addTexture(const char *file_name, int index){
@@ -25,13 +14,7 @@ void EntityCreator::TextureManager::addTexture(const char *file_name, int index)
   addTexture(string_tmp, index);
 }
 sf::Texture *EntityCreator::TextureManager::getTexture(std::string &file_name){
-  if (name_to_texture.count(file_name) >=1 ) {
-    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-    return it->second;
-  }
-  addTexture(file_name);
-  std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-  return it->second;
+  return global()->gameEngine.resourceManager->getTexture(file_name);
 }
 sf::Texture *EntityCreator::TextureManager::getTexture(int index){
   if ( index_to_name.count(index) >= 1) {
@@ -364,4 +347,14 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
 
   em->addEntity(e);
 
+}
+void EntityCreator::createInventory(sf::Vector2f xy){
+  Entity *e = new Entity(em->getNewID());
+  //e->setXY(xy);
+  InventoryComponent *ic = new InventoryComponent();
+  ic->addItem(InventoryComponent::INV_BULLET_COMMON, 5);
+  ic->addItem(InventoryComponent::INV_BULLET_SMOKE, 5);
+  e->addComponent(ic);
+
+  em->addEntity(e);
 }
