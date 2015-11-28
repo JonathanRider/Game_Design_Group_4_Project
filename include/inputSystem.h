@@ -20,6 +20,7 @@ public:
 private:
   constants::Input interprertForPlayer(unsigned long input);
   constants::Input interpretForLogicSystem(unsigned long input);
+  constants::Input interprertForInventory(unsigned long input);
   unsigned long getKeyInputPolling();
   unsigned long getMouseInputPolling(sf::Vector2f &position);
   unsigned long getKeyInputEvent(sf::Event &event);

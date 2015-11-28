@@ -57,10 +57,10 @@ void InventoryComponent::prevItem(){
 }
 bool InventoryComponent::consume() {
   if (current_index >= 0 ) {
-    if (inventory_list[current_index].number == 0) {
+    if (inventory_list[current_index].number <= 0) {
       return false;
     }
-    inventory_list[current_index].number --;
+    inventory_list[current_index].number -= 1;
     return true;
   }
   return false;

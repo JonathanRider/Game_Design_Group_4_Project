@@ -129,4 +129,17 @@ void Entity::receiveInput(constants::Input input){
     }
 
   }
+  if (this->getComponent(constants::INVENTORY, c)) {
+    InventoryComponent *ip = (InventoryComponent*) c;
+    switch (input) {
+      case constants::INPUT_PREVITEM:
+        ip->prevItem();
+        break;
+      case constants::INPUT_NEXTITEM:
+        ip->nextItem();
+        break;
+      default:
+        break;
+    }
+  }
 }

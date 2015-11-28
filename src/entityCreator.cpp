@@ -1,5 +1,7 @@
 #include "entityCreator.h"
 #include "global.h"
+#include "typeConversion.h"
+#include <string.h>
 #include <cmath>
 #include <iostream>
 
@@ -348,13 +350,24 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
   em->addEntity(e);
 
 }
-void EntityCreator::createInventory(sf::Vector2f xy){
+void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std::string> &item_list){
+
   Entity *e = new Entity(em->getNewID());
+
   //e->setXY(xy);
   InventoryComponent *ic = new InventoryComponent();
-  ic->addItem(InventoryComponent::INV_BULLET_COMMON, 5);
-  ic->addItem(InventoryComponent::INV_BULLET_SMOKE, 5);
+  std::map<std::string, std::string>::iterator it;
+  for(it = item_list.begin(); it != item_list.end(); it++) {
+    if (it->first == "common" ) {
+      ic->addItem(InventoryComponent::INV_BULLET_COMMON, typeconvert::string2int(it->second));
+    }
+    if (it->first == "smoke" ) {
+      ic->addItem(InventoryComponent::INV_BULLET_SMOKE, typeconvert::string2int(it->second));
+    }
+  }
   e->addComponent(ic);
 
   em->addEntity(e);
+  em->setInventory(e);
+
 }

@@ -11,6 +11,7 @@ public:
   ~ResourceManager();
 
   sf::Texture *getTexture(std::string &path);
+  sf::Texture *getTexture(const char *path);
   sf::Font *getFont(std::string &path);
   sf::Font *getFont(const char *path);
 

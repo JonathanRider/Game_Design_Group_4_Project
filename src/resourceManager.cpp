@@ -23,6 +23,10 @@ sf::Texture *ResourceManager::getTexture(std::string &path){
     return it->second;
   }
 }
+sf::Texture *ResourceManager::getTexture(const char *path){
+  std::string path_string = path;
+  return getTexture(path_string);
+}
 sf::Font *ResourceManager::getFont(std::string &path){
   std::map<std::string, sf::Font *>::const_iterator it;
   if ( (it = font_map.find(path)) == font_map.end() ) { //not found

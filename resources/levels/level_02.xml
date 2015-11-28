@@ -1,6 +1,10 @@
 <LEVEL>
   <MUSIC file="resources/audio/music/Super_Mario_Bros_Ground_Theme_Hurry_Up.wav" />
   <!-- add multiple files, use ; to seperate -->
+  <INVENTORY>
+    <BULLET type="common" quantity="5" />
+    <BULLET type="smoke" quantity="4" />
+  </INVENTORY>
   <MAP>
     <WALLS>
 

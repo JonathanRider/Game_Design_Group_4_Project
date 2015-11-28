@@ -38,6 +38,9 @@ namespace typeconvert {
       bool positive = number >=0?true:false;
       number = std::abs(number);
       int tmp_num = number;
+      if (number == 0) {
+        return std::string("0");
+      }
       for (i = 0; tmp_num > 0; tmp_num /= 10, i++);
       if ( i > MAX_DIGITS ) {
         i = MAX_DIGITS;

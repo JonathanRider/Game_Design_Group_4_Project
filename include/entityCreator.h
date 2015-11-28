@@ -7,6 +7,7 @@
 #include "constants.h"
 #include "SFML/Graphics.hpp"
 #include <vector>
+#include <map>
 
 class EntityCreator
 {
@@ -25,7 +26,7 @@ public:
   void createFinish(sf::Vector2f xy, std::string sprite_file_name = "");
   void createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name = "");
   void createTrap(sf::Vector2f xy, bool isVisible = true, std::string sprite_file_name = "");
-  void createInventory(sf::Vector2f xy);
+  void createInventory(sf::Vector2f xy, std::map<std::string, std::string> &item_list);
 private:
 
 

@@ -1,6 +1,10 @@
 <LEVEL>
   <MUSIC file="resources/audio/music/Super_Mario_Bros_Ground_Theme.wav" />
   <!-- add multiple files, use ; to seperate -->
+  <INVENTORY>
+    <BULLET type="common" quantity="5" />
+    <BULLET type="smoke" quantity="4" />
+  </INVENTORY>
   <MAP>
     <WALLS>
       <!-- <WALL position="5.5;7.5" dimension="1;1"/>

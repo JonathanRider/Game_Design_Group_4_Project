@@ -92,7 +92,6 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     global()->gameEngine.audioSystem->addMusicList(string_list);
   }
 
-
   //walls
   XMLNode xMap=xMainNode.getChildNode("MAP");
   XMLNode xWalls=xMap.getChildNode("WALLS");
@@ -158,11 +157,22 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     }
   }
 
+  {//INVENTORY
+    XMLNode xInv=xMainNode.getChildNode("INVENTORY");
+    n = xInv.nChildNode("BULLET");
+    std::map<std::string, std::string> item_list;
+    for (int i=0; i < n; i++){
+      XMLNode xBullet=xInv.getChildNode("BULLET", i);
+      item_list.insert(std::pair<std::string,std::string>(xBullet.getAttribute("type"),xBullet.getAttribute("quantity")));
+    }
+    eCreator.createInventory(sf::Vector2f(0,0),item_list);
+  }
+
 }
 
 
 void LevelCreator::createLevel() {
-  eCreator.createInventory(sf::Vector2f(0,0));
+
   for (int i=0; i < creation_list.size(); i++) {
     levelCreator_internal::WorldComponent *c = creation_list[i];
     switch(c->type) {
