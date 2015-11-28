@@ -23,20 +23,20 @@
   </MAP>
   <CHARACTERS>
     <PLAYER position="1.5;1.5"  />
-    <ENEMY position="8.5;1.5" property="static" />
-    <ENEMY position="10.5;1.5" property="static" />
-    <ENEMY position="12.5;1.5" property="static" />
-    <ENEMY position="14.5;1.5" property="static" />
-    <ENEMY position="16.5;1.5" property="static" />
-    <ENEMY position="18.5;1.5" property="static" />
-    <ENEMY position="20.5;1.5" property="static" />
-    <ENEMY position="22.5;1.5" property="static" />
-    <ENEMY position="24.5;1.5" property="static" />
-    <ENEMY position="26.5;1.5" property="static" />
-    <ENEMY position="28.5;1.5" property="static" />
-    <ENEMY position="30.5;1.5" property="static" />
-    <ENEMY position="32.5;1.5" property="static" />
-    <ENEMY position="34.5;1.5" property="static" />
-    <ENEMY position="36.5;1.5" property="static" />
+    <ENEMY position="8.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="10.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="12.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="14.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="16.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="18.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="20.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="22.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="24.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="26.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="28.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="30.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="32.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="34.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
+    <ENEMY position="36.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="100" rotateangle="90" />
   </CHARACTERS>
 </LEVEL>

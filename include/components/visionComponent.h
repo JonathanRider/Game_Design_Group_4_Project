@@ -8,7 +8,7 @@
 class VisionComponent : public Component
 {
 public:
-  VisionComponent(sf::Vector2f location, float l, float dir, float a);
+  VisionComponent(sf::Vector2f location, float l, float dir, float a, float minRAngle = 0, float maxRAngle = 0);
   ~VisionComponent(){delete triFan;}
 
   void setLength(float l){length = l;}
@@ -20,6 +20,15 @@ public:
   void setAlert(bool a){ alert = a;}
   bool getAlert(){ return alert; }
   float getVisionResolution(){return visionResolution;}
+
+  void setMinRotateAngle(float a){minRotateAngle = a;}
+  float getMinRotateAngle(){return minRotateAngle;}
+  void setMaxRotateAngle(float a){maxRotateAngle = a;}
+  float getMaxRotateAngle(){return maxRotateAngle;}
+  int getRotateDirection(){return rotateDirection;}
+  void setRotateDirection(int d){rotateDirection = d;}
+
+  void rotate(float time);
 
   sf::VertexArray* getTriangles(){return triFan;}
 
@@ -34,6 +43,10 @@ private:
   float direction;
   float coneAngle;
   float visionResolution;
+
+  float minRotateAngle;
+  float maxRotateAngle;
+  int rotateDirection;
 
   bool alert;
   sf::VertexArray* triFan;

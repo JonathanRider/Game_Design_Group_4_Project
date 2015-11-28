@@ -20,18 +20,6 @@ void LogicSystem::update(float time){
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
       (*iterator)->move(time);
 
-      //cleanup projectiles
-      // if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
-      //   MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
-      //   if(mc->getVelocity() == 0){
-      //     delete *iterator;
-      //     iterator = eList->erase(iterator);
-      //     iterator--;
-      //     continue;
-      //   }
-      // }
-
-
 
       //Timer updates
       if((*iterator)->hasComponent(constants::TIMER)){
@@ -44,6 +32,11 @@ void LogicSystem::update(float time){
           iterator--;
           continue;
         }
+      }
+
+      if((*iterator)->hasComponent(constants::VISION)){
+        VisionComponent *vc = (VisionComponent*)(*iterator)->getComponent(constants::VISION);
+        vc->rotate(time);
       }
 
       //movement Collission detection

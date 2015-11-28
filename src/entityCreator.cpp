@@ -55,11 +55,11 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
   } else if (type == constants::WALL) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
-    this->createMovingEnemy(xy, sprite_file_name);
+    this->createMovingEnemy(xy, 180, 90, 300, sprite_file_name);
   } else if (type == constants::FINISH) {
     this->createFinish(xy, sprite_file_name);
   }else if (type== constants::ENEMY_STATIC){
-    this->createStaticEnemy(xy, sprite_file_name);
+    this->createStaticEnemy(xy, 180, 90, 300, 90, sprite_file_name);
   } else if (type == constants::TRAP) {
     this->createTrap(xy, true, sprite_file_name);
   }
@@ -164,7 +164,7 @@ void EntityCreator::createBox(sf::Vector2f xy, std::string sprite_file_name) {
 
 }
 
-void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_name) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -192,12 +192,8 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_n
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   e->addComponent(colc);
 
-    VisionComponent *vc = new VisionComponent(e->getXY(), 300, 270, 90);
-  if(xy.y < 400){
+  VisionComponent *vc = new VisionComponent(e->getXY(), viewDistance, viewDirection, viewAngle);
 
-    vc->setDirection(90);
-    // mc->setDirection(0);
-  }
   e->addComponent(vc);
 
   Component *kc = new Component(constants::KILLABLE);
@@ -209,7 +205,7 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_n
   em->addEntity(e);
 
 }
-void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_name) {
+void EntityCreator::createStaticEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, float rotateAngle, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -225,7 +221,7 @@ void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_n
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
 
-  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 180, 90);
+  VisionComponent *vc = new VisionComponent(e->getXY(), viewDistance, viewDirection, viewAngle, viewDirection - rotateAngle/2, viewDirection + rotateAngle/2);
 
   e->addComponent(vc);
 

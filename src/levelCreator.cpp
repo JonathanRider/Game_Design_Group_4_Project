@@ -48,6 +48,17 @@ namespace {
     height = typeconvert::string2float(part);
   }
 
+  void getFloat(const char *str, float &num){
+    std::string line = str;
+    std::istringstream is(line);
+    std::string part;
+    if ( !std::getline(is, part) ) {
+      std::cout << "Error: Dimension is set incorrectly." << std::endl;
+      return;
+    }
+    num = typeconvert::string2float(part);
+  }
+
   void getStringList(const char *str, std::vector<std::string> &string_list) {
     std::string line = str;
     std::istringstream is(line);
@@ -148,12 +159,21 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
     getPosition(xEnemy.getAttribute("position"), x, y);
     sprite_file_name = xEnemy.getAttribute("sprite") == NULL?"": xEnemy.getAttribute("sprite");
     std::set<int> property_set;
+    float viewAngle, viewDirection, viewDistance;
+    getFloat(xEnemy.getAttribute("viewangle"), viewAngle);
+    getFloat(xEnemy.getAttribute("viewdirection"), viewDirection);
+    getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
     getPropertySet(xEnemy.getAttribute("property"), property_set);
     if (property_set.find(constants::MOVING) != property_set.end() ) {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_MOVING, x, y, sprite_file_name));
+
+      eCreator.createMovingEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance);
+      // creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_MOVING, x, y, sprite_file_name));
     }
     else {
-      creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y, sprite_file_name));
+      float rotateAngle;
+      getFloat(xEnemy.getAttribute("rotateangle"), rotateAngle);
+      eCreator.createStaticEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance, rotateAngle);
+      // creation_list.push_back(new levelCreator_internal::WorldComponent(constants::ENEMY_STATIC, x, y, sprite_file_name));
     }
   }
 

@@ -37,8 +37,8 @@
   <CHARACTERS>
     <PLAYER position="5.5;1.5"  />
 
-    <ENEMY position="6;6.5" property="static" />
-    <ENEMY position="6;9.5" property="static" />
-    <ENEMY position="14.5;1.5" property="static" />
+    <ENEMY position="6;6.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
+    <ENEMY position="6;9.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
+    <ENEMY position="14.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
   </CHARACTERS>
 </LEVEL>
