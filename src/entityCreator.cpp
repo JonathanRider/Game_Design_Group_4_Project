@@ -1,23 +1,14 @@
 #include "entityCreator.h"
+#include "global.h"
+#include "typeConversion.h"
+#include <string.h>
 #include <cmath>
-
 #include <iostream>
 
 
-EntityCreator::TextureManager::~TextureManager(){
-  for(std::map<std::string, sf::Texture *>::iterator it = name_to_texture.begin(); it != name_to_texture.end(); ++it) {
-    delete it->second;
-  }
-}
 void EntityCreator::TextureManager::addTexture(std::string &file_name, int index){
-  if (name_to_texture.count(file_name) < 1) {
-    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-    sf::Texture *texture_tmp = new sf::Texture();
-    texture_tmp->loadFromFile(file_name.c_str());
-    name_to_texture[file_name] = texture_tmp;
     if (index >= 0) {
       index_to_name[index] = file_name;
-    }
   }
 }
 void EntityCreator::TextureManager::addTexture(const char *file_name, int index){
@@ -25,13 +16,7 @@ void EntityCreator::TextureManager::addTexture(const char *file_name, int index)
   addTexture(string_tmp, index);
 }
 sf::Texture *EntityCreator::TextureManager::getTexture(std::string &file_name){
-  if (name_to_texture.count(file_name) >=1 ) {
-    std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-    return it->second;
-  }
-  addTexture(file_name);
-  std::map<std::string, sf::Texture *>::iterator it = name_to_texture.find(file_name);
-  return it->second;
+  return global()->gameEngine.resourceManager->getTexture(file_name);
 }
 sf::Texture *EntityCreator::TextureManager::getTexture(int index){
   if ( index_to_name.count(index) >= 1) {
@@ -46,9 +31,11 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   textureManager.addTexture("resources/graphics/sprite/roy.png",PLAYER);
   textureManager.addTexture("resources/graphics/sprite/soldier.png",ENEMY);
   textureManager.addTexture("resources/graphics/sprite/bullet.png",BULLET);
+  textureManager.addTexture("resources/graphics/sprite/grenade.png",GRENADE);
   textureManager.addTexture("resources/graphics/sprite/portal.png",EXIT);
   textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
   textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
+  textureManager.addTexture("resources/graphics/sprite/trap.png",TRAP);
 }
 
 EntityCreator::~EntityCreator() {
@@ -68,11 +55,11 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
   } else if (type == constants::WALL) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
-    this->createMovingEnemy(xy, sprite_file_name);
+    this->createMovingEnemy(xy, 180, 90, 300, sprite_file_name);
   } else if (type == constants::FINISH) {
     this->createFinish(xy, sprite_file_name);
   }else if (type== constants::ENEMY_STATIC){
-    this->createStaticEnemy(xy, sprite_file_name);
+    this->createStaticEnemy(xy, 180, 90, 300, 90, sprite_file_name);
   } else if (type == constants::TRAP) {
     this->createTrap(xy, true, sprite_file_name);
   }
@@ -177,7 +164,7 @@ void EntityCreator::createBox(sf::Vector2f xy, std::string sprite_file_name) {
 
 }
 
-void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_name) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -205,12 +192,8 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_n
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   e->addComponent(colc);
 
-    VisionComponent *vc = new VisionComponent(e->getXY(), 300, 270, 90);
-  if(xy.y < 400){
+  VisionComponent *vc = new VisionComponent(e->getXY(), viewDistance, viewDirection, viewAngle);
 
-    vc->setDirection(90);
-    // mc->setDirection(0);
-  }
   e->addComponent(vc);
 
   Component *kc = new Component(constants::KILLABLE);
@@ -222,7 +205,7 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, std::string sprite_file_n
   em->addEntity(e);
 
 }
-void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_name) {
+void EntityCreator::createStaticEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, float rotateAngle, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -238,7 +221,7 @@ void EntityCreator::createStaticEnemy(sf::Vector2f xy, std::string sprite_file_n
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
 
-  VisionComponent *vc = new VisionComponent(e->getXY(), 300, 180, 90);
+  VisionComponent *vc = new VisionComponent(e->getXY(), viewDistance, viewDirection, viewAngle, viewDirection - rotateAngle/2, viewDirection + rotateAngle/2);
 
   e->addComponent(vc);
 
@@ -257,7 +240,7 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
   // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
   sf::Sprite *sprite = new sf::Sprite();
-  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(GRENADE):textureManager.getTexture(sprite_file_name);
   sprite->setTexture(*texture);
   sprite->setOrigin(5,5);
 
@@ -350,7 +333,7 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
 
   e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
   sf::Sprite *sprite = new sf::Sprite();
-  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(SMOKE):textureManager.getTexture(sprite_file_name);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(TRAP):textureManager.getTexture(sprite_file_name);
   sprite->setTexture(*texture);
   sprite->setOrigin(size/2, size/2);
   GraphicsComponent *gc = new GraphicsComponent(sprite);
@@ -363,5 +346,61 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
   e->addComponent(tc);
 
   em->addEntity(e);
+
+}
+void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std::string> &item_list){
+
+  Entity *e = new Entity(em->getNewID());
+
+  //e->setXY(xy);
+  InventoryComponent *ic = new InventoryComponent();
+  std::map<std::string, std::string>::iterator it;
+  for(it = item_list.begin(); it != item_list.end(); it++) {
+    if (it->first == "common" ) {
+      ic->addItem(InventoryComponent::INV_BULLET_COMMON, typeconvert::string2int(it->second));
+    }
+    if (it->first == "smoke" ) {
+      ic->addItem(InventoryComponent::INV_BULLET_SMOKE, typeconvert::string2int(it->second));
+    }
+  }
+
+  e->addComponent(ic);
+
+  em->addEntity(e);
+  em->setInventory(e);
+
+}
+
+void EntityCreator::createBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
+  // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
+  sprite->setOrigin(5,5);
+
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+  MoveableComponent *mc = new MoveableComponent(999999,0, velocity); //accel, decel, max speed
+  mc->setDirection(direction);
+  mc->setVelocity(velocity);
+  mc->setAccelerating(false);
+  e->addComponent(mc);
+
+  Component *bpc = new Component(constants::BULLETPROJECTILE);
+  e->addComponent(bpc);
+  Component *dc = new Component(constants::DEADLY);
+  e->addComponent(dc);
+  CollidableComponent *colc = new CollidableComponent(e->getXY());
+  e->addComponent(colc);
+
+
+
+
+  em->addEntity(e);
+
 
 }

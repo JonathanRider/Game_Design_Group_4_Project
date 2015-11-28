@@ -18,19 +18,14 @@ void LogicSystem::update(float time){
     std::list<Entity*>::iterator iterator;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
+
+      if((*iterator)->hasComponent(constants::MARKEDFORDELETION)){
+        delete *iterator;
+        iterator = eList->erase(iterator);
+        iterator--;
+      }
+
       (*iterator)->move(time);
-
-      //cleanup projectiles
-      // if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
-      //   MoveableComponent *mc = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
-      //   if(mc->getVelocity() == 0){
-      //     delete *iterator;
-      //     iterator = eList->erase(iterator);
-      //     iterator--;
-      //     continue;
-      //   }
-      // }
-
 
 
       //Timer updates
@@ -44,6 +39,11 @@ void LogicSystem::update(float time){
           iterator--;
           continue;
         }
+      }
+
+      if((*iterator)->hasComponent(constants::VISION)){
+        VisionComponent *vc = (VisionComponent*)(*iterator)->getComponent(constants::VISION);
+        vc->rotate(time);
       }
 
       //movement Collission detection
@@ -62,15 +62,23 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
   switch(input) {
     case constants::INPUT_SHOOT :
       {
+        if (      ((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->consume()) {
         sf::Vector2f position = *(sf::Vector2f*)extra_data;
-      //create bullets
-      float dx = 400 - position.x;
-      float dy = 300 - position.y;
-      float direction =  180 - atan2(dy, dx) * 180 / PI;
-      float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
-      global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
-      //play the sound
-      global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING);
+        //create bullets
+        float dx = 400 - position.x;
+        float dy = 300 - position.y;
+        float direction =  180 - atan2(dy, dx) * 180 / PI;
+        float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
+        if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_COMMON) {
+          global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, speed);
+        }
+        else if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_SMOKE) {
+          global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
+        }
+
+        //play the sound
+        global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING);
+        }
       }
       return;
     default:
@@ -129,6 +137,7 @@ void LogicSystem::resolveCollisions(Entity *e){
               MoveableComponent *mp = (MoveableComponent*)c;
               mc->setVelocity(0);
             }
+            e->addComponent(new Component(constants::MARKEDFORDELETION));
             continue;
           }
         }
@@ -186,6 +195,12 @@ void LogicSystem::resolveCollisions(Entity *e){
               mc->setDirection(540 - mc->getDirection());
             }
           }
+
+          if(e->hasComponent(constants::BULLETPROJECTILE)){
+            e->addComponent(new Component(constants::MARKEDFORDELETION));
+          }
+
+
 
           //code to allow sliding along the collisions
           //move just x

@@ -37,9 +37,11 @@ void InputSystem::update(float time){
 
   //feed the input to every possible parties...
   if (global()->gameEngine.gameState == constants::PLAYING){
+    input_container |= getKeyInputEvent(event);
     input_container |= getKeyInputPolling();
     input_container |= getMouseInputEvent(event, mouse_position);
     manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
+    manager->getInventory()->receiveInput(interprertForInventory(input_container));
     global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
   }
 
@@ -64,18 +66,18 @@ unsigned long InputSystem::getKeyInputPolling() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
     ret_val |= KEY_D_PRESSED;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-    ret_val |= KEY_E_PRESSED;
-  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+//    ret_val |= KEY_E_PRESSED;
+//  }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)){
     ret_val |= KEY_F_PRESSED;
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
     ret_val |= KEY_R_PRESSED;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-    ret_val |= KEY_Q_PRESSED;
-  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+//    ret_val |= KEY_Q_PRESSED;
+//  }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
     ret_val |= KEY_P_PRESSED;
   }
@@ -105,6 +107,12 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
     return ret_val;
   }
   switch(event.key.code){
+    case sf::Keyboard::E:
+      ret_val |= KEY_E_PRESSED;
+      break;
+    case sf::Keyboard::Q:
+      ret_val |= KEY_Q_PRESSED;
+      break;
     case sf::Keyboard::Return:
       ret_val |= KEY_ENTER_PRESSED;
       break;
@@ -177,6 +185,18 @@ constants::Input InputSystem::interpretForMenu(unsigned long input) {
     return constants::INPUT_CONFIRM;
   }
   return constants::INPUT_UNKNOWN;
+}
+
+constants::Input InputSystem::interprertForInventory(unsigned long input){
+  unsigned long key_pressed = input & (KEY_Q_PRESSED | KEY_E_PRESSED);
+  switch (key_pressed) {
+    case KEY_Q_PRESSED:
+      return constants::INPUT_PREVITEM;
+    case KEY_E_PRESSED:
+      return constants::INPUT_NEXTITEM;
+    default:
+      return constants::INPUT_UNKNOWN;
+  }
 }
 
 void InputSystem::handleMenu(constants::Input input){

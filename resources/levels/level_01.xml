@@ -1,6 +1,10 @@
 <LEVEL>
   <MUSIC file="resources/audio/music/Super_Mario_Bros_Ground_Theme.wav" />
   <!-- add multiple files, use ; to seperate -->
+  <INVENTORY>
+    <BULLET type="common" quantity="5" />
+    <BULLET type="smoke" quantity="4" />
+  </INVENTORY>
   <MAP>
     <WALLS>
       <!-- <WALL position="5.5;7.5" dimension="1;1"/>
@@ -30,7 +34,7 @@
   </MAP>
   <CHARACTERS>
     <PLAYER position="1.5;6"  />
-    <ENEMY position="7.5;9.5" property="moving" />
-    <ENEMY position="7.5;1.5" property="moving" />
+    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" />
+    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300"/>
   </CHARACTERS>
 </LEVEL>
