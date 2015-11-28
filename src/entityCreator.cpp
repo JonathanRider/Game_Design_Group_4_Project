@@ -46,9 +46,11 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   textureManager.addTexture("resources/graphics/sprite/roy.png",PLAYER);
   textureManager.addTexture("resources/graphics/sprite/soldier.png",ENEMY);
   textureManager.addTexture("resources/graphics/sprite/bullet.png",BULLET);
+  textureManager.addTexture("resources/graphics/sprite/grenade.png",GRENADE);
   textureManager.addTexture("resources/graphics/sprite/portal.png",EXIT);
   textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
   textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
+  textureManager.addTexture("resources/graphics/sprite/trap.png",TRAP);
 }
 
 EntityCreator::~EntityCreator() {
@@ -257,7 +259,7 @@ void EntityCreator::createGrenade(sf::Vector2f xy, float direction, float veloci
   e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
   // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
   sf::Sprite *sprite = new sf::Sprite();
-  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(GRENADE):textureManager.getTexture(sprite_file_name);
   sprite->setTexture(*texture);
   sprite->setOrigin(5,5);
 
@@ -350,7 +352,7 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
 
   e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
   sf::Sprite *sprite = new sf::Sprite();
-  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(SMOKE):textureManager.getTexture(sprite_file_name);
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(TRAP):textureManager.getTexture(sprite_file_name);
   sprite->setTexture(*texture);
   sprite->setOrigin(size/2, size/2);
   GraphicsComponent *gc = new GraphicsComponent(sprite);
