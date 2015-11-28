@@ -11,7 +11,7 @@ public:
   InventoryComponent();
   ~InventoryComponent();
 
-  enum InventoryItem { INV_BULLET_COMMON, INV_BULLET_SMOKE, /*add inventory item before here */ INV_MAX };
+  enum InventoryItem { INV_GUNICON, INV_GRENADEICON, /*add inventory item before here */ INV_MAX };
   void addItem(InventoryItem item, int number);
   void nextItem();
   void prevItem();

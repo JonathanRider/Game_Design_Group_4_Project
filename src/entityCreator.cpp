@@ -354,8 +354,8 @@ void EntityCreator::createInventory(sf::Vector2f xy){
   Entity *e = new Entity(em->getNewID());
   //e->setXY(xy);
   InventoryComponent *ic = new InventoryComponent();
-  ic->addItem(InventoryComponent::INV_BULLET_COMMON, 5);
-  ic->addItem(InventoryComponent::INV_BULLET_SMOKE, 5);
+  ic->addItem(InventoryComponent::INV_GUNICON, 5);
+  ic->addItem(InventoryComponent::INV_GRENADEICON, 5);
   e->addComponent(ic);
 
   em->addEntity(e);
