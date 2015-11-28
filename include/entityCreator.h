@@ -39,7 +39,7 @@ private:
   private:
     std::map<int, std::string> index_to_name;
   };
-  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, EXIT, BOX, SMOKE, NUM_OF_TEXTURES};
+  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, GRENADE, EXIT, BOX, SMOKE, TRAP, NUM_OF_TEXTURES};
   TextureManager textureManager;
   EntityManager *em;
 

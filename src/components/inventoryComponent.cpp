@@ -7,8 +7,8 @@ InventoryComponent::InventoryComponent(){
   current_index = -1;
   texture_name_list.resize(INV_MAX);
 
-  texture_name_list[INV_BULLET_COMMON]="resources/graphics/sprite/inv_bullet_common.png";
-  texture_name_list[INV_BULLET_SMOKE]="resources/graphics/sprite/inv_bullet_smoke.png";
+  texture_name_list[INV_BULLET_COMMON]="resources/graphics/sprite/gunIcon.png";
+  texture_name_list[INV_BULLET_SMOKE]="resources/graphics/sprite/grenadeIcon.png";
 
   box_display.setSize(sf::Vector2f(50, 100));
 //  box_display.setOutlineColor(sf::Color::Red);
