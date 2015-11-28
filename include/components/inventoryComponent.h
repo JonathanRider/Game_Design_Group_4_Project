@@ -15,7 +15,7 @@ public:
   void addItem(InventoryItem item, int number);
   void nextItem();
   void prevItem();
-//  void getCurrent();
+  InventoryItem getCurrent();
   bool consume();//consume the current item pointed by current_index; return false if the number of the item is already 0;
 
   void updateGraphics();

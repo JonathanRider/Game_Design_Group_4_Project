@@ -55,6 +55,14 @@ void InventoryComponent::prevItem(){
     }
   }
 }
+InventoryComponent::InventoryItem InventoryComponent::getCurrent(){
+  if (current_index >= 0) {
+    return inventory_list[current_index].item;
+  }
+  else {
+    return INV_MAX;
+  }
+}
 bool InventoryComponent::consume() {
   if (current_index >= 0 ) {
     if (inventory_list[current_index].number <= 0) {
