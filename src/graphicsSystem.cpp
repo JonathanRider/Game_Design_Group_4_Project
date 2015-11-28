@@ -127,6 +127,10 @@ void GraphicsSystem::update(float time){
         }
         draw(&va);
       }
+      if ((*iterator)->hasComponent(constants::INVENTORY)) {
+        InventoryComponent *ip = (InventoryComponent *) (*iterator)->getComponent(constants::INVENTORY);
+        ip->draw(*screen, view);
+      }
     }
     if (global()->gameEngine.gameState == constants::PAUSED) {
       sf::Texture *pausedTex = new sf::Texture();

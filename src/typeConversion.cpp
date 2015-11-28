@@ -1,4 +1,6 @@
 #include "typeConversion.h"
+#include <cmath>
+#define MAX_DIGITS 20
 namespace typeconvert {
     float string2float(std::string &s){
       float r_val = 0;
@@ -29,5 +31,24 @@ namespace typeconvert {
             r_val = r_val * 10 + tmp[i] - 48;
       }
       return r_val;
+    }
+    std::string int2string(int number){
+      char char_string[MAX_DIGITS + 1];
+      int i;
+      bool positive = number >=0?true:false;
+      number = std::abs(number);
+      int tmp_num = number;
+      for (i = 0; tmp_num > 0; tmp_num /= 10, i++);
+      if ( i > MAX_DIGITS ) {
+        i = MAX_DIGITS;
+      }
+      char_string[i] = '\0';
+      for (i--; i >= 0 ; number /= 10, i--){
+        char_string[i] = number % 10 + 48;
+      }
+      if (positive)
+        return std::string(char_string);
+      else
+        return "-" + std::string(char_string);
     }
 }

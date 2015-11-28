@@ -162,6 +162,7 @@ void LevelCreator::loadLevelFile(std::string &fileName) {
 
 
 void LevelCreator::createLevel() {
+  eCreator.createInventory(sf::Vector2f(0,0));
   for (int i=0; i < creation_list.size(); i++) {
     levelCreator_internal::WorldComponent *c = creation_list[i];
     switch(c->type) {
