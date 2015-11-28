@@ -7,8 +7,8 @@
 class TextComponent : public Component
 {
 public:
-  TextComponent(std::list<sf::Sprite*> tl, float a = 0, float al = 0);
-  ~TextComponent(){delete sprite;}
+  TextComponent(std::vector<sf::Sprite*> tl, float a = 0, float al = 0);
+  ~TextComponent(){};
 
   void addGraphic(sf::Sprite);
   void setRotation(float a);
@@ -19,10 +19,10 @@ public:
   int getMaxCount(){return  maxCount;}
   void nextGraphic(){listCount+=1;}
 
-  std::list<sf::Sprite*> getTextList(){return textList;}
+  std::vector<sf::Sprite*> getTextList(){return textList;}
 
 private:
-  std::list<sf::Sprite*> textList;
+  std::vector<sf::Sprite*> textList;
   int listCount;
   int maxCount;
   float angle;

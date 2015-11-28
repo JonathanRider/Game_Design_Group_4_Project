@@ -20,7 +20,7 @@ private:
   std::vector<sf::Texture*> menuTextures; //should be moved later
   std::vector<sf::Sprite*> mainMenuSprites;
   std::vector<sf::Sprite*> levelMenuSprites;
-  std::vector<std::vector<sf::Sprite*>> textSprites;
+  std::vector<std::vector<sf::Sprite*> > textSprites;
   sf::Sprite* gameOverSprite;
   sf::Sprite* winSprite;
 };
