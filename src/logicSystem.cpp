@@ -18,6 +18,13 @@ void LogicSystem::update(float time){
     std::list<Entity*>::iterator iterator;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
+
+      if((*iterator)->hasComponent(constants::MARKEDFORDELETION)){
+        delete *iterator;
+        iterator = eList->erase(iterator);
+        iterator--;
+      }
+
       (*iterator)->move(time);
 
 
@@ -62,7 +69,8 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
         float dy = 300 - position.y;
         float direction =  180 - atan2(dy, dx) * 180 / PI;
         float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
-        global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
+        // global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
+        global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, speed);
         //play the sound
         global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING);
         }
@@ -124,6 +132,7 @@ void LogicSystem::resolveCollisions(Entity *e){
               MoveableComponent *mp = (MoveableComponent*)c;
               mc->setVelocity(0);
             }
+            e->addComponent(new Component(constants::MARKEDFORDELETION));
             continue;
           }
         }
@@ -181,6 +190,12 @@ void LogicSystem::resolveCollisions(Entity *e){
               mc->setDirection(540 - mc->getDirection());
             }
           }
+
+          if(e->hasComponent(constants::BULLETPROJECTILE)){
+            e->addComponent(new Component(constants::MARKEDFORDELETION));
+          }
+
+
 
           //code to allow sliding along the collisions
           //move just x

@@ -370,3 +370,37 @@ void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std:
   em->setInventory(e);
 
 }
+
+void EntityCreator::createBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
+  // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
+  sprite->setOrigin(5,5);
+
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+  MoveableComponent *mc = new MoveableComponent(999999,0, velocity); //accel, decel, max speed
+  mc->setDirection(direction);
+  mc->setVelocity(velocity);
+  mc->setAccelerating(false);
+  e->addComponent(mc);
+
+  Component *bpc = new Component(constants::BULLETPROJECTILE);
+  e->addComponent(bpc);
+  Component *dc = new Component(constants::DEADLY);
+  e->addComponent(dc);
+  CollidableComponent *colc = new CollidableComponent(e->getXY());
+  e->addComponent(colc);
+
+
+
+
+  em->addEntity(e);
+
+
+}
