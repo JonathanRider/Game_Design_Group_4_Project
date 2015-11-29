@@ -4,49 +4,21 @@
 #include "entityManager.h"
 #include "entityCreator.h"
 
-#include <set>
-#include <vector>
 #include <string>
 #include <constants.h>
 #include <SFML/Graphics.hpp>
-
-
-
-
-namespace levelCreator_internal { //it is only used in this file
-  class WorldComponent {
-  public:
-    WorldComponent(constants::EntityType i_t, float i_x, float i_y, std::string file_name = "", std::set<int> *set_p = NULL)
-      : type(i_t), x(i_x), y(i_y), sprite_file_name(file_name), property_set(set_p){}
-    ~WorldComponent(){
-      delete property_set;
-    }
-    constants::EntityType type;
-    std::string sprite_file_name;
-    float x, y;
-    std::set<int> * property_set;
-  };
-
-}
-
 
 class LevelCreator {
 public:
   LevelCreator(EntityManager *m);
   ~LevelCreator();
 
-  void loadLevelFile(std::string &fileName);
-  void createLevel();
+  void loadAndCreateLevel(std::string &fileName);
 private:
-  std::vector<levelCreator_internal::WorldComponent *> creation_list;
 
   EntityManager * manager;
   EntityCreator eCreator;
   float scale;
-
-  void clearList();
-
-
 };
 
 

@@ -105,8 +105,7 @@ void NonPlaying::receiveInput(constants::Input input, void *extra_data){
                   break;
               }
               global()->gameEngine.entityManager->clearAll();
-              global()->gameEngine.levelCreator->loadLevelFile(fileName);
-              global()->gameEngine.levelCreator->createLevel();
+              global()->gameEngine.levelCreator->loadAndCreateLevel(fileName);
 
               global()->gameEngine.gameState = constants::PLAYING;
             } //end of confirm case
