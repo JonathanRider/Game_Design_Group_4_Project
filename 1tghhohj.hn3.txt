@@ -1,0 +1,65 @@
+﻿Merge remote-tracking branch 'origin/master'
+
+Conflicts:
+	include/constants.h
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 10 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   bin/helloworld.cpp
+#	modified:   include/components/inventoryComponent.h
+#	modified:   include/components/visionComponent.h
+#	modified:   include/constants.h
+#	modified:   include/entityCreator.h
+#	modified:   include/entityManager.h
+#	modified:   include/global.h
+#	modified:   include/inputSystem.h
+#	new file:   include/resourceManager.h
+#	deleted:    include/textureLoader.h
+#	modified:   include/typeConversion.h
+#	new file:   resources/font/6809 chargen.ttf
+#	modified:   resources/graphics/sprite/Thumbs.db
+#	modified:   resources/graphics/sprite/box.png
+#	copied:     resources/graphics/sprite/box.png -> resources/graphics/sprite/box1.png
+#	new file:   resources/graphics/sprite/camera.png
+#	new file:   resources/graphics/sprite/dinosaur.png
+#	new file:   resources/graphics/sprite/grenade.png
+#	new file:   resources/graphics/sprite/grenadeIcon.png
+#	new file:   resources/graphics/sprite/gunIcon.png
+#	new file:   resources/graphics/sprite/inv_bullet_common.png
+#	new file:   resources/graphics/sprite/inv_bullet_smoke.png
+#	modified:   resources/graphics/sprite/portal.png
+#	copied:     resources/graphics/sprite/portal.png -> resources/graphics/sprite/portal1.png
+#	modified:   resources/graphics/sprite/roy.png
+#	modified:   resources/graphics/sprite/smoke.png
+#	copied:     resources/graphics/sprite/smoke.png -> resources/graphics/sprite/smoke1.png
+#	new file:   resources/graphics/sprite/trap.png
+#	modified:   resources/levels/level_01.xml
+#	modified:   resources/levels/level_02.xml
+#	modified:   resources/levels/level_03.xml
+#	modified:   src/components/inventoryComponent.cpp
+#	modified:   src/components/visionComponent.cpp
+#	modified:   src/entity.cpp
+#	modified:   src/entityCreator.cpp
+#	modified:   src/graphicsSystem.cpp
+#	modified:   src/inputSystem.cpp
+#	modified:   src/levelCreator.cpp
+#	modified:   src/logicSystem.cpp
+#	new file:   src/resourceManager.cpp
+#	deleted:    src/textureLoader.cpp
+#	modified:   src/typeConversion.cpp
+#
+
