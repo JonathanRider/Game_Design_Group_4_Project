@@ -5,58 +5,11 @@
 GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   screen = w;
   manager = m;
-
-  //Menu stuff will be moved eventually
-  sf::Sprite *main_menu0_sprite = new sf::Sprite;
-  main_menu0_sprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/MainMenu0.png"));
-  mainMenuSprites.push_back(main_menu0_sprite);
-
-  sf::Sprite *main_menu1_sprite = new sf::Sprite;
-  main_menu1_sprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/MainMenu1.png"));
-  mainMenuSprites.push_back(main_menu1_sprite);
-
-  sf::Sprite *level_menu0_sprite = new sf::Sprite;
-  level_menu0_sprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu0.png"));
-  levelMenuSprites.push_back(level_menu0_sprite);
-
-  sf::Sprite *level_menu1_sprite = new sf::Sprite;
-  level_menu1_sprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu1.png"));
-  levelMenuSprites.push_back(level_menu1_sprite);
-
-  sf::Sprite *level_menu2_sprite = new sf::Sprite;
-  level_menu2_sprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu2.png"));
-  levelMenuSprites.push_back(level_menu2_sprite);
-
-  gameOverSprite = new sf::Sprite;
-  gameOverSprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/GameOver.png"));
-
-  winSprite = new sf::Sprite;
-  winSprite->setTexture(* global()->gameEngine.resourceManager->getTexture("resources/graphics/image/Win.png"));
-
 }
 
 
 void GraphicsSystem::update(float time){
-
-  if (global()->gameEngine.gameState == constants::MENU) {
-
-    // sf::Texture *menuTex = new sf::Texture();
-    // menuTex->loadFromFile("resources/MainMenu.png");
-    // sf::Sprite *menuSprite = new sf::Sprite();
-    // menuSprite->setTexture(*menuTex);
-    // draw(*menuSprite);
-    draw(mainMenuSprites[global()->gameEngine.mainMenuState]);
-  } else if (global()->gameEngine.gameState == constants::WIN) {
-    screen->setView(screen->getDefaultView()); //reset view
-    draw(winSprite);
-  } else if (global()->gameEngine.gameState == constants::GAMEOVER) {
-    screen->setView(screen->getDefaultView()); //reset view
-    draw(gameOverSprite);
-  } else if (global()->gameEngine.gameState == constants::LEVELMENU) {
-    screen->setView(screen->getDefaultView()); //reset view
-    draw(levelMenuSprites.at(global()->gameEngine.levelMenuState));
-
-  } else if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
+  if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
     sf::View view;
     view.setCenter(manager->getPlayer()->getXY());
     view.setSize(sf::Vector2f(800, 600));
@@ -125,6 +78,9 @@ void GraphicsSystem::update(float time){
       pausedSprite->setTexture(*pausedTex);
       draw(pausedSprite);
     }
+  }
+  else {
+    global()->gameEngine.nonPlaying->draw(*screen);
   }
 }
 

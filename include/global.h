@@ -6,7 +6,11 @@
 #include "entityCreator.h"
 #include "audioSystem.h"
 #include "resourceManager.h"
+#include "nonPlaying.h"
+#include "entityManager.h"
+#include "levelCreator.h"
 
+class NonPlaying;
 namespace global_internal{ //this namespace is not supposed to use outside the file
   class GameEngine { //used to store some information for run-time
     public:
@@ -15,6 +19,9 @@ namespace global_internal{ //this namespace is not supposed to use outside the f
       EntityCreator *entityCreator;
       AudioSystem *audioSystem;
       ResourceManager *resourceManager;
+      NonPlaying *nonPlaying;
+      EntityManager *entityManager;
+      LevelCreator *levelCreator;
       constants::GameState gameState;
       int mainMenuState;
       int levelMenuState;

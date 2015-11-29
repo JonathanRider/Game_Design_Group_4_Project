@@ -8,6 +8,7 @@
 #include "levelCreator.h"
 #include "audioSystem.h"
 #include "resourceManager.h"
+#include "nonPlaying.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -38,7 +39,9 @@ int main(int argc, char** argv)
   global()->gameEngine.resourceManager = resourceM;
 
   EntityManager* entityM = new EntityManager();
+  global()->gameEngine.entityManager = entityM;
   LevelCreator *lCreator = new LevelCreator(entityM);
+  global()->gameEngine.levelCreator = lCreator;
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
   AudioSystem* audioS = new AudioSystem();
   global()->gameEngine.audioSystem = audioS;
@@ -49,6 +52,8 @@ int main(int argc, char** argv)
   InputSystem* inputS = new InputSystem(entityM, &App, lCreator);;
   EntityCreator* eCreator = new EntityCreator(entityM);
   global()->gameEngine.entityCreator = eCreator;
+  NonPlaying * nonPlaying = new NonPlaying();
+  global()->gameEngine.nonPlaying = nonPlaying;
 
 //  std::string fileName = "resources/levels/level_01.xml";
 //  lCreator->loadLevelFile(fileName);
@@ -86,7 +91,7 @@ int main(int argc, char** argv)
   }
   App.close();
 
-
+  delete nonPlaying;
 
   delete audioS;
   delete resourceM;

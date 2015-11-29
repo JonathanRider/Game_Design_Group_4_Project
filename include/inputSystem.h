@@ -27,7 +27,6 @@ private:
   unsigned long getMouseInputEvent(sf::Event &event, sf::Vector2f &position);
 
   constants::Input interpretForMenu(unsigned long input);
-  void handleMenu(constants::Input input);
 
   EntityManager *manager;
   sf::RenderWindow *screen;
