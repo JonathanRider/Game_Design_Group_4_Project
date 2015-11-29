@@ -16,6 +16,8 @@
 #define KEY_ENTER_PRESSED 1<<10
 #define KEY_UP_PRESSED 1<<11
 #define KEY_DOWN_PRESSED 1<<12
+#define KEY_LEFT_PRESSED 1<<13
+#define KEY_RIGHT_PRESSED 1<<14
 
 InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
   :manager(m), screen(w), lCreator(lc){  }
@@ -84,12 +86,12 @@ unsigned long InputSystem::getKeyInputPolling() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
     ret_val |= KEY_ENTER_PRESSED;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-    ret_val |= KEY_UP_PRESSED;
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-    ret_val |= KEY_DOWN_PRESSED;
-  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+//    ret_val |= KEY_UP_PRESSED;
+//  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+//    ret_val |= KEY_DOWN_PRESSED;
+//  }
   return ret_val;
 }
 unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
@@ -121,6 +123,13 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
       break;
     case sf::Keyboard::Down:
       ret_val |= KEY_DOWN_PRESSED;
+      break;
+    case sf::Keyboard::Left:
+      ret_val |= KEY_LEFT_PRESSED;
+      break;
+    case sf::Keyboard::Right:
+      ret_val |= KEY_RIGHT_PRESSED;
+      break;
     default:
       break;
   }
@@ -180,6 +189,12 @@ constants::Input InputSystem::interpretForMenu(unsigned long input) {
   }
   else if (input & KEY_DOWN_PRESSED) {
     return constants::INPUT_DOWN;
+  }
+  else if (input & KEY_LEFT_PRESSED) {
+    return constants::INPUT_LEFT;
+  }
+  else if (input & KEY_RIGHT_PRESSED) {
+    return constants::INPUT_RIGHT;
   }
   else if (input & KEY_ENTER_PRESSED) {
     return constants::INPUT_CONFIRM;
