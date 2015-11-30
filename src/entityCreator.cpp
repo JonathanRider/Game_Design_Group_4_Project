@@ -36,7 +36,7 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
   textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
   textureManager.addTexture("resources/graphics/sprite/trap.png",TRAP);
-  textureManager.addTexture("resources/graphics/sprite/dinasaur.png",GLASS);
+  textureManager.addTexture("resources/graphics/sprite/glass.png",GLASS);
 }
 
 EntityCreator::~EntityCreator() {
