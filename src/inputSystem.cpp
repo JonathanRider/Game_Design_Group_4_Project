@@ -18,6 +18,7 @@
 #define KEY_DOWN_PRESSED 1<<12
 #define KEY_LEFT_PRESSED 1<<13
 #define KEY_RIGHT_PRESSED 1<<14
+#define KEY_ESC_PRESSED 1<<15 //constants::INPUT_ESC
 
 InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
   :manager(m), screen(w), lCreator(lc){  }
@@ -45,7 +46,12 @@ void InputSystem::update(float time){
     manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
     manager->getInventory()->receiveInput(interprertForInventory(input_container));
     global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
-  }
+  } else if (global()->gameEngine.gameState == constants::PAUSED){
+      input_container |= getKeyInputEvent(event);
+      input_container |= getKeyInputPolling();
+      input_container |= getMouseInputEvent(event, mouse_position);
+      global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
+    }
 
   else {
     input_container |= getKeyInputEvent(event);
@@ -80,12 +86,12 @@ unsigned long InputSystem::getKeyInputPolling() {
 //  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
 //    ret_val |= KEY_Q_PRESSED;
 //  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
-    ret_val |= KEY_P_PRESSED;
-  }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
-    ret_val |= KEY_ENTER_PRESSED;
-  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
+//    ret_val |= KEY_P_PRESSED;
+//  }
+//  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+//    ret_val |= KEY_ENTER_PRESSED;
+//  }
 //  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 //    ret_val |= KEY_UP_PRESSED;
 //  }
@@ -129,6 +135,12 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
       break;
     case sf::Keyboard::Right:
       ret_val |= KEY_RIGHT_PRESSED;
+      break;
+    case sf::Keyboard::Escape:
+      ret_val |= KEY_ESC_PRESSED;
+      break;
+    case sf::Keyboard::P:
+      ret_val |= KEY_P_PRESSED;
       break;
     default:
       break;
@@ -174,10 +186,13 @@ constants::Input InputSystem::interprertForPlayer(unsigned long input){
 }
 
 constants::Input InputSystem::interpretForLogicSystem(unsigned long input) {
-  unsigned long key_pressed = input & ( MOUSE_LEFT_PRESSED );
+  unsigned long key_pressed = input & ( MOUSE_LEFT_PRESSED | KEY_P_PRESSED);
   switch (key_pressed) {
     case MOUSE_LEFT_PRESSED:
       return constants::INPUT_SHOOT;
+    case KEY_P_PRESSED:
+      std::cout <<"interpret pause" << std::endl;
+      return constants::INPUT_PAUSE;
     default:
       return constants::INPUT_UNKNOWN;
   }
@@ -198,6 +213,9 @@ constants::Input InputSystem::interpretForMenu(unsigned long input) {
   }
   else if (input & KEY_ENTER_PRESSED) {
     return constants::INPUT_CONFIRM;
+  }
+  else if (input & KEY_ESC_PRESSED) {
+    return constants::INPUT_ESC;
   }
   return constants::INPUT_UNKNOWN;
 }

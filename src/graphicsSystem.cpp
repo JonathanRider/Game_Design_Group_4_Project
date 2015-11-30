@@ -73,7 +73,7 @@ void GraphicsSystem::update(float time){
     }
     if (global()->gameEngine.gameState == constants::PAUSED) {
       sf::Texture *pausedTex = new sf::Texture();
-      pausedTex->loadFromFile("resources/paused.png");
+      pausedTex->loadFromFile("resources/graphics/image/paused.png");
       sf::Sprite *pausedSprite = new sf::Sprite();
       pausedSprite->setTexture(*pausedTex);
       draw(pausedSprite);

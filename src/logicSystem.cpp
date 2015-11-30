@@ -60,6 +60,16 @@ void LogicSystem::update(float time){
 
 void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
   switch(input) {
+    case constants::INPUT_PAUSE :
+      {
+        if (global()->gameEngine.gameState == constants::PLAYING){
+          global()->gameEngine.gameState =  constants::PAUSED;
+        }
+        else if (global()->gameEngine.gameState == constants::PAUSED ) {
+          global()->gameEngine.gameState = constants::PLAYING;
+        }
+      }
+      return;
     case constants::INPUT_SHOOT :
       {
         if (      ((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->consume()) {

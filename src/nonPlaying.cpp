@@ -32,6 +32,9 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     case constants::INPUT_RIGHT:
       position_column++;
       break;
+    case constants::INPUT_ESC:
+      state = NonPlaying::MAINMENU;
+      break;
     case constants::INPUT_CONFIRM:
       if (level_file_map.find(getCurrentLevel()) != level_file_map.end() ){
         global()->gameEngine.entityManager->clearAll();

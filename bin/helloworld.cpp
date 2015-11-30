@@ -23,10 +23,6 @@ int main(int argc, char** argv)
   Global::init();
   global()->gameEngine.gameState = constants::NONPLAYING;
   //global()->gameEngine.gameState = constants::PLAYING;
-  global()->gameEngine.mainMenuState = 0;
-  global()->gameEngine.levelMenuState = 0;
-  global()->gameEngine.optionsMenuState = 0;
-
   srand (time(NULL));
   // create main window
   sf::RenderWindow App(sf::VideoMode(global()->config.appearance.window_width,
