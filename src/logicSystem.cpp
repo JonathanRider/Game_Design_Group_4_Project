@@ -49,7 +49,7 @@ void LogicSystem::update(float time){
       //movement Collission detection
       if((*iterator)->hasComponent(constants::COLLIDABLE) && (*iterator)->hasComponent(constants::MOVEABLE)){
         resolveCollisions((*iterator));
-        if(global()->gameEngine.gameState == constants::LEVELMENU){
+        if(global()->gameEngine.gameState == constants::NONPLAYING){
           return;
         }
       }
@@ -104,7 +104,8 @@ void LogicSystem::resolveCollisions(Entity *e){
       if((*iterator)->hasComponent(constants::FINISH_COMP)) {
         if(e->getID() == manager->getPlayer()->getID()){
           if(origBB->intersects(*otherBB)){
-            global()->gameEngine.gameState = constants::WIN;
+            global()->gameEngine.gameState = constants::NONPLAYING;
+            global()->gameEngine.nonPlaying->receiveInput(constants::INPUT_WIN, NULL);
             //manager->clearAll();
             return;
             //lCreator->clearList();
@@ -117,7 +118,8 @@ void LogicSystem::resolveCollisions(Entity *e){
         if(trc->getVisibility()) {
           if(e->getID() == manager->getPlayer()->getID()){
             if(origBB->intersects(*otherBB)){
-              global()->gameEngine.gameState = constants::GAMEOVER;
+              global()->gameEngine.gameState = constants::NONPLAYING;
+              global()->gameEngine.nonPlaying->receiveInput(constants::INPUT_LOSE, NULL);
               return;
             }
           }
@@ -347,7 +349,8 @@ void LogicSystem::updateVisionCones(float time){
         if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box)) {
           vc->setAlert(true);
           //caught end game
-          global()->gameEngine.gameState = constants::GAMEOVER;
+          global()->gameEngine.gameState = constants::NONPLAYING;
+          global()->gameEngine.nonPlaying->receiveInput(constants::INPUT_LOSE, NULL);
           break;
         }
       }

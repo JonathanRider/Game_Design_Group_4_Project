@@ -21,7 +21,7 @@
 int main(int argc, char** argv)
 {
   Global::init();
-  global()->gameEngine.gameState = constants::MENU;
+  global()->gameEngine.gameState = constants::NONPLAYING;
   //global()->gameEngine.gameState = constants::PLAYING;
   global()->gameEngine.mainMenuState = 0;
   global()->gameEngine.levelMenuState = 0;

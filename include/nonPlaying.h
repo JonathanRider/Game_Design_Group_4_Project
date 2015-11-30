@@ -4,11 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
+
+
 class Menu {
 public:
   Menu(){}
   virtual ~Menu(){}
-  virtual void receiveInput(constants::Input input, void *extra_data) = 0;
+  virtual void receiveInput(constants::Input input, int &state, void *extra_data = NULL) = 0;
   virtual void draw(sf::RenderWindow &w) = 0;
 };
 
@@ -16,7 +18,7 @@ class LevelMenu: public Menu {
 public:
   LevelMenu();
   ~LevelMenu();
-  void receiveInput(constants::Input input, void *extra_data);
+  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
   void draw(sf::RenderWindow &w);
 private:
   void drawCell(sf::RenderWindow &w, int row_position, int column_position);
@@ -30,6 +32,35 @@ private:
   float interval_horizontal, interval_vertical;
 };
 
+class MainMenu: public Menu {
+public:
+  MainMenu();
+  ~MainMenu();
+  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
+  void draw(sf::RenderWindow &w);
+private:
+  int current_index;
+};
+
+class OptionsMenu: public Menu {
+public:
+  OptionsMenu();
+  ~OptionsMenu();
+  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
+  void draw(sf::RenderWindow &w);
+};
+class TerminalMenu: public Menu { //for win or lose
+public:
+  TerminalMenu();
+  ~TerminalMenu();
+  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
+  void draw(sf::RenderWindow &w);
+  bool isWin(){return b_win;}
+  void setWin(bool b){b_win = b;}
+private:
+  bool b_win;
+};
+
 class NonPlaying {
   //This class handles everything when the game is not in playing state;
 public:
@@ -38,14 +69,13 @@ public:
 
   void receiveInput(constants::Input input, void *extra_data);
   void draw(sf::RenderWindow &w);
+  enum NonPlayingState {MAINMENU, LEVELMENU, OPTIONSMENU, TERMINALMENU};
 private:
-  std::vector<sf::Texture*> menuTextures; //should be moved later
-  std::vector<sf::Sprite*> mainMenuSprites;
-  std::vector<sf::Sprite*> levelMenuSprites;
-  std::vector<std::vector<sf::Sprite*> > textSprites;
-  sf::Sprite* gameOverSprite;
-  sf::Sprite* winSprite;
+  NonPlayingState internal_state;
   LevelMenu levelMenu;
+  OptionsMenu optionsMenu;
+  MainMenu mainMenu;
+  TerminalMenu terminalMenu;
 };
 
 #endif
