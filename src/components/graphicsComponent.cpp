@@ -31,12 +31,24 @@ void GraphicsComponent::rotate(float a){
 }
 void GraphicsComponent::rotateTo(sf::Vector2f &position){
   sf::Vector2f my_position = getCenter();
-  static float angle = 0;
-  if (my_position == position){
+
+  //std::cout << my_position.x <<"," <<my_position.y <<"   "<<position.x <<"," <<position.y <<std::endl;
+  float angle = 0;
+  if (400 == position.x && 300 == position.y){
     return;
     //do I need to do something?
   }
-  angle = computeAngle(my_position, position);
+  else if (400 == position.x ){
+    angle = 300 < position.y?0:180;
+  }
+  else if (300 == position.y){
+    angle = 400 < position.x?270:90;
+  }
+  else {
+    angle = -1*atan2((position.x - 400), (position.y - 300))*180/PI;
+  }
+  angle += 180;
+
   sprite->setRotation(angle);
 }
 sf::Vector2f GraphicsComponent::getCenter(){
