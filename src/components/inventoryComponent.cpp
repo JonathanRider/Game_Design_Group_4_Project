@@ -98,6 +98,6 @@ void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
   w.draw(box_display);
   inv_sprite.setPosition(base_point.x + 10, base_point.y + 10);
   w.draw(inv_sprite);
-  number_display.setPosition(base_point.x + 10, base_point.y + 60);
+  number_display.setPosition(base_point.x + 10, base_point.y + 65);
   w.draw(number_display);
 }
