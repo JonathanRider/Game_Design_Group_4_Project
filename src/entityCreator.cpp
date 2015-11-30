@@ -36,7 +36,7 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
   textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
   textureManager.addTexture("resources/graphics/sprite/trap.png",TRAP);
-  textureManager.addTexture("resources/graphics/sprite/dinasaur.png",GLASS);
+  textureManager.addTexture("resources/graphics/sprite/glass.png",GLASS);
 }
 
 EntityCreator::~EntityCreator() {
@@ -411,12 +411,14 @@ void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std:
 void EntityCreator::createBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name){
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
-  e->setBoundingBox(new sf::FloatRect(xy.x-5, xy.y-5, 10, 10));
+  e->setBoundingBox(new sf::FloatRect(xy.x-3, xy.y-5, 6, 10));
   // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
   sf::Sprite *sprite = new sf::Sprite();
   sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
   sprite->setTexture(*texture);
-  sprite->setOrigin(5,5);
+  sprite->setOrigin(6,6);
+  sprite->setRotation(90.0);
+  sprite->rotate(-1*direction);
 
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
