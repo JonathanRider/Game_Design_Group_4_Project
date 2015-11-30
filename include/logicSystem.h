@@ -29,6 +29,7 @@ public:
   constants::GameState* state;
 private:
 
+  bool playerVisible;
   void resolveCollisions(Entity* e);
   void resolveTimer(Entity* e);
 

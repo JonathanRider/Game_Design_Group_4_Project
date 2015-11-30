@@ -22,7 +22,8 @@ public:
   void createPlayer(sf::Vector2f xy, std::string sprite_file_name = "");
   void createWall(sf::Vector2f xy, float width, float height, std::string sprite_file_name = "");
   void createBox(sf::Vector2f xy, std::string sprite_file_name = "");
-  void createMovingEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name = "");
+  void createGlass(sf::Vector2f xy, float width, float height, std::string sprite_file_name ="");
+  void createMovingEnemy(sf::Vector2f xy, float xMin, float xMax, float yMin, float yMax, float moveDirection, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name = "");
   void createStaticEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, float rotateAngle, std::string sprite_file_name = "");
   void createFinish(sf::Vector2f xy, std::string sprite_file_name = "");
   void createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name = "");
@@ -40,7 +41,7 @@ private:
   private:
     std::map<int, std::string> index_to_name;
   };
-  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, GRENADE, EXIT, BOX, SMOKE, TRAP, NUM_OF_TEXTURES};
+  enum TextureIndex {WALL, PLAYER, ENEMY, BULLET, GRENADE, EXIT, BOX, SMOKE, TRAP, GLASS, NUM_OF_TEXTURES};
   TextureManager textureManager;
   EntityManager *em;
 

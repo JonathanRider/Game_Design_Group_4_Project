@@ -2,43 +2,54 @@
   <MUSIC file="resources/audio/music/Super_Mario_Bros_Ground_Theme.wav" />
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
-    <BULLET type="common" quantity="5" />
-    <BULLET type="smoke" quantity="4" />
+    <BULLET type="common" quantity="50" />
+    <BULLET type="smoke" quantity="50" />
   </INVENTORY>
   <MAP>
     <WALLS>
-      <!-- <WALL position="5.5;7.5" dimension="1;1"/>
-      <WALL position="7.5;7.5" dimension="1;1"/> -->
-
-      <WALL position="0;0" dimension="16;1"/>
-      <WALL position="0;12" dimension="16;1"/>
-      <WALL position="0;1" dimension="1;11"/>
-      <WALL position="15;1" dimension="1;11"/>
-
-      <WALL position="1;2" dimension="11;1"/>
-      <WALL position="13;2" dimension="2;2"/>
-
-      <WALL position="2;4" dimension="13;2"/>
-      <WALL position="7;6" dimension="8;1"/>
-
-      <WALL position="2;7" dimension="14;1"/>
-      <WALL position="2;8" dimension="14;1"/>
-      <WALL position="1;10" dimension="3;2"/>
-      <WALL position="5;10" dimension="11;1"/>
-      <WALL position="7;9" dimension="8;1"/>
 
 
+      <WALL position="5;5" dimension="16;1"/>
+      <WALL position="5;17" dimension="16;1"/>
+      <WALL position="5;6" dimension="1;11"/>
+      <WALL position="20;6" dimension="1;11"/>
 
+      <WALL position="8;16" dimension="1;1"/>
+      <WALL position="10;15" dimension="1;1"/>
+      <WALL position="12;16" dimension="1;1"/>
+      <WALL position="14;15" dimension="1;1"/>
+      <WALL position="16;16" dimension="1;1"/>
+      <WALL position="18;15" dimension="1;1"/>
+      <WALL position="19;15" dimension="1;1"/>
+
+
+      <!-- <WALL position="5;14" dimension="15;1"/> -->
 
     </WALLS>
-    <FINISH position="14.5;11.5" />
+
+    <GLASSWALLS>
+
+      <GLASS position="6;14" dimension="14;1"/>
+
+    </GLASSWALLS>
+    <BOXES>
+      <BOX position="8.5;15.5"/>
+      <BOX position="10.5;16.5"/>
+      <BOX position="12.5;15.5"/>
+      <BOX position="14.5;16.5"/>
+      <BOX position="16.5;15.5"/>
+      <BOX position="18.5;16.5"/>
+
+    </BOXES>
+    <FINISH position="19.5;16.5" />
     <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
-    <PLAYER position="5.5;1.5"  />
+    <PLAYER position="7.5;16"  />
 
-    <ENEMY position="6;6.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
-    <ENEMY position="6;9.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
-    <ENEMY position="14.5;1.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
+    <!-- <ENEMY position="8;10" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/> -->
+    <ENEMY position="13;12" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/>
+    <ENEMY position="18;12" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/>
+
   </CHARACTERS>
 </LEVEL>

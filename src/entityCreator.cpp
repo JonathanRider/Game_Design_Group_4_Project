@@ -36,6 +36,7 @@ EntityCreator::EntityCreator(EntityManager *em):em(em){
   textureManager.addTexture("resources/graphics/sprite/box.png",BOX);
   textureManager.addTexture("resources/graphics/sprite/smoke.png",SMOKE);
   textureManager.addTexture("resources/graphics/sprite/trap.png",TRAP);
+  textureManager.addTexture("resources/graphics/sprite/dinasaur.png",GLASS);
 }
 
 EntityCreator::~EntityCreator() {
@@ -55,7 +56,7 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
   } else if (type == constants::WALL) {
     // this->createWall(xy, texture);
   } else if (type ==  constants::ENEMY_MOVING) {
-    this->createMovingEnemy(xy, 180, 90, 300, sprite_file_name);
+    this->createMovingEnemy(xy, xy.x-200, xy.x+200, xy.y+200, xy.y-200, 0, 180, 90, 300, sprite_file_name);
   } else if (type == constants::FINISH) {
     this->createFinish(xy, sprite_file_name);
   }else if (type== constants::ENEMY_STATIC){
@@ -139,6 +140,41 @@ void EntityCreator::createWall(sf::Vector2f xy, float width, float height, std::
 
 }
 
+void EntityCreator::createGlass(sf::Vector2f xy, float width, float height, std::string sprite_file_name) {
+  Entity *e = new Entity(em->getNewID());
+  xy.x += width/2;
+  xy.y += height/2;
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-width/2, xy.y-height/2, width, height));
+
+  //create sprite
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(GLASS):textureManager.getTexture(sprite_file_name);
+  texture->setRepeated(true);
+  sprite->setTexture(* texture);
+  sprite->setOrigin(width/2, height/2);
+  // sprite->getTexture()->setRepeated(true);
+  sf::IntRect ir;
+
+  ir.width = (int)width;
+  ir.height = (int)height;
+  sprite->setTextureRect(ir);
+  ///////////////////////////////////////////////////////////
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  Component *bmc = new Component(constants::BMOVEMENT);
+
+
+  // VisionComponent *vc = new VisionComponent(e->getXY(), 300, rand()%360, 90);
+  // e->addComponent(vc);
+
+
+  e->addComponent(gc);
+  e->addComponent(bmc);
+  em->addEntity(e);
+
+}
+
 void EntityCreator::createBox(sf::Vector2f xy, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
@@ -164,7 +200,7 @@ void EntityCreator::createBox(sf::Vector2f xy, std::string sprite_file_name) {
 
 }
 
-void EntityCreator::createMovingEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name) {
+void EntityCreator::createMovingEnemy(sf::Vector2f xy, float xMin, float xMax, float yMin, float yMax, float moveDirection, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name) {
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
   e->setBoundingBox(new sf::FloatRect(xy.x-25, xy.y-25, 50, 50));
@@ -181,12 +217,12 @@ void EntityCreator::createMovingEnemy(sf::Vector2f xy, float viewDirection, floa
   e->addComponent(gc);
 
   MoveableComponent *mc = new MoveableComponent(1200.0,80000.0, 100.0); //accel, decel, max speed
-  mc->setMaxXPos(e->getXY().x + 200);
-  mc->setMinXPos(e->getXY().x - 200);
-  mc->setMaxYPos(e->getXY().y);
-  mc->setMinYPos(e->getXY().y);
+  mc->setMaxXPos(xMax);
+  mc->setMinXPos(xMin);
+  mc->setMaxYPos(yMax);
+  mc->setMinYPos(yMin);
   mc->setAccelerating(true);
-  mc->setDirection(180);
+  mc->setDirection(moveDirection);
   e->addComponent(mc);
 
   CollidableComponent *colc = new CollidableComponent(e->getXY());

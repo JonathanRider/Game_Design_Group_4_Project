@@ -74,10 +74,23 @@ void Entity::move(float time){
     this->setXY(newXY);
 
     if (this->getComponent(constants::ENEMY, c)) {
-      if (this->getXY().x <= mp->getMinXPos() && this->getXY().y <= mp->getMinYPos()) {
-        mp->setDirection(mp->getDirection() + 180);
-      } else if (this->getXY().x >= mp->getMaxXPos() && this->getXY().y >= mp->getMaxYPos()) {
-        mp->setDirection(mp->getDirection() + 180);
+      if(mp->getMinXPos() !=mp->getMaxXPos()){
+        if (this->getXY().x < mp->getMinXPos()){
+          mp->setDirection(mp->getDirection() + 180);
+          this->setXY(sf::Vector2f(mp->getMinXPos()+0.01, xy.y));
+        }else if (this->getXY().x > mp->getMaxXPos()){
+          mp->setDirection(mp->getDirection() + 180);
+          this->setXY(sf::Vector2f(mp->getMaxXPos()-0.01, xy.y));
+        }
+      }
+      if(mp->getMinYPos() != mp->getMaxYPos()){
+        if(this->getXY().y < mp->getMinYPos()) {
+          mp->setDirection(mp->getDirection() + 180);
+          this->setXY(sf::Vector2f(xy.x, mp->getMinYPos()+0.01));
+        }else if(this->getXY().y > mp->getMaxYPos()) {
+          mp->setDirection(mp->getDirection() + 180);
+          this->setXY(sf::Vector2f(xy.x, mp->getMaxYPos()-0.01));
+        }
       }
     }
   }

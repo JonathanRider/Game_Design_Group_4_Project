@@ -128,6 +128,19 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
   }
 
   {
+    //destroyable boxes
+    XMLNode xGlassWalls=xMap.getChildNode("GLASSWALLS");
+    n = xGlassWalls.nChildNode();
+    for (int i=0; i < n; i++) {
+      XMLNode xGlass = xGlassWalls.getChildNode(i);
+      getPosition(xGlass.getAttribute("position"), x, y);
+      getDimensions(xGlass.getAttribute("dimension"), width, height);
+      sprite_file_name = xGlass.getAttribute("sprite") == NULL?"": xGlass.getAttribute("sprite");
+      eCreator.createGlass(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, sprite_file_name);
+    }
+  }
+
+  {
     //finish
     XMLNode xFinish = xMap.getChildNode("FINISH");
     getPosition(xFinish.getAttribute("position"), x, y);
@@ -172,12 +185,19 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
       getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
       getPropertySet(xEnemy.getAttribute("property"), property_set);
       if (property_set.find(constants::MOVING) != property_set.end() ) {
-        eCreator.createMovingEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance);
+        float left, right, up, down, moveDirection;
+        getFloat(xEnemy.getAttribute("left"), left);
+        getFloat(xEnemy.getAttribute("right"), right);
+        getFloat(xEnemy.getAttribute("up"), up);
+        getFloat(xEnemy.getAttribute("down"), down);
+        getFloat(xEnemy.getAttribute("movedirection"), moveDirection);
+        getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
+        eCreator.createMovingEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), x*scale - left*scale, x*scale + right*scale, y*scale-up*scale, y*scale+ down*scale, moveDirection, viewDirection, viewAngle, viewDistance, sprite_file_name);
       }
       else {
         float rotateAngle;
         getFloat(xEnemy.getAttribute("rotateangle"), rotateAngle);
-        eCreator.createStaticEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance, rotateAngle);
+        eCreator.createStaticEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance, rotateAngle, sprite_file_name);
       }
     }
   }

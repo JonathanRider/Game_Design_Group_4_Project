@@ -16,6 +16,7 @@ void LogicSystem::update(float time){
   if (global()->gameEngine.gameState == constants::PLAYING) {
     std::list<Entity*>* eList = manager->getEntityList();
     std::list<Entity*>::iterator iterator;
+    playerVisible = true;
 
     for (iterator = eList->begin(); iterator != eList->end(); ++iterator) {
 
@@ -97,7 +98,7 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
 }
 void LogicSystem::resolveCollisions(Entity *e){
   MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
-  if(mc->getVelocity() == 0){
+  if(mc->getVelocity() == 0 && manager->getPlayer()->getID() != e->getID()){
     return;
   }
 
@@ -240,6 +241,16 @@ void LogicSystem::resolveCollisions(Entity *e){
 
       }
 
+      if(e->getID() == manager->getPlayer()->getID()){
+
+        if((*iterator)->hasComponent(constants::BVISION)){
+          sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+          if(origBB->intersects(*otherBB)){
+            playerVisible = false;
+          }
+        }
+      }
+
     }
   }
 }
@@ -356,7 +367,7 @@ void LogicSystem::updateVisionCones(float time){
       //Check whether the vision has caught our player
       vc->setAlert(false);
       for(int i =1; i < tFan->getVertexCount()-1 ; i++){
-        if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box)) {
+        if (collision::triIntersectRect((*tFan)[0].position, (*tFan)[i].position, (*tFan)[i+1].position, *player_box) && playerVisible) {
           vc->setAlert(true);
           //caught end game
           global()->gameEngine.gameState = constants::NONPLAYING;
