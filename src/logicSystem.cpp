@@ -74,11 +74,15 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
     case constants::INPUT_SHOOT :
       {
         if (      ((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->consume()) {
-        sf::Vector2f position = *(sf::Vector2f*)extra_data;
+        sf::Vector2f mouse_p = *(sf::Vector2f*)extra_data;
         //create bullets
-        float dx = 400 - position.x;
-        float dy = 300 - position.y;
-        float direction =  180 - atan2(dy, dx) * 180 / PI;
+        //float dx = 400 - position.x;
+        //float dy = 300 - position.y;
+        sf::Vector2f player_p = ((GraphicsComponent *) (manager->getPlayer()->getComponent(constants::GRAPHICS)))->getCenter();
+        float dx = mouse_p.x - player_p.x;
+        float dy = mouse_p.y - player_p.y;
+
+        float direction = (-1)*atan2(dy, dx) * 180 / PI;
         float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
         if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_COMMON) {
           global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, speed);

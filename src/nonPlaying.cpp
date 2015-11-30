@@ -55,8 +55,8 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     position_column = num_column - 1;
 }
 void LevelMenu::draw(sf::RenderWindow &w){
-  calculateInterval(w.getSize().x, w.getSize().y);
-  //std::cout << w.getSize().x <<"," << w.getSize().y << std::endl;
+  //calculateInterval(w.getSize().x, w.getSize().y);
+  calculateInterval(800, 600);
   w.clear(sf::Color(0, 0, 0, 255));
 
   for(int i=0; i < num_row; i++)
@@ -79,10 +79,10 @@ void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_posit
   box.setOutlineThickness(5);
   box.setPosition(x,y);
   if (position_row == row_position && position_column == column_position){
-    box.setFillColor(sf::Color(0,0,0,0));
+    box.setFillColor(sf::Color(255,255,255,255));
   }
   else {
-    box.setFillColor(sf::Color(255,255,255,255));
+    box.setFillColor(sf::Color(255,255,255,0));
   }
 
   sf::Text text;

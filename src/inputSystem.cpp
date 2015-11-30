@@ -106,11 +106,9 @@ unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
 //  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 //    ret_val |= MOUSE_LEFT_PRESSED;
 //  }
-  //sf::Vector2i p;
-  //p = sf::Mouse::getPosition(*screen);
-  //position = screen->mapPixelToCoords(p);
-  position.x = sf::Mouse::getPosition(*screen).x;
-  position.y = sf::Mouse::getPosition(*screen).y;
+  sf::Vector2i p;
+  p = sf::Mouse::getPosition(*screen);
+  position = screen->mapPixelToCoords(p);
   return ret_val;
 }
 unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
@@ -170,8 +168,11 @@ unsigned long InputSystem::getMouseInputEvent(sf::Event &event, sf::Vector2f &po
   }
   if (event.mouseButton.button == sf::Mouse::Left){
       ret_val |= MOUSE_LEFT_PRESSED;
-      position.x = sf::Mouse::getPosition(*screen).x;
-      position.y = sf::Mouse::getPosition(*screen).y;
+    //  position.x = sf::Mouse::getPosition(*screen).x;
+    //  position.y = sf::Mouse::getPosition(*screen).y;
+      sf::Vector2i p;
+      p = sf::Mouse::getPosition(*screen);
+      position = screen->mapPixelToCoords(p);
   }
   return ret_val;
 }
