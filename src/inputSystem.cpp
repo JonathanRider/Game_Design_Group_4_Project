@@ -42,8 +42,9 @@ void InputSystem::update(float time){
   if (global()->gameEngine.gameState == constants::PLAYING){
     input_container |= getKeyInputEvent(event);
     input_container |= getKeyInputPolling();
+    input_container |= getMouseInputPolling(mouse_position);
     input_container |= getMouseInputEvent(event, mouse_position);
-    manager->getPlayer()->receiveInput(interprertForPlayer(input_container));
+    manager->getPlayer()->receiveInput(interprertForPlayer(input_container),(void *) &mouse_position );
     manager->getInventory()->receiveInput(interprertForInventory(input_container));
     global()->gameEngine.logicSystem->receiveInput(interpretForLogicSystem(input_container), (void *) &mouse_position);
   } else if (global()->gameEngine.gameState == constants::PAUSED){
@@ -102,11 +103,11 @@ unsigned long InputSystem::getKeyInputPolling() {
 }
 unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
   unsigned long ret_val = 0;
-  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-    ret_val |= MOUSE_LEFT_PRESSED;
-    position.x = sf::Mouse::getPosition(*screen).x;
-    position.y = sf::Mouse::getPosition(*screen).y;
-  }
+//  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+//    ret_val |= MOUSE_LEFT_PRESSED;
+//  }
+  position.x = sf::Mouse::getPosition(*screen).x;
+  position.y = sf::Mouse::getPosition(*screen).y;
   return ret_val;
 }
 unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {

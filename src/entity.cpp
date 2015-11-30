@@ -98,7 +98,7 @@ void Entity::move(float time){
 
 }
 
-void Entity::receiveInput(constants::Input input){
+void Entity::receiveInput(constants::Input input, void *extra_data){
   Component *c;
   if (this->getComponent(constants::MOVEABLE, c)) {
     MoveableComponent *mp = (MoveableComponent*) c;
@@ -154,5 +154,11 @@ void Entity::receiveInput(constants::Input input){
       default:
         break;
     }
+  }
+  if (this->getComponent(constants::PLAYERC, c) && extra_data != NULL){
+    this->getComponent(constants::GRAPHICS, c);
+    GraphicsComponent * gp = (GraphicsComponent *)c;
+    sf::Vector2f * mouse_position = (sf::Vector2f *) extra_data;
+    gp->rotateTo(*mouse_position);
   }
 }

@@ -23,8 +23,8 @@ public:
   sf::Vector2f getXY(){return xy;}
 
   void move(float time);
-  void receiveInput(constants::Input input);
-  
+  void receiveInput(constants::Input input, void *extra_data = NULL);
+
   sf::FloatRect* getBoundingBox(){return boundingBox;}
   void setBoundingBox(sf::FloatRect *bb){delete boundingBox; boundingBox = bb;}
 

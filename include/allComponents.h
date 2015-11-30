@@ -12,5 +12,11 @@
 #include "components/trapComponent.h"
 #include "components/inventoryComponent.h"
 
+//Here follows some simple components (not enough to use a single file)
+class PlayerComponent : public Component{
+public:
+  PlayerComponent(){this->setType(constants::PLAYERC);};
+  ~PlayerComponent(){}
+};
 
 #endif

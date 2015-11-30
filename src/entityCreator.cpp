@@ -92,6 +92,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   MoveableComponent *mc = new MoveableComponent(10000.0,80000.0, 300.0); //accel, decel, max speed
   CollidableComponent *colc = new CollidableComponent(e->getXY());
+  PlayerComponent *pc = new PlayerComponent();
 
   // VisionComponent *vc = new VisionComponent(e->getXY(), 300, 270, 90);
   // e->addComponent(vc);
@@ -99,7 +100,7 @@ void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) 
   e->addComponent(gc);
   e->addComponent(mc);
   e->addComponent(colc);
-
+  e->addComponent(pc);
 
   em->addEntity(e);
   em->setPlayer(e);

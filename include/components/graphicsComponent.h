@@ -13,6 +13,7 @@ public:
   void setGraphics(sf::Sprite);
   void setRotation(float a);
   void rotate(float a);
+  void rotateTo(sf::Vector2f &position);
   float getRotation();
   void setOpacity(float a);
 
