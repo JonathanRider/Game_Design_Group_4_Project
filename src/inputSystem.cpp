@@ -106,8 +106,9 @@ unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
 //  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 //    ret_val |= MOUSE_LEFT_PRESSED;
 //  }
-  position.x = sf::Mouse::getPosition(*screen).x;
-  position.y = sf::Mouse::getPosition(*screen).y;
+  sf::Vector2i p;
+  p = sf::Mouse::getPosition(*screen);
+  position = screen->mapPixelToCoords(p);
   return ret_val;
 }
 unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
@@ -121,6 +122,18 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
       break;
     case sf::Keyboard::Q:
       ret_val |= KEY_Q_PRESSED;
+      break;
+    case sf::Keyboard::W:
+      ret_val |= KEY_W_PRESSED;
+      break;
+    case sf::Keyboard::S:
+      ret_val |= KEY_S_PRESSED;
+      break;
+    case sf::Keyboard::A:
+      ret_val |= KEY_A_PRESSED;
+      break;
+    case sf::Keyboard::D:
+      ret_val |= KEY_D_PRESSED;
       break;
     case sf::Keyboard::Return:
       ret_val |= KEY_ENTER_PRESSED;
@@ -200,16 +213,16 @@ constants::Input InputSystem::interpretForLogicSystem(unsigned long input) {
 }
 
 constants::Input InputSystem::interpretForMenu(unsigned long input) {
-  if ( input & KEY_UP_PRESSED ) {
+  if ( input & KEY_UP_PRESSED  | input & KEY_W_PRESSED) {
     return constants::INPUT_UP;
   }
-  else if (input & KEY_DOWN_PRESSED) {
+  else if (input & KEY_DOWN_PRESSED | input & KEY_S_PRESSED) {
     return constants::INPUT_DOWN;
   }
-  else if (input & KEY_LEFT_PRESSED) {
+  else if (input & KEY_LEFT_PRESSED | input & KEY_A_PRESSED) {
     return constants::INPUT_LEFT;
   }
-  else if (input & KEY_RIGHT_PRESSED) {
+  else if (input & KEY_RIGHT_PRESSED | input & KEY_D_PRESSED) {
     return constants::INPUT_RIGHT;
   }
   else if (input & KEY_ENTER_PRESSED) {

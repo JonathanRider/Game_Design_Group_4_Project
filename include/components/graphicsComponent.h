@@ -16,6 +16,7 @@ public:
   void rotateTo(sf::Vector2f &position);
   float getRotation();
   void setOpacity(float a);
+  sf::Vector2f getCenter();
 
   sf::Sprite* getSprite(){return sprite;}
 
