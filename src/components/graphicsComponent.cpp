@@ -43,7 +43,5 @@ void GraphicsComponent::rotateTo(sf::Vector2f &position){
 }
 sf::Vector2f GraphicsComponent::getCenter(){
   sf::Vector2f center_position = sprite->getPosition();
-  center_position.x += sprite->getTexture()->getSize().x / 2;
-  center_position.y += sprite->getTexture()->getSize().y / 2;
   return center_position;
 }
