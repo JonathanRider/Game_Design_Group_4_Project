@@ -17,6 +17,8 @@ public:
 private:
   sf::RenderWindow* screen;
   EntityManager* manager;
+  sf::Sprite background_sprite;
+  sf::Sprite pausedSprite;
 };
 
 #endif

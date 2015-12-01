@@ -2,39 +2,31 @@
   <MUSIC file="resources/audio/music/Roys_Song.wav" />
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
-    <BULLET type="common" quantity="5" />
-    <BULLET type="smoke" quantity="4" />
+    <BULLET type="common" quantity="1" />
+    <BULLET type="smoke" quantity="1" />
   </INVENTORY>
   <MAP>
     <WALLS>
       <!-- <WALL position="5.5;7.5" dimension="1;1"/>
       <WALL position="7.5;7.5" dimension="1;1"/> -->
 
-      <WALL position="0;0" dimension="16;1" sprite="resources/graphics/sprite/box.png"  />
-      <WALL position="0;11" dimension="16;1"/>
-      <WALL position="0;1" dimension="1;10"/>
-      <WALL position="15;1" dimension="1;10"/>
+      <WALL position="0;4" dimension="20;1"/>
+      <WALL position="0;8" dimension="20;1"/>
+      <WALL position="0;5" dimension="1;4"/>
+      <WALL position="19;5" dimension="1;4"/>
 
 
 
-      <WALL dimension="2;1" position="1;7" />  <WALL dimension="2;1" position="1;4" />
-      <WALL dimension="1;1" position="3.5;7" />  <WALL dimension="1;1" position="3.5;4" />
-      <WALL dimension="2;1" position="6;7" /> <WALL dimension="2;1" position="6;4" />
-      <!-- <WALL dimension="1;1" position="7;7" /> <WALL dimension="1;1" position="7;4" /> -->
-      <WALL dimension="2;1" position="13;7" /><WALL dimension="1;1" position="11.5;7" />
-      <WALL dimension="2;1" position="13;4" /><WALL dimension="1;1" position="11.5;4" />
+
+
     </WALLS>
-    <FINISH position="14;9" />
-
-    <TRAPS>
-
-      <TRAP position="12;9"/>
-
-    </TRAPS>
+    <FINISH position="15.5;6.5" />
+    <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
-    <PLAYER position="1.5;6"  />
-    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0"/>
-    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0"/>
+    <PLAYER position="3.5;6.5"  />
+
+    <ENEMY position="18.5;6.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+
   </CHARACTERS>
 </LEVEL>

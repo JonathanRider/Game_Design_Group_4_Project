@@ -48,7 +48,7 @@
     <PLAYER position="7.5;16"  />
 
     <!-- <ENEMY position="8;10" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/> -->
-    <ENEMY position="13;12" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/>
+    <ENEMY position="13;12" property="static" viewangle="120" viewdirection="90" viewdistance="290" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/>
     <ENEMY position="18;12" property="static" viewangle="120" viewdirection="90" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/camera.png"/>
 
   </CHARACTERS>
