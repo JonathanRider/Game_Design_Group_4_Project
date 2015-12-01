@@ -203,13 +203,14 @@ constants::Input InputSystem::interprertForPlayer(unsigned long input){
 }
 
 constants::Input InputSystem::interpretForLogicSystem(unsigned long input) {
-  unsigned long key_pressed = input & ( MOUSE_LEFT_PRESSED | KEY_P_PRESSED);
+  unsigned long key_pressed = input & ( MOUSE_LEFT_PRESSED | KEY_P_PRESSED | KEY_ESC_PRESSED);
   switch (key_pressed) {
     case MOUSE_LEFT_PRESSED:
       return constants::INPUT_SHOOT;
     case KEY_P_PRESSED:
-      std::cout <<"interpret pause" << std::endl;
       return constants::INPUT_PAUSE;
+    case KEY_ESC_PRESSED:
+      return constants::INPUT_ESC;
     default:
       return constants::INPUT_UNKNOWN;
   }

@@ -71,6 +71,12 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
         }
       }
       return;
+    case constants::INPUT_ESC :
+    {
+      global()->gameEngine.gameState = constants::NONPLAYING;
+      global()->gameEngine.nonPlaying->setState(NonPlaying::LEVELMENU);
+    }
+      return;
     case constants::INPUT_SHOOT :
       {
         if (      ((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->consume()) {

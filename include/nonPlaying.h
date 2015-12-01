@@ -85,6 +85,7 @@ public:
   void draw(sf::RenderWindow &w);
   enum NonPlayingState {MAINMENU, LEVELMENU, OPTIONSMENU, TERMINALMENU};
   NonPlayingState getState(){return internal_state;}
+  void setState(NonPlayingState s){internal_state = s;}
 private:
   NonPlayingState internal_state;
   LevelMenu levelMenu;
