@@ -135,14 +135,14 @@ void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_posit
   sf::RectangleShape box;
   box.setSize(sf::Vector2f(cell_width, cell_height));
   box.setOutlineColor(sf::Color::Black);
-  box.setOutlineThickness(4);
+  box.setOutlineThickness(2);
   box.setPosition(x,y);
 
 
   sf::Text text;
   text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   text.setCharacterSize(24);
-  text.setPosition(x,y);
+  text.setPosition(x+8,y+28);
   text.setString(level_string);
 
   if (position_row == row_position && position_column == column_position){
