@@ -89,10 +89,23 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     position_row = 0;
   if (position_row >= num_row)
     position_row = num_row - 1;
-  if (position_column < 0)
-    position_column = 0;
-  if (position_column >= num_column)
-    position_column = num_column - 1;
+  if (position_column < 0) {
+    if (position_row > 0){
+      position_column = num_column - 1;
+      position_row--;
+    }
+    else
+      position_column = 0;
+  }
+
+  if (position_column >= num_column){
+    if (position_row < num_row - 1){
+      position_column = 0;
+      position_row ++;
+    }
+    else
+      position_column = num_column - 1;
+  }
 }
 void LevelMenu::draw(sf::RenderWindow &w){
   if (b_instory){
