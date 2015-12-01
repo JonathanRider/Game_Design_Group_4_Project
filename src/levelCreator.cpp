@@ -102,6 +102,19 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
   XMLNode xMap=xMainNode.getChildNode("MAP");
 
   {
+    //Glass Walls
+    XMLNode xGlassWalls=xMap.getChildNode("GLASSWALLS");
+    n = xGlassWalls.nChildNode();
+    for (int i=0; i < n; i++) {
+      XMLNode xGlass = xGlassWalls.getChildNode(i);
+      getPosition(xGlass.getAttribute("position"), x, y);
+      getDimensions(xGlass.getAttribute("dimension"), width, height);
+      sprite_file_name = xGlass.getAttribute("sprite") == NULL?"": xGlass.getAttribute("sprite");
+      eCreator.createGlass(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, sprite_file_name);
+    }
+  }
+  
+  {
     //walls
     XMLNode xWalls=xMap.getChildNode("WALLS");
 
@@ -127,18 +140,6 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
     }
   }
 
-  {
-    //destroyable boxes
-    XMLNode xGlassWalls=xMap.getChildNode("GLASSWALLS");
-    n = xGlassWalls.nChildNode();
-    for (int i=0; i < n; i++) {
-      XMLNode xGlass = xGlassWalls.getChildNode(i);
-      getPosition(xGlass.getAttribute("position"), x, y);
-      getDimensions(xGlass.getAttribute("dimension"), width, height);
-      sprite_file_name = xGlass.getAttribute("sprite") == NULL?"": xGlass.getAttribute("sprite");
-      eCreator.createGlass(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, sprite_file_name);
-    }
-  }
 
   {
     //finish

@@ -5,6 +5,18 @@
 GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   screen = w;
   manager = m;
+
+  sf::Texture *background = global()->gameEngine.resourceManager->getTexture("resources/graphics/sprite/floor.png");
+  background->setRepeated(true);
+
+  background_sprite.setTexture(*background);
+  background_sprite.setTextureRect(sf::IntRect(0,0,10000,10000));
+  background_sprite.setOrigin(25.0f, 25.0f);
+  background_sprite.setPosition(-5000.0f, -5000.0f);
+
+  sf::Texture *pausedTex = new sf::Texture();
+  pausedTex = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/paused.png");
+  pausedSprite.setTexture(*pausedTex);
 }
 
 
@@ -18,15 +30,8 @@ void GraphicsSystem::update(float time){
     screen->setView(view);
 
     //This is definitely the wrong place to create the background, but trying to create an entity crashed it....
-    sf::Texture *background = new sf::Texture();
-    background->loadFromFile("resources/graphics/sprite/floor.png");
-    background->setRepeated(true);
-    sf::Sprite *background_sprite = new sf::Sprite;
-    background_sprite->setTexture(*background);
-    background_sprite->setTextureRect(sf::IntRect(0,0,10000,10000));
-    background_sprite->setOrigin(25.0f, 25.0f);
-    background_sprite->setPosition(-5000.0f, -5000.0f);
-    draw(background_sprite);
+
+    draw(&background_sprite);
 
     //iterate through entityManager and update
     std::list<Entity*>* eList = manager->getEntityList();
@@ -73,11 +78,7 @@ void GraphicsSystem::update(float time){
       }
     }
     if (global()->gameEngine.gameState == constants::PAUSED) {
-      sf::Texture *pausedTex = new sf::Texture();
-      pausedTex->loadFromFile("resources/graphics/image/paused.png");
-      sf::Sprite *pausedSprite = new sf::Sprite();
-      pausedSprite->setTexture(*pausedTex);
-      draw(pausedSprite);
+      draw(&pausedSprite);
     }
   }
   if (global()->gameEngine.gameState == constants::NONPLAYING ) {
