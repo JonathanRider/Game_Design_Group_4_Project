@@ -40,8 +40,8 @@ void StoryMenu::draw(sf::RenderWindow &w){
 }
 
 LevelMenu::LevelMenu():position_row(0),position_column(0), num_row(3), num_column(3),
-cell_width(100), cell_height(80),
-margin_left(100), margin_right(100), margin_top(50), margin_down(50),
+cell_width(110), cell_height(95),
+margin_left(110), margin_right(115), margin_top(56), margin_down(60),
 b_instory(false){
   level_file_map[1] = std::string("resources/levels/level_01.xml"); //this is level 1
   level_file_map[2] = std::string("resources/levels/level_02.xml");
@@ -102,7 +102,9 @@ void LevelMenu::draw(sf::RenderWindow &w){
   //calculateInterval(w.getSize().x, w.getSize().y);
   calculateInterval(800, 600);
   w.clear(sf::Color(0, 0, 0, 255));
-
+  sf::Sprite background;
+  background.setTexture(*global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu.png"));
+  w.draw(background);
   for(int i=0; i < num_row; i++)
     for(int j=0; j < num_column; j++){
       drawCell(w,i, j);
@@ -119,22 +121,27 @@ void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_posit
 
   sf::RectangleShape box;
   box.setSize(sf::Vector2f(cell_width, cell_height));
-  box.setOutlineColor(sf::Color::Red);
-  box.setOutlineThickness(5);
+  box.setOutlineColor(sf::Color::Black);
+  box.setOutlineThickness(4);
   box.setPosition(x,y);
-  if (position_row == row_position && position_column == column_position){
-    box.setFillColor(sf::Color(255,255,255,255));
-  }
-  else {
-    box.setFillColor(sf::Color(255,255,255,0));
-  }
+
 
   sf::Text text;
   text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   text.setCharacterSize(24);
-  text.setColor(sf::Color::Red);
   text.setPosition(x,y);
   text.setString(level_string);
+
+  if (position_row == row_position && position_column == column_position){
+    //SELECTED
+    box.setFillColor(sf::Color(255,255,255,255));
+    text.setColor(sf::Color::Red);
+  }
+  else {
+    box.setFillColor(sf::Color::Red);
+    text.setColor(sf::Color::White);
+  }
+
 
   w.draw(box);
   w.draw(text);
