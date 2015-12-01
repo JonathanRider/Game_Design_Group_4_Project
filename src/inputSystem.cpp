@@ -138,6 +138,9 @@ unsigned long InputSystem::getKeyInputEvent(sf::Event &event) {
     case sf::Keyboard::Return:
       ret_val |= KEY_ENTER_PRESSED;
       break;
+    case sf::Keyboard::Space:
+      ret_val |= KEY_ENTER_PRESSED;
+      break;
     case sf::Keyboard::Up:
       ret_val |= KEY_UP_PRESSED;
       break;
