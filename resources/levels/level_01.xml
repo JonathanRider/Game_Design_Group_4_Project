@@ -2,8 +2,8 @@
   <MUSIC file="resources/audio/music/Roys_Song.wav" />
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
-    <BULLET type="common" quantity="1" />
-    <BULLET type="smoke" quantity="1" />
+    <BULLET type="common" quantity="3" />
+    <BULLET type="smoke" quantity="3" />
   </INVENTORY>
   <MAP>
     <WALLS>
@@ -26,7 +26,8 @@
   <CHARACTERS>
     <PLAYER position="3.5;6.5"  />
 
-    <ENEMY position="18.5;6.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="18.5;5.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
+    <ENEMY position="18.5;7.5" property="static" viewangle="90" viewdirection="180" viewdistance="300" rotateangle="0"/>
 
   </CHARACTERS>
 </LEVEL>

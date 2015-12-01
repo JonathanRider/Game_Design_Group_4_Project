@@ -20,11 +20,27 @@
 
 
     </WALLS>
+
+    <TRAPS>
+
+      <TRAP position="11.5;9"/>
+      <TRAP position="4.5;7"/>
+      <TRAP position="14.5;4.5"/>
+      <TRAP position="25.5;9"/>
+      <TRAP position="26.5;9"/>
+      <TRAP position="11.5;9"/>
+
+      <TRAP position="27.5;11.5"/>
+      <TRAP position="27.5;10.5"/>
+      <TRAP position="28.5;10.5"/>
+
+    </TRAPS>
+
     <FINISH position="28.5;11.5" />
     <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
-    <PLAYER position="5.5;1.5"  />
+    <PLAYER position="2.5;2.5"  />
 
     <ENEMY position="6;6.5" property="static" viewangle="90" viewdirection="350" viewdistance="250" rotateangle="100" sprite="resources/graphics/sprite/camera.png"/>
     <ENEMY position="6;9.5" property="static" viewangle="90" viewdirection="180" viewdistance="250" rotateangle="50"sprite="resources/graphics/sprite/camera.png"/>

@@ -10,39 +10,38 @@
       <!-- <WALL position="5.5;7.5" dimension="1;1"/>
       <WALL position="7.5;7.5" dimension="1;1"/> -->
 
-      <WALL position="0;0" dimension="16;1" sprite="resources/graphics/sprite/box.png"  />
+      <WALL position="0;0" dimension="16;1"/>
       <WALL position="0;11" dimension="16;1"/>
       <WALL position="0;1" dimension="1;10"/>
       <WALL position="15;1" dimension="1;10"/>
 
 
 
-      <WALL dimension="2;1" position="1;7" />  <WALL dimension="2;1" position="1;4" />
-      <WALL dimension="1;1" position="3.5;7" />  <WALL dimension="1;1" position="3.5;4" />
-      <WALL dimension="2;1" position="6;7" /> <WALL dimension="2;1" position="6;4" />
-      <!-- <WALL dimension="1;1" position="7;7" /> <WALL dimension="1;1" position="7;4" /> -->
-      <WALL dimension="2;1" position="13;7" /><WALL dimension="1;1" position="11.5;7" />
-      <WALL dimension="2;1" position="13;4" /><WALL dimension="1;1" position="11.5;4" />
+      <WALL dimension="2;1" position="1;7" />
+      <WALL dimension="2;1" position="1;4" />
+      <WALL dimension="1;1" position="3.5;7" />
+      <WALL dimension="1;1" position="3.5;4" />
+      <WALL dimension="2;1" position="6;7" />
+      <WALL dimension="2;1" position="6;4" />
+      <WALL dimension="1;1" position="13;7" />
+      <WALL dimension="1;1" position="11.5;7" />
+      <WALL dimension="2;1" position="13;4" />
+      <WALL dimension="1;1" position="11.5;4" />
     </WALLS>
 
-    <GLASSWALLS>
 
-      <GLASS position="3;4" dimension="3;1"/>
-      <GLASS position="3;7" dimension="3;1"/>
-
-
-    </GLASSWALLS>
     <FINISH position="14;9" />
 
-    <TRAPS>
-
-      <TRAP position="12;9"/>
-
-    </TRAPS>
   </MAP>
   <CHARACTERS>
     <PLAYER position="1.5;6"  />
-    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0"/>
-    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0"/>
+    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+
+    <ENEMY position="2.5;3.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="2.5;8.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="12.5;8.5" property="static" viewangle="90" viewdirection="150" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="12.5;3.5" property="static" viewangle="90" viewdirection="210" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+
   </CHARACTERS>
 </LEVEL>
