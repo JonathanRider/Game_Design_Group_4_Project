@@ -12,6 +12,7 @@ public:
   ~InventoryComponent();
   //enum InventoryItem { INV_GUNICON, INV_GRENADEICON, /*add inventory item before here */ INV_MAX };
   enum InventoryItem { INV_BULLET_COMMON, INV_BULLET_SMOKE, /*add inventory item before here */ INV_MAX };
+  void setLevelSign(int level);
   void addItem(InventoryItem item, int number);
   void nextItem();
   void prevItem();
@@ -36,6 +37,7 @@ private:
   sf::Sprite inv_sprite;
   sf::RectangleShape box_display;
   sf::Text number_display;
+  sf::Text level_sign;
 };
 
 

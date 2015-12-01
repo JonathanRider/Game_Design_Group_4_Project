@@ -20,6 +20,9 @@ InventoryComponent::InventoryComponent(){
   number_display.setColor(sf::Color::Red);
   //number_display.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
+  level_sign.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/ahronbd.ttf")));
+  level_sign.setCharacterSize(50);
+  level_sign.setColor(sf::Color(0,0,255,222));
 }
 
 InventoryComponent::~InventoryComponent(){}
@@ -81,17 +84,23 @@ void InventoryComponent::updateGraphics(){
   number_display.setString(typeconvert::int2string(inventory_list[current_index].number));
 }
 void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
+  sf::Vector2f center = v.getCenter();
+  sf::Vector2f size = v.getSize();
+  sf::Vector2f base_point;
+
+  //draw the level number
+  level_sign.setPosition(center.x - 340, center.y - 280);
+  w.draw(level_sign);
+
   if (current_index < 0) {
     return;
   }
   updateGraphics();
-  //  v.
-  sf::Vector2f center = v.getCenter();
-  sf::Vector2f size = v.getSize();
 
-  sf::Vector2f base_point;
+
   base_point.x = center.x - 50;
   base_point.y = center.y + size.y / 2 - 100;
+
 
 
   box_display.setPosition(base_point);
@@ -100,4 +109,7 @@ void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
   w.draw(inv_sprite);
   number_display.setPosition(base_point.x + 10, base_point.y + 65);
   w.draw(number_display);
+}
+void InventoryComponent::setLevelSign(int level){
+  level_sign.setString("Level "+typeconvert::int2string(level));
 }

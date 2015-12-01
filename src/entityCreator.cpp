@@ -385,12 +385,13 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
   em->addEntity(e);
 
 }
-void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std::string> &item_list){
+void EntityCreator::createInventory(sf::Vector2f xy,  std::map<std::string, std::string> &item_list, int level){
 
   Entity *e = new Entity(em->getNewID());
 
   //e->setXY(xy);
   InventoryComponent *ic = new InventoryComponent();
+  ic->setLevelSign(level);
   std::map<std::string, std::string>::iterator it;
   for(it = item_list.begin(); it != item_list.end(); it++) {
     if (it->first == "common" ) {

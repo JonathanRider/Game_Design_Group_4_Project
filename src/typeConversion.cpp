@@ -32,6 +32,10 @@ namespace typeconvert {
       }
       return r_val;
     }
+    int string2int(const char *s){
+      std::string number = s;
+      return string2int(number);
+    }
     std::string int2string(int number){
       char char_string[MAX_DIGITS + 1];
       int i;

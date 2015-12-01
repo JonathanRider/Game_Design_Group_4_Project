@@ -28,7 +28,7 @@ public:
   void createFinish(sf::Vector2f xy, std::string sprite_file_name = "");
   void createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name = "");
   void createTrap(sf::Vector2f xy, bool isVisible = true, std::string sprite_file_name = "");
-  void createInventory(sf::Vector2f xy, std::map<std::string, std::string> &item_list);
+  void createInventory(sf::Vector2f xy, std::map<std::string, std::string> &item_list, int level);
 private:
 
 

@@ -89,7 +89,7 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
   float x, y, width, height;
   std::string sprite_file_name;
   XMLNode xMainNode=XMLNode::openFileHelper(fileName.c_str());
-
+  int current_level = typeconvert::string2int(xMainNode.getAttribute("order"));
   //music
   { //don't want to contaminate other variables
     XMLNode xMusic=xMainNode.getChildNode("MUSIC");
@@ -113,7 +113,7 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
       eCreator.createGlass(sf::Vector2f( x * scale + 25, y * scale + 25), width*scale, height*scale, sprite_file_name);
     }
   }
-  
+
   {
     //walls
     XMLNode xWalls=xMap.getChildNode("WALLS");
@@ -211,7 +211,7 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
       XMLNode xBullet=xInv.getChildNode("BULLET", i);
       item_list.insert(std::pair<std::string,std::string>(xBullet.getAttribute("type"),xBullet.getAttribute("quantity")));
     }
-    eCreator.createInventory(sf::Vector2f(0,0),item_list);
+    eCreator.createInventory(sf::Vector2f(0,0),item_list, current_level);
   }
 
 }
