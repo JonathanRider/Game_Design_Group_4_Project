@@ -14,6 +14,16 @@ public:
   virtual void draw(sf::RenderWindow &w) = 0;
 };
 
+class StoryMenu: public Menu {
+public:
+  StoryMenu();
+  ~StoryMenu();
+  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
+  void draw(sf::RenderWindow &w);
+  void setLevelFile(std::string &name){level_file = name;}
+private:
+  std::string level_file;
+};
 class LevelMenu: public Menu {
 public:
   LevelMenu();
@@ -24,6 +34,8 @@ private:
   void drawCell(sf::RenderWindow &w, int row_position, int column_position);
   void calculateInterval(float window_width, float window_height);
   int getCurrentLevel();
+  StoryMenu storyMenu;
+  bool b_instory;
   std::map<int, std::string> level_file_map;
   int position_row, position_column; //start from 0
   int num_row, num_column;
@@ -60,6 +72,8 @@ public:
 private:
   bool b_win;
 };
+
+
 
 class NonPlaying {
   //This class handles everything when the game is not in playing state;

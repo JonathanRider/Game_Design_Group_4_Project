@@ -3,10 +3,36 @@
 #include <iostream>
 #include <string>
 
+StoryMenu::StoryMenu(){}
+StoryMenu::~StoryMenu(){}
+void StoryMenu::receiveInput(constants::Input input, int &state, void *extra_data){
+
+  switch (input) {
+    case constants::INPUT_CONFIRM:
+    {
+      bool *b_instory= (bool *) extra_data;
+      global()->gameEngine.entityManager->clearAll();
+      global()->gameEngine.levelCreator->loadAndCreateLevel(level_file);
+      global()->gameEngine.gameState = constants::PLAYING;
+      *b_instory = false;
+    }
+      break;
+    default:
+      break;
+  }
+}
+void StoryMenu::draw(sf::RenderWindow &w){
+  sf::Sprite sprite;
+  sf::Texture *p_texture;
+  p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/Win.png");
+  sprite.setTexture(*p_texture);
+  w.draw(sprite);
+}
+
 LevelMenu::LevelMenu():position_row(0),position_column(0), num_row(3), num_column(3),
 cell_width(100), cell_height(80),
-margin_left(100), margin_right(100), margin_top(50), margin_down(50){
-
+margin_left(100), margin_right(100), margin_top(50), margin_down(50),
+b_instory(false){
   level_file_map[1] = std::string("resources/levels/level_01.xml"); //this is level 1
   level_file_map[2] = std::string("resources/levels/level_02.xml");
   level_file_map[3] = std::string("resources/levels/level_03.xml");
@@ -19,6 +45,10 @@ margin_left(100), margin_right(100), margin_top(50), margin_down(50){
 }
 LevelMenu::~LevelMenu(){}
 void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_data){
+  if (b_instory){
+    storyMenu.receiveInput(input, state, &b_instory);
+    return;
+  }
   switch (input) {
     case constants::INPUT_UP:
       position_row--;
@@ -37,9 +67,8 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
       break;
     case constants::INPUT_CONFIRM:
       if (level_file_map.find(getCurrentLevel()) != level_file_map.end() ){
-        global()->gameEngine.entityManager->clearAll();
-        global()->gameEngine.levelCreator->loadAndCreateLevel(level_file_map[getCurrentLevel()]);
-        global()->gameEngine.gameState = constants::PLAYING;
+        storyMenu.setLevelFile(level_file_map[getCurrentLevel()]);
+        b_instory = true;
       }
       break;
     default:
@@ -55,6 +84,10 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     position_column = num_column - 1;
 }
 void LevelMenu::draw(sf::RenderWindow &w){
+  if (b_instory){
+    storyMenu.draw(w);
+    return;
+  }
   //calculateInterval(w.getSize().x, w.getSize().y);
   calculateInterval(800, 600);
   w.clear(sf::Color(0, 0, 0, 255));
@@ -174,6 +207,7 @@ void TerminalMenu::draw(sf::RenderWindow &w){
   sprite.setTexture(*p_texture);
   w.draw(sprite);
 }
+
 
 NonPlaying::NonPlaying():internal_state(MAINMENU){}
 NonPlaying::~NonPlaying(){}
