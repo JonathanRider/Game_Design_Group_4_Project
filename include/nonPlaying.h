@@ -84,6 +84,7 @@ public:
   void receiveInput(constants::Input input, void *extra_data);
   void draw(sf::RenderWindow &w);
   enum NonPlayingState {MAINMENU, LEVELMENU, OPTIONSMENU, TERMINALMENU};
+  NonPlayingState getState(){return internal_state;}
 private:
   NonPlayingState internal_state;
   LevelMenu levelMenu;

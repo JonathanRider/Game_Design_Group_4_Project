@@ -9,7 +9,8 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
 
 
 void GraphicsSystem::update(float time){
-  if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED) {
+  if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED ||
+  global()->gameEngine.nonPlaying->getState() == NonPlaying::TERMINALMENU) {
     sf::View view;
     view.setCenter(manager->getPlayer()->getXY());
     view.setSize(sf::Vector2f(800, 600));
@@ -79,7 +80,7 @@ void GraphicsSystem::update(float time){
       draw(pausedSprite);
     }
   }
-  else {
+  if (global()->gameEngine.gameState == constants::NONPLAYING ) {
     global()->gameEngine.nonPlaying->draw(*screen);
   }
 }

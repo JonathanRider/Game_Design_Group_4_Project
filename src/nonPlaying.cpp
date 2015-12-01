@@ -205,6 +205,7 @@ void TerminalMenu::draw(sf::RenderWindow &w){
     p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/GameOver.png");
   }
   sprite.setTexture(*p_texture);
+  sprite.setPosition(300, 100);
   w.draw(sprite);
 }
 
