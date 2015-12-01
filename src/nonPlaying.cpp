@@ -135,14 +135,14 @@ void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_posit
   sf::RectangleShape box;
   box.setSize(sf::Vector2f(cell_width, cell_height));
   box.setOutlineColor(sf::Color::Black);
-  box.setOutlineThickness(2);
+  box.setOutlineThickness(4);
   box.setPosition(x,y);
 
 
   sf::Text text;
   text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   text.setCharacterSize(24);
-  text.setPosition(x+8,y+28);
+  text.setPosition(x,y);
   text.setString(level_string);
 
   if (position_row == row_position && position_column == column_position){
@@ -186,7 +186,7 @@ void MainMenu::receiveInput(constants::Input input, int &state, void *extra_data
         state = NonPlaying::LEVELMENU;
       }
       else if (current_index == 1) { //optionsMenu
-        //state = NonPlaying::OPTIONSMENU
+        state = NonPlaying::INFOMENU;
       }
       break;
     default:
@@ -210,10 +210,59 @@ void MainMenu::draw(sf::RenderWindow &w){
   w.draw(sprite);
 }
 
-OptionsMenu::OptionsMenu(){}
-OptionsMenu::~OptionsMenu(){}
-void OptionsMenu::receiveInput(constants::Input input, int &state, void *extra_data){}
-void OptionsMenu::draw(sf::RenderWindow &w){}
+InfoMenu::InfoMenu():current_index(0), inMenu(false){}
+InfoMenu::~InfoMenu(){}
+void InfoMenu::receiveInput(constants::Input input, int &state, void *extra_data){
+  switch (input) {
+    case constants::INPUT_UP:
+      current_index--;
+      break;
+    case constants::INPUT_DOWN:
+      current_index++;
+      break;
+    case constants::INPUT_CONFIRM:
+      inMenu = true;
+      break;
+    case constants::INPUT_ESC:
+      if(inMenu){
+        inMenu = !inMenu;
+      }else{
+        state = NonPlaying::MAINMENU;
+      }
+    default:
+      break;
+  }
+  if (current_index < 0)
+    current_index = 0;
+  if (current_index > 2)
+    current_index = 2;
+}
+void InfoMenu::draw(sf::RenderWindow &w){
+  sf::Sprite sprite;
+  sf::Texture *p_texture;
+  if(inMenu){
+    if (current_index == 0) {
+      p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/controls.png");
+    }
+    else if (current_index == 1){
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/enemies.png");
+    }else{
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/items.png");
+    }
+  }else {
+    if (current_index == 0) {
+      p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu0.png");
+    }
+    else if (current_index == 1){
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu1.png");
+    }else{
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu2.png");
+    }
+  }
+  sprite.setTexture(*p_texture);
+  w.draw(sprite);
+
+}
 
 TerminalMenu::TerminalMenu():b_win(false){}
 TerminalMenu::~TerminalMenu(){}
@@ -260,8 +309,8 @@ void NonPlaying::receiveInput(constants::Input input, void *extra_data){
       case LEVELMENU:
         levelMenu.receiveInput(input, (int &)internal_state);
         return;
-      case OPTIONSMENU:
-        optionsMenu.receiveInput(input,(int &)internal_state);
+      case INFOMENU:
+        infoMenu.receiveInput(input,(int &)internal_state);
         return;
       case TERMINALMENU:
         terminalMenu.receiveInput(input, (int &)internal_state);
@@ -283,5 +332,8 @@ void NonPlaying::draw(sf::RenderWindow &w){
   } else if (internal_state == LEVELMENU) {
     w.setView(w.getDefaultView()); //reset view
     levelMenu.draw(w);
+  }else if (internal_state == INFOMENU){
+    w.setView(w.getDefaultView()); //reset view
+    infoMenu.draw(w);
   }
 }

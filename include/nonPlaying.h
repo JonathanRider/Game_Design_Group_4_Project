@@ -57,12 +57,16 @@ private:
   int current_index;
 };
 
-class OptionsMenu: public Menu {
+class InfoMenu: public Menu {
 public:
-  OptionsMenu();
-  ~OptionsMenu();
+  InfoMenu();
+  ~InfoMenu();
   void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
   void draw(sf::RenderWindow &w);
+
+private:
+  int current_index;
+  bool inMenu;
 };
 class TerminalMenu: public Menu { //for win or lose
 public:
@@ -86,13 +90,13 @@ public:
 
   void receiveInput(constants::Input input, void *extra_data);
   void draw(sf::RenderWindow &w);
-  enum NonPlayingState {MAINMENU, LEVELMENU, OPTIONSMENU, TERMINALMENU};
+  enum NonPlayingState {MAINMENU, LEVELMENU, TERMINALMENU, INFOMENU, CONTROLS, ENEMIES, ITEMS};
   NonPlayingState getState(){return internal_state;}
   void setState(NonPlayingState s){internal_state = s;}
 private:
   NonPlayingState internal_state;
   LevelMenu levelMenu;
-  OptionsMenu optionsMenu;
+  InfoMenu infoMenu;
   MainMenu mainMenu;
   TerminalMenu terminalMenu;
 };
