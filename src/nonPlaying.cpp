@@ -3,7 +3,17 @@
 #include <iostream>
 #include <string>
 
-StoryMenu::StoryMenu(){}
+StoryMenu::StoryMenu(){
+  story_board_map[1] = "resources/graphics/image/level_01_story.png";
+  story_board_map[2] = "resources/graphics/image/level_02_story.png";
+  story_board_map[3] = "resources/graphics/image/level_03_story.png";
+  story_board_map[4] = "resources/graphics/image/level_04_story.png";
+  story_board_map[5] = "resources/graphics/image/level_05_story.png";
+  story_board_map[6] = "resources/graphics/image/level_06_story.png";
+  story_board_map[7] = "resources/graphics/image/level_07_story.png";
+  story_board_map[8] = "resources/graphics/image/level_08_story.png";
+  story_board_map[9] = "resources/graphics/image/level_09_story.png";
+}
 StoryMenu::~StoryMenu(){}
 void StoryMenu::receiveInput(constants::Input input, int &state, void *extra_data){
 
@@ -24,7 +34,7 @@ void StoryMenu::receiveInput(constants::Input input, int &state, void *extra_dat
 void StoryMenu::draw(sf::RenderWindow &w){
   sf::Sprite sprite;
   sf::Texture *p_texture;
-  p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/Win.png");
+  p_texture= global()->gameEngine.resourceManager->getTexture(story_board_map[level]);
   sprite.setTexture(*p_texture);
   w.draw(sprite);
 }
@@ -68,6 +78,7 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     case constants::INPUT_CONFIRM:
       if (level_file_map.find(getCurrentLevel()) != level_file_map.end() ){
         storyMenu.setLevelFile(level_file_map[getCurrentLevel()]);
+        storyMenu.setLevel(getCurrentLevel());
         b_instory = true;
       }
       break;

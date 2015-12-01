@@ -21,8 +21,11 @@ public:
   void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
   void draw(sf::RenderWindow &w);
   void setLevelFile(std::string &name){level_file = name;}
+  void setLevel(int l) {level = l;}
 private:
   std::string level_file;
+  int level;
+  std::map<int,std::string> story_board_map;
 };
 class LevelMenu: public Menu {
 public:
