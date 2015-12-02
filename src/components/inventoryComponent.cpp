@@ -22,7 +22,8 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
   texture_name_list[INV_BULLET_COMMON]="resources/graphics/sprite/gunIcon.png";
   texture_name_list[INV_BULLET_SMOKE]="resources/graphics/sprite/grenadeIcon.png";
 
-  box_display.setSize(sf::Vector2f(50, 100));
+  box_display.setSize(sf::Vector2f(100, 80));
+  box_display.setFillColor(sf::Color(255,255,255,200));
 //  box_display.setOutlineColor(sf::Color::Red);
 //  box_display.setOutlineThickness(5);
 
@@ -32,13 +33,13 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
   number_display.setColor(sf::Color::Red);
   //number_display.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
-  level_sign.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/ahronbd.ttf")));
+  level_sign.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   level_sign.setCharacterSize(50);
-  level_sign.setColor(sf::Color(0,0,255,222));
+  level_sign.setColor(sf::Color(0,0,0,250));
 
-  timer_display.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/ahronbd.ttf")));
+  timer_display.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   timer_display.setCharacterSize(50);
-  timer_display.setColor(sf::Color(153,153,0,249));
+  timer_display.setColor(sf::Color(153,153,0,250));
   timer.setStartTime(5);
 }
 
@@ -122,7 +123,7 @@ void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
   //draw the timer
   static sf::Clock clock;
   static bool b_timer_disappear = false;
-  timer_display.setPosition(center.x + 300, center.y - 280);
+  timer_display.setPosition(center.x + 200, center.y - 280);
   if (b_timingAlert && timer.getTime() > 0){
     if (b_timer_disappear){
       if (clock.getElapsedTime().asSeconds() >= 0.4){
@@ -156,7 +157,7 @@ void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
   w.draw(box_display);
   inv_sprite.setPosition(base_point.x + 10, base_point.y + 10);
   w.draw(inv_sprite);
-  number_display.setPosition(base_point.x + 10, base_point.y + 65);
+  number_display.setPosition(base_point.x + 55, base_point.y + 20);
   w.draw(number_display);
 }
 void InventoryComponent::setLevelSign(int level){

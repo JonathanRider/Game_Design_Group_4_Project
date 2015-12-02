@@ -1,4 +1,4 @@
-<LEVEL order="6" time="10">
+<LEVEL order="6" time="30">
   <MUSIC file="resources/audio/music/Roys_Song.wav" />
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
