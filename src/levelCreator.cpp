@@ -90,6 +90,16 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
   std::string sprite_file_name;
   XMLNode xMainNode=XMLNode::openFileHelper(fileName.c_str());
   int current_level = typeconvert::string2int(xMainNode.getAttribute("order"));
+  //background
+  {
+    XMLNode xBackground=xMainNode.getChildNode("BACKGROUND");
+    if ( !xBackground.isEmpty()){
+      if (xBackground.getAttribute("sprite") != NULL){
+        global()->gameEngine.graphicsSystem->setBackgroundSprite(xBackground.getAttribute("sprite"));
+      }
+    }
+  }
+
   //music
   { //don't want to contaminate other variables
     XMLNode xMusic=xMainNode.getChildNode("MUSIC");

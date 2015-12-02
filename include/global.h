@@ -9,8 +9,10 @@
 #include "nonPlaying.h"
 #include "entityManager.h"
 #include "levelCreator.h"
+#include "graphicsSystem.h"
 
 class NonPlaying;
+class graphicsSystem;
 namespace global_internal{ //this namespace is not supposed to use outside the file
   class GameEngine { //used to store some information for run-time
     public:
@@ -18,6 +20,7 @@ namespace global_internal{ //this namespace is not supposed to use outside the f
       LogicSystem *logicSystem;
       EntityCreator *entityCreator;
       AudioSystem *audioSystem;
+      GraphicsSystem *graphicsSystem;
       ResourceManager *resourceManager;
       NonPlaying *nonPlaying;
       EntityManager *entityManager;

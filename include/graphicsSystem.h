@@ -13,6 +13,8 @@ public:
   void update(float time);
   void draw(sf::Drawable *drawable);
   void draw(void (*callback)(sf::RenderWindow* w));
+  void setBackgroundSprite(std::string &sprite_path);
+  void setBackgroundSprite(const char *sprite_path);
 
 private:
   sf::RenderWindow* screen;

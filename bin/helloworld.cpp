@@ -39,6 +39,7 @@ int main(int argc, char** argv)
   LevelCreator *lCreator = new LevelCreator(entityM);
   global()->gameEngine.levelCreator = lCreator;
   GraphicsSystem* graphicsS = new GraphicsSystem(&App, entityM);
+  global()->gameEngine.graphicsSystem = graphicsS;
   AudioSystem* audioS = new AudioSystem();
   global()->gameEngine.audioSystem = audioS;
 

@@ -92,3 +92,17 @@ void GraphicsSystem::draw(sf::Drawable *drawable){
 void GraphicsSystem::draw(void (*callback)(sf::RenderWindow* w)) {
   callback(this->screen);
 }
+void GraphicsSystem::setBackgroundSprite(std::string &sprite_path){
+  sf::Texture *background = global()->gameEngine.resourceManager->getTexture(sprite_path);
+  background->setRepeated(true);
+
+  background_sprite.setTexture(*background);
+  background_sprite.setTextureRect(sf::IntRect(0,0,10000,10000));
+  background_sprite.setOrigin(25.0f, 25.0f);
+  background_sprite.setPosition(-5000.0f, -5000.0f);
+}
+
+void GraphicsSystem::setBackgroundSprite(const char *sprite_path){
+  std::string str = sprite_path;
+  setBackgroundSprite(str);
+}
