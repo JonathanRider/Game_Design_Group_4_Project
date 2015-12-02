@@ -26,7 +26,7 @@ int main(int argc, char** argv)
   srand (time(NULL));
   // create main window
   sf::RenderWindow App(sf::VideoMode(global()->config.appearance.window_width,
-    global()->config.appearance.window_height,32), "Hello World - SFML");
+    global()->config.appearance.window_height,32), "Roy's Reality");
   App.setFramerateLimit(60);
   App.setIcon( constants::rIcon.width,  constants::rIcon.height,  constants::rIcon.pixel_data );
 
@@ -87,10 +87,17 @@ int main(int argc, char** argv)
   }
   App.close();
 
-  delete nonPlaying;
 
+  delete nonPlaying;
+  delete eCreator;
+  delete inputS;
+  delete logicS;
   delete audioS;
+  delete graphicsS;
+  delete lCreator;
+  delete entityM;
   delete resourceM;
+  Global::clean();
   // Done.
   return 0;
 }

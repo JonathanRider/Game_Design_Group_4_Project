@@ -211,7 +211,7 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
       XMLNode xBullet=xInv.getChildNode("BULLET", i);
       item_list.insert(std::pair<std::string,std::string>(xBullet.getAttribute("type"),xBullet.getAttribute("quantity")));
     }
-    eCreator.createInventory(sf::Vector2f(0,0),item_list, current_level);
+    eCreator.createInventory(sf::Vector2f(0,0),item_list, current_level, typeconvert::string2int(xMainNode.getAttribute("time")));
   }
 
 }

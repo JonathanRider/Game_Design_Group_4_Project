@@ -14,11 +14,11 @@ GraphicsSystem::GraphicsSystem(sf::RenderWindow* w, EntityManager* m){
   background_sprite.setOrigin(25.0f, 25.0f);
   background_sprite.setPosition(-5000.0f, -5000.0f);
 
-  sf::Texture *pausedTex = new sf::Texture();
+  sf::Texture *pausedTex;
   pausedTex = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/paused.png");
   pausedSprite.setTexture(*pausedTex);
 }
-
+GraphicsSystem::~GraphicsSystem(){}
 
 void GraphicsSystem::update(float time){
   if (global()->gameEngine.gameState == constants::PLAYING || global()->gameEngine.gameState == constants::PAUSED ||

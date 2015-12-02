@@ -36,6 +36,10 @@ class Global {
     global_internal::GameEngine gameEngine;
     static Global *getSingleton(){return singleton;}
     static void init(){singleton = new Global();}
+    static void clean(){
+      delete singleton;
+      singleton = NULL;
+    }
 };
 
 static Global *global(){

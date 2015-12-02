@@ -22,6 +22,7 @@
 
 InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
   :manager(m), screen(w), lCreator(lc){  }
+InputSystem::~InputSystem(){}
 
 void InputSystem::update(float time){
   sf::Event event;

@@ -9,7 +9,7 @@
 bool print = false;
 LogicSystem::LogicSystem(EntityManager *m, LevelCreator *lc)
   :manager(m), lCreator(lc){}
-
+LogicSystem::~LogicSystem(){}
 void LogicSystem::update(float time){
   //for each component type that we want to do stuff with
 
@@ -46,7 +46,10 @@ void LogicSystem::update(float time){
         VisionComponent *vc = (VisionComponent*)(*iterator)->getComponent(constants::VISION);
         vc->rotate(time);
       }
-
+      if((*iterator)->hasComponent(constants::INVENTORY)){
+        InventoryComponent *ic = (InventoryComponent*)(*iterator)->getComponent(constants::INVENTORY);
+        ic->update();
+      }
       //movement Collission detection
       if((*iterator)->hasComponent(constants::COLLIDABLE) && (*iterator)->hasComponent(constants::MOVEABLE)){
         resolveCollisions((*iterator));

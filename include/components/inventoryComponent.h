@@ -19,8 +19,9 @@ public:
   InventoryItem getCurrent();
   bool consume();//consume the current item pointed by current_index; return false if the number of the item is already 0;
 
-  void updateGraphics();
+  void update();
   void draw(sf::RenderWindow &w, sf::View &v);
+  void setTimerStartTime(int seconds);
 
 private:
   class InventoryStruct {
@@ -29,15 +30,31 @@ private:
     InventoryItem item;
     int number;
   };
-
+  class Timer {
+    public:
+      Timer();
+      Timer(int seconds);
+      ~Timer();
+      void restart();
+      void pause();
+      void resume();
+      double getTime();//in seconds;
+      void setStartTime(int seconds){start_seconds= seconds;}
+      std::string getTimeString();
+    private:
+      int start_seconds;
+      sf::Clock clock;
+      sf::Time time;
+      bool b_paused;
+  };
+  Timer timer;
   std::vector<InventoryStruct> inventory_list;
   int current_index;
-
   std::vector<std::string> texture_name_list;
   sf::Sprite inv_sprite;
   sf::RectangleShape box_display;
-  sf::Text number_display;
-  sf::Text level_sign;
+  sf::Text number_display, level_sign, timer_display;
+  bool b_timingAlert;
 };
 
 
