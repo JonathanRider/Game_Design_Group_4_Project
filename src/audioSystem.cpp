@@ -54,7 +54,9 @@ void AudioSystem::loadResource(){
   for(int i=0; i < SOUND_MAX; i++){
     list_soundbuffer.push_back(new sf::SoundBuffer());
   }
-  list_soundbuffer[BULLET_SHOOTING]->loadFromFile("resources/audio/sound/Gun_Shot-Marvin-1140816320.wav");
+  list_soundbuffer[BULLET_SHOOTING_COMMON]->loadFromFile("resources/audio/sound/Gun_Shot-Marvin-1140816320.wav");
+  list_soundbuffer[BULLET_SHOOTING_SMOKE]->loadFromFile("resources/audio/sound/grenadeSound.wav");
+  list_soundbuffer[WEAPON_SWITCH]->loadFromFile("resources/audio/sound/weaponSwitch.wav");
   //other sounds ...
 }
 

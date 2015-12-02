@@ -13,7 +13,7 @@ public:
   ~AudioSystem();
 
   void loadResource();
-  enum SoundName { BULLET_SHOOTING, SOUND_MAX};
+  enum SoundName { BULLET_SHOOTING_COMMON, BULLET_SHOOTING_SMOKE, WEAPON_SWITCH, SOUND_MAX};
 
   void update();
 

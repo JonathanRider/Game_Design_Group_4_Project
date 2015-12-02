@@ -66,6 +66,7 @@ void InventoryComponent::nextItem(){
       current_index ++;
     }
   }
+  global()->gameEngine.audioSystem->playSound(AudioSystem::WEAPON_SWITCH);
 }
 void InventoryComponent::prevItem(){
   if (current_index >= 0) {
@@ -75,6 +76,7 @@ void InventoryComponent::prevItem(){
       current_index --;
     }
   }
+  global()->gameEngine.audioSystem->playSound(AudioSystem::WEAPON_SWITCH);
 }
 InventoryComponent::InventoryItem InventoryComponent::getCurrent(){
   if (current_index >= 0) {

@@ -95,13 +95,14 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
         float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
         if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_COMMON) {
           global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, speed);
+          //play the sound
+          global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING_COMMON);
         }
         else if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_SMOKE) {
           global()->gameEngine.entityCreator->createGrenade(manager->getPlayer()->getXY(), direction, speed, 200);
+          //play the sound
+          global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING_SMOKE);
         }
-
-        //play the sound
-        global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING);
         }
       }
       return;
