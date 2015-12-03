@@ -62,7 +62,7 @@ void EntityCreator::create(constants::EntityType type, sf::Vector2f xy, std::str
   }else if (type== constants::ENEMY_STATIC){
     this->createStaticEnemy(xy, 180, 90, 300, 90, sprite_file_name);
   } else if (type == constants::TRAP) {
-    this->createTrap(xy, true, sprite_file_name);
+    this->createTrap(xy, 10, true, sprite_file_name);
   }
 
 
@@ -90,7 +90,20 @@ void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) 
   ///////////////////////////////////////////////////////////
 
   GraphicsComponent *gc = new GraphicsComponent(sprite);
-  MoveableComponent *mc = new MoveableComponent(10000.0,80000.0, 300.0); //accel, decel, max speed
+
+  MoveableComponent *mc;
+  if(sprite_file_name == "resources/graphics/sprite/bonus/spaceship.png"){
+    mc = new MoveableComponent(10000.0,0.0, 300.0); //accel, decel, max speed
+    mc->setVelocity(0);
+    mc->setAccelerating(false);
+  }else{
+    mc = new MoveableComponent(10000.0,80000.0, 300.0); //accel, decel, max speed
+  }
+
+  if(sprite_file_name == "resources/graphics/sprite/bonus/dinosaur.png" || sprite_file_name == "resources/graphics/sprite/bonus/lavaGuy.png"){
+    Component *dr = new Component(constants::DONTROTATE);
+    e->addComponent(dr);
+  }
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   PlayerComponent *pc = new PlayerComponent();
 
@@ -362,7 +375,7 @@ void EntityCreator::createSmokeScreen(sf::Vector2f xy, std::string sprite_file_n
 
 }
 
-void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string sprite_file_name){
+void EntityCreator::createTrap(sf::Vector2f xy, float time, bool isVisible, std::string sprite_file_name){
   Entity *e = new Entity(em->getNewID());
   e->setXY(xy);
 
@@ -376,10 +389,9 @@ void EntityCreator::createTrap(sf::Vector2f xy, bool isVisible, std::string spri
   GraphicsComponent *gc = new GraphicsComponent(sprite);
   e->addComponent(gc);
 
-  TrapComponent *trc = new TrapComponent(isVisible);
+  TrapComponent *trc = new TrapComponent(isVisible, time);
   e->addComponent(trc);
-
-  TimerComponent *tc = new TimerComponent(10, constants::TTRAP);
+  TimerComponent *tc = new TimerComponent(time, constants::TTRAP);
   e->addComponent(tc);
 
   em->addEntity(e);
@@ -442,6 +454,45 @@ void EntityCreator::createBullet(sf::Vector2f xy, float direction, float velocit
 
 
   em->addEntity(e);
+}
+void EntityCreator::createBouncingEnemy(sf::Vector2f xy, float direction, float speed, float killable, float size, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-size/2, xy.y-size/2, size, size));
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(GRENADE):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
+  sprite->setOrigin(size/4*2.5,size/4*2.5);
+  sprite->setRotation(-1*direction +90);
 
 
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+  MoveableComponent *mc = new MoveableComponent(999999,0, speed); //accel, decel, max speed
+  mc->setDirection(direction);
+  mc->setVelocity(speed);
+  mc->setAccelerating(false);
+  e->addComponent(mc);
+
+  Component *bpc = new Component(constants::BOUNCEPROJECTILE);
+  e->addComponent(bpc);
+
+  CollidableComponent *colc = new CollidableComponent(e->getXY());
+  e->addComponent(colc);
+
+  TrapComponent *trc = new TrapComponent(true, -1);
+  e->addComponent(trc);
+
+  if(killable > 0){
+    Component *kc = new Component(constants::KILLABLE);
+    e->addComponent(kc);
+  }
+
+  Component *bmc = new Component(constants::BMOVEMENT);
+  e->addComponent(bmc);
+
+
+
+
+  em->addEntity(e);
 }

@@ -156,9 +156,11 @@ void Entity::receiveInput(constants::Input input, void *extra_data){
     }
   }
   if (this->getComponent(constants::PLAYERC, c) && extra_data != NULL){
-    this->getComponent(constants::GRAPHICS, c);
-    GraphicsComponent * gp = (GraphicsComponent *)c;
-    sf::Vector2f * mouse_position = (sf::Vector2f *) extra_data;
-    gp->rotateTo(*mouse_position);
+    if(!this->getComponent(constants::DONTROTATE)){
+      this->getComponent(constants::GRAPHICS, c);
+      GraphicsComponent * gp = (GraphicsComponent *)c;
+      sf::Vector2f * mouse_position = (sf::Vector2f *) extra_data;
+      gp->rotateTo(*mouse_position);
+    }
   }
 }

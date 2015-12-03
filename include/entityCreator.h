@@ -25,9 +25,10 @@ public:
   void createGlass(sf::Vector2f xy, float width, float height, std::string sprite_file_name ="");
   void createMovingEnemy(sf::Vector2f xy, float xMin, float xMax, float yMin, float yMax, float moveDirection, float viewDirection, float viewAngle, float viewDistance, std::string sprite_file_name = "");
   void createStaticEnemy(sf::Vector2f xy, float viewDirection, float viewAngle, float viewDistance, float rotateAngle, std::string sprite_file_name = "");
+  void createBouncingEnemy(sf::Vector2f xy, float direction, float speed, float killable, float size, std::string sprite_file_name = "");
   void createFinish(sf::Vector2f xy, std::string sprite_file_name = "");
   void createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name = "");
-  void createTrap(sf::Vector2f xy, bool isVisible = true, std::string sprite_file_name = "");
+  void createTrap(sf::Vector2f xy, float time, bool isVisible = true, std::string sprite_file_name = "");
   void createInventory(sf::Vector2f xy, std::map<std::string, std::string> &item_list, int level, int time);
 private:
 

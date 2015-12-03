@@ -94,7 +94,7 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
         float direction = (-1)*atan2(dy, dx) * 180 / PI;
         float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
         if (((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->getCurrent() == InventoryComponent::INV_BULLET_COMMON) {
-          global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, speed);
+          global()->gameEngine.entityCreator->createBullet(manager->getPlayer()->getXY(), direction, 500);
           //play the sound
           global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING_COMMON);
         }
@@ -168,6 +168,22 @@ void LogicSystem::resolveCollisions(Entity *e){
             continue;
           }
         }
+
+        if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
+          sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
+          if(origBB->intersects(*otherBB)){
+            MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
+            MoveableComponent *otherMC = (MoveableComponent*)(*iterator)->getComponent(constants::MOVEABLE);
+            otherMC->setDirection(mc->getDirection());
+
+            GraphicsComponent *gc = (GraphicsComponent*)(*iterator)->getComponent(constants::GRAPHICS);
+            gc->getSprite()->setRotation(-1*mc->getDirection() +90);
+
+            e->addComponent(new Component(constants::MARKEDFORDELETION));
+            continue;
+          }
+
+        }
       }
       if((*iterator)->hasComponent(constants::BMOVEMENT)){
 
@@ -221,6 +237,16 @@ void LogicSystem::resolveCollisions(Entity *e){
             if(fabs(yOverlap/yRatio) >= fabs(xOverlap/xRatio)){
               mc->setDirection(540 - mc->getDirection());
             }
+            while(mc->getDirection() >360 || mc->getDirection() < 0){
+              if(mc->getDirection() > 360){
+                mc->setDirection(mc->getDirection()-360);
+              }
+              if(mc->getDirection() < 0){
+                mc->setDirection(mc->getDirection()+ 360);
+              }
+            }
+            GraphicsComponent *gc = (GraphicsComponent*)e->getComponent(constants::GRAPHICS);
+            gc->getSprite()->setRotation(-1*mc->getDirection() +90);
           }
 
           if(e->hasComponent(constants::BULLETPROJECTILE)){
@@ -280,7 +306,7 @@ void LogicSystem::resolveTimer(Entity *e){
       case constants::TTRAP:
         if (e->getComponent(constants::TRAPC, c2)){
           TrapComponent *trc = (TrapComponent*)c2;
-          global()->gameEngine.entityCreator->createTrap(e->getXY(), !trc->getVisibility());
+          global()->gameEngine.entityCreator->createTrap(e->getXY(), trc->getTime(), !trc->getVisibility());
         }
     }
   }

@@ -24,7 +24,6 @@
 
     </WALLS>
     <FINISH position="15.5;6.5" />
-    <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
     <PLAYER position="3.5;6.5"  />

@@ -35,7 +35,6 @@
 
     </GLASSWALLS>
     <FINISH position="13.5;10.5" />
-    <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
     <PLAYER position="1.5;10.5"  />

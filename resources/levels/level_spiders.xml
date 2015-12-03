@@ -1,0 +1,53 @@
+<LEVEL order="Arachine" time="3s0">
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+  <!-- add multiple files, use ; to seperate -->
+  <BACKGROUND sprite="resources/graphics/sprite/bonus/spiderTile.png"/>
+  <INVENTORY>
+    <BULLET type="common" quantity="99" />
+    <BULLET type="smoke" quantity="0" />
+  </INVENTORY>
+  <MAP>
+    <WALLS>
+      <WALL position="0;0" dimension="20;1"/>
+      <WALL position="0;0" dimension="1;20"/>
+      <WALL position="0;20" dimension="20;1"/>
+      <WALL position="20;0" dimension="1;21"/>
+
+    </WALLS>
+
+    <FINISH position="19.5;19.5" />
+  </MAP>
+  <CHARACTERS>
+    <PLAYER position="1.5;1.5" sprite="resources/graphics/sprite/bonus/arachine.png"/>
+
+    <ENEMY position="3;7.5" property="bouncing" direction="10" speed="300" size="40" killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="4;10.5" property="bouncing" direction="78" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="5;33.5" property="bouncing" direction="304" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="6;6.5" property="bouncing" direction="108" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="7;21.5" property="bouncing" direction="233" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="8;13.5" property="bouncing" direction="74" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="9;26.5" property="bouncing" direction="150" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="10;17.5" property="bouncing" direction="333" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="11;8.5" property="bouncing" direction="12" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="12;12.5" property="bouncing" direction="44" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="13;19.5" property="bouncing" direction="200" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="14;34.5" property="bouncing" direction="270" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="15;6.5" property="bouncing" direction="350" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="16;15.5" property="bouncing" direction="78" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="17;23.5" property="bouncing" direction="27" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="18;27.5" property="bouncing" direction="100" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="19;8.5" property="bouncing" direction="170" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="7;30.5" property="bouncing" direction="255" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="9;20.5" property="bouncing" direction="304" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="11;16.5" property="bouncing" direction="6" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="13;29.5" property="bouncing" direction="85" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="15;11.5" property="bouncing" direction="260" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="17;7.5" property="bouncing" direction="166" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="19;33.5" property="bouncing" direction="350" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="12;29.5" property="bouncing" direction="48" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="14;26.5" property="bouncing" direction="266" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+    <ENEMY position="16;15.5" property="bouncing" direction="20" speed="300" size="40"  killable="1" sprite="resources/graphics/sprite/bonus/spider.png"/>
+
+
+  </CHARACTERS>
+</LEVEL>

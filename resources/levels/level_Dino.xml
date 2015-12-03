@@ -1,10 +1,11 @@
-<LEVEL order="4" time="15">
-    <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+<LEVEL order="Parasaurus Rex" time="30">
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+
   <!-- add multiple files, use ; to seperate -->
-  <BACKGROUND sprite="resources/graphics/sprite/grassFloor.png"/>
+    <BACKGROUND sprite="resources/graphics/sprite/grassFloor.png"/>
   <INVENTORY>
-    <BULLET type="common" quantity="5" />
-    <BULLET type="smoke" quantity="4" />
+    <BULLET type="common" quantity="0" />
+    <BULLET type="smoke" quantity="0" />
   </INVENTORY>
   <MAP>
     <WALLS>
@@ -31,18 +32,18 @@
     </WALLS>
 
 
-    <FINISH position="14;9" />
+    <FINISH position="14;9" sprite="resources/graphics/sprite/bonus/FireFlower.png"/>
 
   </MAP>
   <CHARACTERS>
-    <PLAYER position="1.5;6"  />
-    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/dinosaur.png"/>
-    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <PLAYER position="1.5;6"  sprite="resources/graphics/sprite/bonus/phil.png"/>
+    <ENEMY position="7.5;9.5" property="moving" viewangle="90" viewdirection="270" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
+    <ENEMY position="7.5;1.5" property="moving" viewangle="90" viewdirection="90" viewdistance="300" left="4" right="4" up="0" down="0" movedirection="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
 
-    <ENEMY position="2.5;3.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
-    <ENEMY position="2.5;8.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
-    <ENEMY position="12.5;8.5" property="static" viewangle="90" viewdirection="150" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
-    <ENEMY position="12.5;3.5" property="static" viewangle="90" viewdirection="210" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/dinosaur.png"/>
+    <ENEMY position="2.5;3.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
+    <ENEMY position="2.5;8.5" property="static" viewangle="90" viewdirection="0" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
+    <ENEMY position="12.5;8.5" property="static" viewangle="90" viewdirection="150" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
+    <ENEMY position="12.5;3.5" property="static" viewangle="90" viewdirection="210" viewdistance="300" rotateangle="0" sprite="resources/graphics/sprite/bonus/dino.png"/>
 
   </CHARACTERS>
 </LEVEL>

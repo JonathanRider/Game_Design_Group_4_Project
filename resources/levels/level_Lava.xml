@@ -1,0 +1,130 @@
+<LEVEL order="Lava Leapers" time="3s0">
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+  <!-- add multiple files, use ; to seperate -->
+  <!-- you can add the background like this
+  <BACKGROUND sprite="resources/graphics/sprite/grassFloor.png"/>
+-->
+<BACKGROUND sprite="resources/graphics/sprite/bonus/lavaBackground.png"/>
+  <INVENTORY>
+    <BULLET type="common" quantity="0" />
+    <BULLET type="smoke" quantity="0" />
+  </INVENTORY>
+  <MAP>
+    <WALLS>
+      <WALL position="0;5" dimension="100;1"/>
+      <WALL position="0;35" dimension="100;1"/>
+
+    </WALLS>
+    <GLASSWALLS>
+
+      <GLASS position="3;5" dimension="1;1"/>
+
+
+    </GLASSWALLS>
+    <TRAPS>
+      <TRAP position="0.5;20.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+
+
+      <TRAP position="0.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="1.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="2.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="3.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="4.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="5.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="6.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="7.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="8.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="9.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="10.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="11.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="12.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="13.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="14.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="15.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="16.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="17.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="18.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="19.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="20.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="21.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="22.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="23.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="24.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="25.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="26.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="27.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="28.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="29.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="30.5;21.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+
+      <TRAP position="0.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="1.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="2.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="3.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="4.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="5.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="6.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="7.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="8.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="9.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="10.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="11.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="12.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="13.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="14.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="15.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="16.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="17.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="18.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="19.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="20.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="21.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="22.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="23.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="24.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="25.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="26.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="27.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="28.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="29.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+      <TRAP position="30.5;19.5" time="999" sprite="resources/graphics/sprite/bonus/lava.png"/>
+
+
+
+    </TRAPS>
+
+    <FINISH position="30.5;20.5" sprite="resources/graphics/sprite/bonus/lavaExit.png"/>
+  </MAP>
+  <CHARACTERS>
+    <PLAYER position="1.5;20.5"  sprite="resources/graphics/sprite/bonus/lavaGuy.png"/>
+
+    <ENEMY position="3;30.5" property="bouncing" direction="90" speed="300" size="40" killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="4;20.5" property="bouncing" direction="90" speed="310" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="5;33.5" property="bouncing" direction="270" speed="320" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="6;6.5" property="bouncing" direction="270" speed="330" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="7;21.5" property="bouncing" direction="90" speed="340" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="8;13.5" property="bouncing" direction="90" speed="350" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="9;26.5" property="bouncing" direction="270" speed="360" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="10;17.5" property="bouncing" direction="270" speed="370" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="11;8.5" property="bouncing" direction="90" speed="380" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="12;12.5" property="bouncing" direction="90" speed="390" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="13;19.5" property="bouncing" direction="270" speed="400" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="14;34.5" property="bouncing" direction="270" speed="410" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="15;6.5" property="bouncing" direction="90" speed="420" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="16;15.5" property="bouncing" direction="90" speed="430" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="17;23.5" property="bouncing" direction="270" speed="440" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="18;27.5" property="bouncing" direction="90" speed="450" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="19;8.5" property="bouncing" direction="270" speed="460" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="20;30.5" property="bouncing" direction="90" speed="470" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="21;20.5" property="bouncing" direction="270" speed="480" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="22;16.5" property="bouncing" direction="90" speed="490" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="23;29.5" property="bouncing" direction="270" speed="500" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="24;11.5" property="bouncing" direction="90" speed="510" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="25;7.5" property="bouncing" direction="270" speed="520" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="26;33.5" property="bouncing" direction="270" speed="530" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="27;29.5" property="bouncing" direction="90" speed="540" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="28;26.5" property="bouncing" direction="270" speed="550" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+    <ENEMY position="29;15.5" property="bouncing" direction="270" speed="560" size="40"  killable="0" sprite="resources/graphics/sprite/bonus/lavaBall.png"/>
+
+  </CHARACTERS>
+</LEVEL>

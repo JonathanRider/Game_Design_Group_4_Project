@@ -14,6 +14,9 @@ namespace {
     if ( strcmp(str.c_str(), "moving") == 0){
       return constants::MOVING;
     }
+    else if(strcmp(str.c_str(), "bouncing") == 0){
+      return constants::BOUNCING;
+    }
     return -1;
   }
   void getPosition(const char *str, float &x, float &y) {
@@ -166,14 +169,15 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
     for (int i=0; i < n; i++) {
       XMLNode xTrap = xTraps.getChildNode(i);
       getPosition(xTrap.getAttribute("position"), x, y);
+      float time;
+      getFloat(xTrap.getAttribute("time"), time);
       sprite_file_name = xTrap.getAttribute("sprite") == NULL?"": xTrap.getAttribute("sprite");
-      eCreator.create(constants::TRAP, sf::Vector2f( x * scale + 25, y * scale + 25), sprite_file_name);
+      eCreator.createTrap( sf::Vector2f( x * scale + 25, y * scale + 25), time, true, sprite_file_name);
     }
   }
 
 
   XMLNode xChars=xMainNode.getChildNode("CHARACTERS");
-
   {
     //player
     XMLNode xPlayer=xChars.getChildNode("PLAYER");
@@ -190,12 +194,12 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
       getPosition(xEnemy.getAttribute("position"), x, y);
       sprite_file_name = xEnemy.getAttribute("sprite") == NULL?"": xEnemy.getAttribute("sprite");
       std::set<int> property_set;
-      float viewAngle, viewDirection, viewDistance;
-      getFloat(xEnemy.getAttribute("viewangle"), viewAngle);
-      getFloat(xEnemy.getAttribute("viewdirection"), viewDirection);
-      getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
       getPropertySet(xEnemy.getAttribute("property"), property_set);
       if (property_set.find(constants::MOVING) != property_set.end() ) {
+        float viewAngle, viewDirection, viewDistance;
+        getFloat(xEnemy.getAttribute("viewangle"), viewAngle);
+        getFloat(xEnemy.getAttribute("viewdirection"), viewDirection);
+        getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
         float left, right, up, down, moveDirection;
         getFloat(xEnemy.getAttribute("left"), left);
         getFloat(xEnemy.getAttribute("right"), right);
@@ -205,7 +209,19 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
         getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
         eCreator.createMovingEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), x*scale - left*scale, x*scale + right*scale, y*scale-up*scale, y*scale+ down*scale, moveDirection, viewDirection, viewAngle, viewDistance, sprite_file_name);
       }
+      else if(property_set.find(constants::BOUNCING) != property_set.end() ){
+        float direction, size, speed, killable;
+        getFloat(xEnemy.getAttribute("direction"), direction);
+        getFloat(xEnemy.getAttribute("size"), size);
+        getFloat(xEnemy.getAttribute("speed"), speed);
+        getFloat(xEnemy.getAttribute("killable"), killable);
+        eCreator.createBouncingEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), direction, speed, killable, size, sprite_file_name);
+      }
       else {
+        float viewAngle, viewDirection, viewDistance;
+        getFloat(xEnemy.getAttribute("viewangle"), viewAngle);
+        getFloat(xEnemy.getAttribute("viewdirection"), viewDirection);
+        getFloat(xEnemy.getAttribute("viewdistance"), viewDistance);
         float rotateAngle;
         getFloat(xEnemy.getAttribute("rotateangle"), rotateAngle);
         eCreator.createStaticEnemy(sf::Vector2f( x * scale + 25, y * scale + 25), viewDirection, viewAngle, viewDistance, rotateAngle, sprite_file_name);
@@ -223,5 +239,6 @@ void LevelCreator::loadAndCreateLevel(std::string &fileName) {
     }
     eCreator.createInventory(sf::Vector2f(0,0),item_list, current_level, typeconvert::string2int(xMainNode.getAttribute("time")));
   }
+
 
 }

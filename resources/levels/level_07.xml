@@ -42,7 +42,6 @@
 
     </BOXES>
     <FINISH position="19.5;16.5" />
-    <TRAP position="999;999"/>
   </MAP>
   <CHARACTERS>
     <PLAYER position="7.5;16"  />
