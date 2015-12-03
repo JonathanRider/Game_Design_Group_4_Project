@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 <LEVEL order="9" time="15">
   <MUSIC file="resources/audio/music/Roys_Song.wav" />
+=======
+<LEVEL order="9" time="30">
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+>>>>>>> origin/master
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
     <BULLET type="common" quantity="1" />
