@@ -39,7 +39,7 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
 
   timer_display.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   timer_display.setCharacterSize(50);
-  timer_display.setColor(sf::Color(153,153,0,250));
+  timer_display.setColor(sf::Color(0,0,0,250));
   timer.setStartTime(5);
 }
 
