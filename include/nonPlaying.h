@@ -22,9 +22,12 @@ public:
   void draw(sf::RenderWindow &w);
   void setLevelFile(std::string &name){level_file = name;}
   void setLevel(int l) {level = l;}
+  void setBonus(bool t){bonus = t;}
+  bool getBonus(){return bonus;}
 private:
   std::string level_file;
   int level;
+  bool bonus;
   std::map<int,std::string> story_board_map;
 };
 class LevelMenu: public Menu {

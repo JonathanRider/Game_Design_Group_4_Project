@@ -13,6 +13,12 @@ StoryMenu::StoryMenu(){
   story_board_map[7] = "resources/graphics/image/level_07_story.png";
   story_board_map[8] = "resources/graphics/image/level_08_story.png";
   story_board_map[9] = "resources/graphics/image/level_09_story.png";
+  story_board_map[10] = "resources/graphics/image/bonus/level_Lava_story.png";
+  story_board_map[11] = "resources/graphics/image/bonus/level_sumo_story.png";
+  story_board_map[12] = "resources/graphics/image/bonus/level_space_story.png";
+  story_board_map[13] = "resources/graphics/image/bonus/level_Dino_story.png";
+  story_board_map[14] = "resources/graphics/image/bonus/level_spiders_story.png";
+  story_board_map[15] = "resources/graphics/image/bonus/level_bond_story.png";
 }
 StoryMenu::~StoryMenu(){}
 void StoryMenu::receiveInput(constants::Input input, int &state, void *extra_data){
@@ -34,7 +40,11 @@ void StoryMenu::receiveInput(constants::Input input, int &state, void *extra_dat
 void StoryMenu::draw(sf::RenderWindow &w){
   sf::Sprite sprite;
   sf::Texture *p_texture;
-  p_texture= global()->gameEngine.resourceManager->getTexture(story_board_map[level]);
+  int actualLevel= level;
+  if(getBonus()){
+    actualLevel += 9;
+  }
+  p_texture= global()->gameEngine.resourceManager->getTexture(story_board_map[actualLevel]);
   sprite.setTexture(*p_texture);
   w.draw(sprite);
 }
@@ -43,6 +53,7 @@ cell_width(160), cell_height(160),
 margin_left(110), margin_right(115), margin_top(56), margin_down(60),
 b_instory(false){
 
+  storyMenu.setBonus(true);
   level_file_map[1] = std::string("resources/levels/level_Lava.xml");
   level_file_map[2] = std::string("resources/levels/level_sumo.xml");
   level_file_map[3] = std::string("resources/levels/level_space.xml");
@@ -188,6 +199,7 @@ LevelMenu::LevelMenu():position_row(0),position_column(0), num_row(3), num_colum
 cell_width(110), cell_height(95),
 margin_left(110), margin_right(115), margin_top(56), margin_down(60),
 b_instory(false){
+  storyMenu.setBonus(false);
   level_file_map[1] = std::string("resources/levels/level_01.xml"); //this is level 1
   level_file_map[2] = std::string("resources/levels/level_02.xml");
   level_file_map[3] = std::string("resources/levels/level_03.xml");
