@@ -4,3 +4,4 @@ cmake_install.cmake
 helloworld.exe
 Makefile
 set_env.bat
+Thumbs.db

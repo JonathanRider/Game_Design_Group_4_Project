@@ -1,6 +1,7 @@
 <LEVEL order="7" time="45">
   <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
   <!-- add multiple files, use ; to seperate -->
+  <BACKGROUND sprite="resources/graphics/sprite/floor.png"/>
   <INVENTORY>
     <BULLET type="common" quantity="50" />
     <BULLET type="smoke" quantity="50" />

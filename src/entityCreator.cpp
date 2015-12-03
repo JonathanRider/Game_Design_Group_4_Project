@@ -100,9 +100,13 @@ void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) 
     mc = new MoveableComponent(10000.0,80000.0, 300.0); //accel, decel, max speed
   }
 
-  if(sprite_file_name == "resources/graphics/sprite/bonus/dinosaur.png" || sprite_file_name == "resources/graphics/sprite/bonus/lavaGuy.png"){
+  if(sprite_file_name == "resources/graphics/sprite/bonus/phil.png" || sprite_file_name == "resources/graphics/sprite/bonus/lavaGuy.png"){
     Component *dr = new Component(constants::DONTROTATE);
     e->addComponent(dr);
+  }
+  if(sprite_file_name == "resources/graphics/sprite/bonus/james.png"){
+    Component *rf = new Component(constants::RAPIDFIRE);
+    e->addComponent(rf);
   }
   CollidableComponent *colc = new CollidableComponent(e->getXY());
   PlayerComponent *pc = new PlayerComponent();
@@ -445,6 +449,46 @@ void EntityCreator::createBullet(sf::Vector2f xy, float direction, float velocit
 
   Component *bpc = new Component(constants::BULLETPROJECTILE);
   e->addComponent(bpc);
+  Component *dc = new Component(constants::DEADLY);
+  e->addComponent(dc);
+  CollidableComponent *colc = new CollidableComponent(e->getXY());
+  e->addComponent(colc);
+
+
+
+
+  em->addEntity(e);
+}
+void EntityCreator::createBounceBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x-3, xy.y-5, 6, 10));
+  // e->setXY(sf::Vector2f(xy.x+50*cos(direction*PI/180), xy.y+50*sin(direction*PI/180)));
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(BULLET):textureManager.getTexture(sprite_file_name);
+  sprite->setTexture(*texture);
+  sprite->setOrigin(6,6);
+  sprite->setRotation(90.0);
+  sprite->rotate(-1*direction);
+
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+  MoveableComponent *mc = new MoveableComponent(999999, 0, velocity); //accel, decel, max speed
+  mc->setDirection(direction);
+  mc->setVelocity(velocity);
+  mc->setAccelerating(false);
+  e->addComponent(mc);
+
+  Component *bpc = new Component(constants::BOUNCEPROJECTILE);
+  e->addComponent(bpc);
+
+  Component *bb = new Component(constants::BOUNCEBULLET);
+  e->addComponent(bb);
+
+  TimerComponent *tc = new TimerComponent(3, constants::TNOTHING);
+  e->addComponent(tc);
+
   Component *dc = new Component(constants::DEADLY);
   e->addComponent(dc);
   CollidableComponent *colc = new CollidableComponent(e->getXY());

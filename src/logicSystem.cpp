@@ -80,6 +80,21 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
       global()->gameEngine.nonPlaying->setState(NonPlaying::LEVELMENU);
     }
       return;
+    case constants::INPUT_RAPID_FIRE:
+      if(manager->getPlayer()->hasComponent(constants::RAPIDFIRE)){
+        sf::Vector2f mouse_p = *(sf::Vector2f*)extra_data;
+        //create bullets
+        sf::Vector2f player_p = ((GraphicsComponent *) (manager->getPlayer()->getComponent(constants::GRAPHICS)))->getCenter();
+        float dx = mouse_p.x - player_p.x;
+        float dy = mouse_p.y - player_p.y;
+
+        float direction = (-1)*atan2(dy, dx) * 180 / PI;
+        float speed = LogicSystem::calculateShootingSpeed(sqrt(dx*dx + dy*dy), 200);
+        global()->gameEngine.entityCreator->createBounceBullet(manager->getPlayer()->getXY(), direction, 500);
+        global()->gameEngine.audioSystem->playSound(AudioSystem::BULLET_SHOOTING_COMMON);
+
+      }
+      return;
     case constants::INPUT_SHOOT :
       {
         if (      ((InventoryComponent *) manager->getInventory()->getComponent(constants::INVENTORY))->consume()) {
@@ -169,7 +184,7 @@ void LogicSystem::resolveCollisions(Entity *e){
           }
         }
 
-        if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE)){
+        if((*iterator)->hasComponent(constants::BOUNCEPROJECTILE) && !(*iterator)->hasComponent(constants::BOUNCEBULLET)){
           sf::FloatRect *otherBB = (*iterator)->getBoundingBox();
           if(origBB->intersects(*otherBB)){
             MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);

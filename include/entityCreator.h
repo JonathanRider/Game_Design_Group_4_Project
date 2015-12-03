@@ -19,6 +19,7 @@ public:
 
   void createGrenade(sf::Vector2f xy, float direction, float velocity, float drag, std::string sprite_file_name = "");
   void createBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name = "");
+  void createBounceBullet(sf::Vector2f xy, float direction, float velocity, std::string sprite_file_name = "");
   void createPlayer(sf::Vector2f xy, std::string sprite_file_name = "");
   void createWall(sf::Vector2f xy, float width, float height, std::string sprite_file_name = "");
   void createBox(sf::Vector2f xy, std::string sprite_file_name = "");

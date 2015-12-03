@@ -1,0 +1,92 @@
+<LEVEL order="James Gold" time="20">
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
+  <!-- add multiple files, use ; to seperate -->
+  <BACKGROUND sprite="resources/graphics/sprite/grassFloor.png"/>
+  <INVENTORY>
+    <BULLET type="common" quantity="99" />
+    <BULLET type="smoke" quantity="0" />
+  </INVENTORY>
+  <MAP>
+    <WALLS>
+      <!-- <WALL position="5.5;7.5" dimension="1;1"/>
+      <WALL position="7.5;7.5" dimension="1;1"/> -->
+
+      <WALL position="0;0" dimension="16;1"/>
+      <WALL position="15;1" dimension="1;11"/>
+      <WALL position="0;1" dimension="1;11"/>
+      <WALL position="0;11" dimension="16;1"/>
+
+      <WALL position="3;3" dimension="1;1"/>
+      <WALL position="12;3" dimension="1;1"/>
+      <WALL position="3;8" dimension="1;1"/>
+      <WALL position="12;8" dimension="1;1"/>
+
+
+
+
+
+
+    </WALLS>
+
+
+    <FINISH position="14.5;10.5" />
+    <TRAP position="999;999"/>
+  </MAP>
+  <CHARACTERS>
+    <PLAYER position="8;6"  sprite="resources/graphics/sprite/bonus/james.png"/>
+
+    <ENEMY position="1.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="2.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="3.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="4.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="5.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="6.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="7.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="8.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="9.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="10.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="11.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="12.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="13.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;1.5" property="static" viewangle="90" viewdirection="90" viewdistance="200" rotateangle="0"/>
+
+    <ENEMY position="1.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="2.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="3.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="4.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="5.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="6.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="7.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="8.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="9.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="10.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="11.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="12.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="13.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;10.5" property="static" viewangle="90" viewdirection="270" viewdistance="200" rotateangle="0"/>
+
+    <ENEMY position="1.5;2.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;3.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;4.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;5.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;6.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;7.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;8.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;9.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="1.5;10.5" property="static" viewangle="90" viewdirection="0" viewdistance="200" rotateangle="0"/>
+
+
+    <ENEMY position="14.5;2.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;3.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;4.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;5.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;6.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;7.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;8.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;9.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+    <ENEMY position="14.5;10.5" property="static" viewangle="90" viewdirection="180" viewdistance="200" rotateangle="0"/>
+
+
+
+  </CHARACTERS>
+</LEVEL>

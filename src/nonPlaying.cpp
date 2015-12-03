@@ -38,6 +38,151 @@ void StoryMenu::draw(sf::RenderWindow &w){
   sprite.setTexture(*p_texture);
   w.draw(sprite);
 }
+BonusLevelMenu::BonusLevelMenu():position_row(0),position_column(0), num_row(2), num_column(3),
+cell_width(160), cell_height(160),
+margin_left(110), margin_right(115), margin_top(56), margin_down(60),
+b_instory(false){
+
+  level_file_map[1] = std::string("resources/levels/level_Lava.xml");
+  level_file_map[2] = std::string("resources/levels/level_sumo.xml");
+  level_file_map[3] = std::string("resources/levels/level_space.xml");
+  level_file_map[4] = std::string("resources/levels/level_Dino.xml");
+  level_file_map[5] = std::string("resources/levels/level_spiders.xml");
+  level_file_map[6] = std::string("resources/levels/level_bond.xml");
+}
+
+void BonusLevelMenu::draw(sf::RenderWindow &w){
+  if (b_instory){
+    storyMenu.draw(w);
+    return;
+  }
+  //calculateInterval(w.getSize().x, w.getSize().y);
+  calculateInterval(800, 600);
+  w.clear(sf::Color(0, 0, 0, 255));
+  sf::Sprite background;
+  //background.setTexture(*global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu.png"));
+  w.draw(background);
+  for(int i=0; i < num_row; i++)
+    for(int j=0; j < num_column; j++){
+      drawCell(w,i, j);
+    }
+}
+void BonusLevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_position){
+  float x, y;
+  //calculate the position
+  x = margin_left + (cell_width + interval_horizontal) * column_position;
+  y = margin_top + (cell_height + interval_vertical) * row_position;
+
+  //get level string
+  int temp = row_position * num_column + column_position + 1;
+  std::string level_string;
+  switch(temp){
+    case 1: level_string = "Lava\nLeapers"; break;
+    case 2: level_string = "Sumo\nSlammers"; break;
+    case 3: level_string = "AstroLoot"; break;
+    case 4: level_string = "Paramourus\nRex"; break;
+    case 5: level_string = "Arachine"; break;
+    case 6: level_string = "Gold...\nJames\nGold"; break;
+
+  }
+
+  sf::RectangleShape box;
+  box.setSize(sf::Vector2f(cell_width, cell_height));
+  box.setOutlineColor(sf::Color::Black);
+  box.setOutlineThickness(4);
+  box.setPosition(x,y);
+
+
+  sf::Text text;
+  text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
+  text.setCharacterSize(24);
+  text.setPosition(x,y+30);
+  text.setString(level_string);
+  if (position_row == row_position && position_column == column_position){
+    //SELECTED
+    box.setFillColor(sf::Color(255,255,255,255));
+    text.setColor(sf::Color::Red);
+  }
+  else {
+    box.setFillColor(sf::Color::Red);
+    text.setColor(sf::Color::White);
+  }
+
+
+  w.draw(box);
+  w.draw(text);
+}
+
+void BonusLevelMenu::calculateInterval(float window_width, float window_height){
+  interval_horizontal = (window_width - margin_left - margin_right - cell_width * num_column)/(num_column - 1);
+  if (interval_horizontal < 0)
+    interval_horizontal = 0;
+  interval_vertical = (window_height - margin_top - margin_down -cell_height * num_row)/(num_row - 1);
+  if (interval_vertical < 0)
+    interval_vertical = 0;
+}
+int BonusLevelMenu::getCurrentLevel(){
+  return position_row * num_column + position_column + 1;
+}
+
+void BonusLevelMenu::receiveInput(constants::Input input, int &state, void *extra_data){
+  if (b_instory){
+    storyMenu.receiveInput(input, state, &b_instory);
+    return;
+  }
+  switch (input) {
+    case constants::INPUT_UP:
+      position_row--;
+      break;
+    case constants::INPUT_DOWN:
+      position_row++;
+      break;
+    case constants::INPUT_LEFT:
+      position_column--;
+      break;
+    case constants::INPUT_RIGHT:
+      position_column++;
+      break;
+    case constants::INPUT_ESC:
+      state = NonPlaying::MAINMENU;
+      break;
+    case constants::INPUT_CONFIRM:
+      if (level_file_map.find(getCurrentLevel()) != level_file_map.end() ){
+        storyMenu.setLevelFile(level_file_map[getCurrentLevel()]);
+        storyMenu.setLevel(getCurrentLevel());
+        b_instory = true;
+      }
+      break;
+    default:
+      break;
+  }
+  if (position_row < 0)
+    position_row = 0;
+  if (position_row >= num_row)
+    position_row = num_row - 1;
+  if (position_column < 0) {
+    if (position_row > 0){
+      position_column = num_column - 1;
+      position_row--;
+    }
+    else{
+      state = NonPlaying::LEVELMENU;
+      position_column = 0;
+
+    }
+  }
+
+  if (position_column >= num_column){
+    if (position_row < num_row - 1){
+      position_column = 0;
+      position_row ++;
+    }
+    else{
+      state  = state = NonPlaying::BONUSLEVELMENU;
+      position_column = num_column - 1;
+    }
+  }
+}
 
 LevelMenu::LevelMenu():position_row(0),position_column(0), num_row(3), num_column(3),
 cell_width(110), cell_height(95),
@@ -52,6 +197,11 @@ b_instory(false){
   level_file_map[7] = std::string("resources/levels/level_07.xml");
   level_file_map[8] = std::string("resources/levels/level_08.xml");
   level_file_map[9] = std::string("resources/levels/level_09.xml");
+  level_file_map[10] = std::string("resources/levels/level_Lava.xml");
+  level_file_map[11] = std::string("resources/levels/level_sumo.xml");
+  level_file_map[12] = std::string("resources/levels/level_space.xml");
+  level_file_map[13] = std::string("resources/levels/level_Dino.xml");
+  level_file_map[14] = std::string("resources/levels/level_spiders.xml");
 }
 LevelMenu::~LevelMenu(){}
 void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_data){
@@ -103,8 +253,10 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
       position_column = 0;
       position_row ++;
     }
-    else
+    else{
+      state  = state = NonPlaying::BONUSLEVELMENU;
       position_column = num_column - 1;
+    }
   }
 }
 void LevelMenu::draw(sf::RenderWindow &w){
@@ -142,9 +294,8 @@ void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_posit
   sf::Text text;
   text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   text.setCharacterSize(24);
-  text.setPosition(x,y);
+  text.setPosition(x+8,y+28);
   text.setString(level_string);
-
   if (position_row == row_position && position_column == column_position){
     //SELECTED
     box.setFillColor(sf::Color(255,255,255,255));
@@ -315,6 +466,8 @@ void NonPlaying::receiveInput(constants::Input input, void *extra_data){
       case TERMINALMENU:
         terminalMenu.receiveInput(input, (int &)internal_state);
         return;
+      case BONUSLEVELMENU:
+        bonusLevelMenu.receiveInput(input, (int &)internal_state);
       default:
         return;
     }
@@ -335,5 +488,8 @@ void NonPlaying::draw(sf::RenderWindow &w){
   }else if (internal_state == INFOMENU){
     w.setView(w.getDefaultView()); //reset view
     infoMenu.draw(w);
+  }else if (internal_state == BONUSLEVELMENU){
+    w.setView(w.getDefaultView()); //reset view
+    bonusLevelMenu.draw(w);
   }
 }

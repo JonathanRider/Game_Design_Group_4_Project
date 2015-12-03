@@ -19,6 +19,7 @@
 #define KEY_LEFT_PRESSED 1<<13
 #define KEY_RIGHT_PRESSED 1<<14
 #define KEY_ESC_PRESSED 1<<15 //constants::INPUT_ESC
+#define KEY_LEFT_RAPID_PRESSED 1<<16 //constants::INPUT_ESC
 
 InputSystem::InputSystem(EntityManager *m, sf::RenderWindow *w, LevelCreator *lc)
   :manager(m), screen(w), lCreator(lc){  }
@@ -104,9 +105,9 @@ unsigned long InputSystem::getKeyInputPolling() {
 }
 unsigned long InputSystem::getMouseInputPolling(sf::Vector2f &position) {
   unsigned long ret_val = 0;
-//  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-//    ret_val |= MOUSE_LEFT_PRESSED;
-//  }
+ if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+   ret_val |= KEY_LEFT_RAPID_PRESSED;
+ }
   sf::Vector2i p;
   p = sf::Mouse::getPosition(*screen);
   position = screen->mapPixelToCoords(p);
@@ -208,6 +209,10 @@ constants::Input InputSystem::interprertForPlayer(unsigned long input){
 
 constants::Input InputSystem::interpretForLogicSystem(unsigned long input) {
   unsigned long key_pressed = input & ( MOUSE_LEFT_PRESSED | KEY_P_PRESSED | KEY_ESC_PRESSED);
+
+
+
+
   switch (key_pressed) {
     case MOUSE_LEFT_PRESSED:
       return constants::INPUT_SHOOT;
@@ -216,6 +221,9 @@ constants::Input InputSystem::interpretForLogicSystem(unsigned long input) {
     case KEY_ESC_PRESSED:
       return constants::INPUT_ESC;
     default:
+      if( input & KEY_LEFT_RAPID_PRESSED){
+        return constants::INPUT_RAPID_FIRE;
+      }
       return constants::INPUT_UNKNOWN;
   }
 }
