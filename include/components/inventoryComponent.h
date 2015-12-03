@@ -52,7 +52,7 @@ private:
   int current_index;
   std::vector<std::string> texture_name_list;
   sf::Sprite inv_sprite;
-  sf::RectangleShape box_display;
+  sf::RectangleShape box_display, timer_box;
   sf::Text number_display, level_sign, timer_display;
   bool b_timingAlert;
 };

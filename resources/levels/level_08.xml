@@ -1,5 +1,5 @@
 <LEVEL order="8" time="3s0">
-  <MUSIC file="resources/audio/music/Roys_Song.wav" />
+  <MUSIC file="resources/audio/music/Roys_Song.wav;resources/audio/music/Roy's Song Fast.wav" />
   <!-- add multiple files, use ; to seperate -->
   <INVENTORY>
     <BULLET type="common" quantity="0" />

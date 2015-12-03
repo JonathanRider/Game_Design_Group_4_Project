@@ -27,6 +27,8 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
 //  box_display.setOutlineColor(sf::Color::Red);
 //  box_display.setOutlineThickness(5);
 
+  timer_box.setSize(sf::Vector2f(170, 60));
+  timer_box.setFillColor(sf::Color(255,255,255,200));
 
   number_display.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   number_display.setCharacterSize(24);
@@ -39,7 +41,7 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
 
   timer_display.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   timer_display.setCharacterSize(50);
-  timer_display.setColor(sf::Color(153,153,0,250));
+  timer_display.setColor(sf::Color(51,51,255,250));
   timer.setStartTime(5);
 }
 
@@ -109,6 +111,7 @@ void InventoryComponent::update(){
   if (timer.getTime() <= 10 && b_timingAlert == false){
     timer_display.setColor(sf::Color(255,0,0,244));
     b_timingAlert = true;
+    global()->gameEngine.audioSystem->playMusic(1);
   }
   timer_display.setString(timer.getTimeString());
 
@@ -125,6 +128,8 @@ void InventoryComponent::draw(sf::RenderWindow &w, sf::View &v){
   //draw the timer
   static sf::Clock clock;
   static bool b_timer_disappear = false;
+  timer_box.setPosition(center.x + 190, center.y - 280);
+  w.draw(timer_box);
   timer_display.setPosition(center.x + 200, center.y - 280);
   if (b_timingAlert && timer.getTime() > 0){
     if (b_timer_disappear){
