@@ -57,41 +57,108 @@ void Entity::setXY(sf::Vector2f newXY){
 
 }
 void Entity::move(float time){
+
   Component *c;
   if (this->getComponent(constants::MOVEABLE, c)) {
-    MoveableComponent *mp = (MoveableComponent*) c;
-    if(mp->getAccelerating()){
-      mp->changeVelocity(mp->getAcceleration()*time);
+    if(!this->hasComponent(constants::PLATFORMING)){
+      MoveableComponent *mp = (MoveableComponent*) c;
+      if(mp->getAccelerating()){
+        mp->changeVelocity(mp->getAcceleration()*time);
+      }else{
+        mp->changeVelocity(-1*mp->getDeceleration()*time);
+      }
+      float v = mp->getVelocity();
+      float d = mp->getDirection();
+      float dx = time*(v*cos(d*PI/180.0));
+      float dy = -time*(v*sin(d*PI/180.0));
+
+      sf::Vector2f newXY = sf::Vector2f(this->getXY().x + dx, this->getXY().y + dy);
+      this->setXY(newXY);
+
+      if (this->getComponent(constants::ENEMY, c)) {
+        if(mp->getMinXPos() !=mp->getMaxXPos()){
+          if (this->getXY().x < mp->getMinXPos()){
+            mp->setDirection(mp->getDirection() + 180);
+            this->setXY(sf::Vector2f(mp->getMinXPos()+0.01, xy.y));
+          }else if (this->getXY().x > mp->getMaxXPos()){
+            mp->setDirection(mp->getDirection() + 180);
+            this->setXY(sf::Vector2f(mp->getMaxXPos()-0.01, xy.y));
+          }
+        }
+        if(mp->getMinYPos() != mp->getMaxYPos()){
+          if(this->getXY().y < mp->getMinYPos()) {
+            mp->setDirection(mp->getDirection() + 180);
+            this->setXY(sf::Vector2f(xy.x, mp->getMinYPos()+0.01));
+          }else if(this->getXY().y > mp->getMaxYPos()) {
+            mp->setDirection(mp->getDirection() + 180);
+            this->setXY(sf::Vector2f(xy.x, mp->getMaxYPos()-0.01));
+          }
+        }
+      }
+
     }else{
-      mp->changeVelocity(-1*mp->getDeceleration()*time);
-    }
-    float v = mp->getVelocity();
-    float d = mp->getDirection();
-    float dx = time*(v*cos(d*PI/180.0));
-    float dy = -time*(v*sin(d*PI/180.0));
 
-    sf::Vector2f newXY = sf::Vector2f(this->getXY().x + dx, this->getXY().y + dy);
-    this->setXY(newXY);
+      MoveableComponent *mp = (MoveableComponent*) c;
+      Component *c2;
+      this->getComponent(constants::PLATFORMING, c2);
+      PlatformingComponent *pc = (PlatformingComponent*)c2;
+      if(mp->getAccelerating()){
+        if(mp->getDirection() == 45 || mp->getDirection() == 315 || mp->getDirection() == 0){
+          float speed = pc->getXSpeed() + mp->getAcceleration()*time;
+          if(speed > pc->getMaxSpeed()){
+            speed = pc->getMaxSpeed();
+          }
+          pc->setXSpeed(speed);
+        }else if(mp->getDirection() == 135 || mp->getDirection() == 180 || mp->getDirection() == 225){
+          float speed = pc->getXSpeed() - mp->getAcceleration()*time;
+          if(speed < -1*pc->getMaxSpeed()){
+            speed = -1*pc->getMaxSpeed();
+          }
+          pc->setXSpeed(speed);
+        }else{
+          if(pc->getXSpeed() > 1){
+            pc->setXSpeed(pc->getXSpeed() - mp->getDeceleration()*time);
+          }else if (pc->getXSpeed() < -1){
+            pc->setXSpeed(pc->getXSpeed() + mp->getDeceleration()*time);
+          }else{
+            pc->setXSpeed(0);
+          }
+        }
+        if(mp->getDirection() == 90 || mp->getDirection() == 135 ||mp->getDirection() == 45){
+          //try to jump
+          if(pc->hasJump()){
+            pc->setJump(false);
+            pc->setYSpeed(-1*(650 + 50*time));
+          }
 
-    if (this->getComponent(constants::ENEMY, c)) {
-      if(mp->getMinXPos() !=mp->getMaxXPos()){
-        if (this->getXY().x < mp->getMinXPos()){
-          mp->setDirection(mp->getDirection() + 180);
-          this->setXY(sf::Vector2f(mp->getMinXPos()+0.01, xy.y));
-        }else if (this->getXY().x > mp->getMaxXPos()){
-          mp->setDirection(mp->getDirection() + 180);
-          this->setXY(sf::Vector2f(mp->getMaxXPos()-0.01, xy.y));
+        }
+        if(mp->getDirection() == 90){
+          if(pc->getXSpeed() - mp->getDeceleration()*time > 0){
+            pc->setXSpeed(pc->getXSpeed() - mp->getDeceleration()*time);
+          }else if ( pc->getXSpeed() + mp->getDeceleration()*time < 0){
+            pc->setXSpeed(pc->getXSpeed() + mp->getDeceleration()*time);
+          }else{
+            pc->setXSpeed(0);
+          }
+        }
+
+      }else{
+        if(pc->getXSpeed() - mp->getDeceleration()*time > 0){
+          pc->setXSpeed(pc->getXSpeed() - mp->getDeceleration()*time);
+        }else if ( pc->getXSpeed() + mp->getDeceleration()*time < 0){
+          pc->setXSpeed(pc->getXSpeed() + mp->getDeceleration()*time);
+        }else{
+          pc->setXSpeed(0);
         }
       }
-      if(mp->getMinYPos() != mp->getMaxYPos()){
-        if(this->getXY().y < mp->getMinYPos()) {
-          mp->setDirection(mp->getDirection() + 180);
-          this->setXY(sf::Vector2f(xy.x, mp->getMinYPos()+0.01));
-        }else if(this->getXY().y > mp->getMaxYPos()) {
-          mp->setDirection(mp->getDirection() + 180);
-          this->setXY(sf::Vector2f(xy.x, mp->getMaxYPos()-0.01));
-        }
-      }
+
+      // std::cout << pc->getXSpeed() << std::endl;
+
+      pc->setYSpeed(pc->getYSpeed() + 750*time);
+      this->setXY(sf::Vector2f(this->getXY().x + pc->getXSpeed()*time, this->getXY().y + pc->getYSpeed()*time));
+
+      mp->setDirection(atan2(-1*pc->getYSpeed(), pc->getXSpeed())*180/PI);
+
     }
   }
 

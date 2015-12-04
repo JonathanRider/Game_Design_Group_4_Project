@@ -203,6 +203,18 @@ void LogicSystem::resolveCollisions(Entity *e){
       if((*iterator)->hasComponent(constants::BMOVEMENT)){
 
         if(origBB->intersects(*otherBB)){
+
+          if(e->hasComponent(constants::PLATFORMING)){
+            PlatformingComponent *pc = (PlatformingComponent*)e->getComponent(constants::PLATFORMING);
+            if(origBB->top + origBB->height-5 < otherBB->top){
+              pc->setYSpeed(0);
+              pc->setJump(true);
+            }
+            if(origBB->top < (otherBB->top +otherBB->height - 2)){
+              pc->setYSpeed(0);
+            }
+          }
+
           MoveableComponent *mc = (MoveableComponent*)e->getComponent(constants::MOVEABLE);
           float reverseDirection = fmod((mc->getDirection() + 180),360);
 

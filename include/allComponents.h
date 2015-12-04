@@ -11,6 +11,7 @@
 #include "components/timerComponent.h"
 #include "components/trapComponent.h"
 #include "components/inventoryComponent.h"
+#include "components/platformingComponent.h"
 
 //Here follows some simple components (not enough to use a single file)
 class PlayerComponent : public Component{

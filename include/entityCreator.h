@@ -31,6 +31,7 @@ public:
   void createSmokeScreen(sf::Vector2f xy, std::string sprite_file_name = "");
   void createTrap(sf::Vector2f xy, float time, bool isVisible = true, std::string sprite_file_name = "");
   void createInventory(sf::Vector2f xy, std::map<std::string, std::string> &item_list, int level, int time);
+  void createLava(sf::Vector2f xy, float speed, std::string sprite_file_name);
 private:
 
 

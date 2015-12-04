@@ -104,6 +104,15 @@ void EntityCreator::createPlayer(sf::Vector2f xy, std::string sprite_file_name) 
     Component *dr = new Component(constants::DONTROTATE);
     e->addComponent(dr);
   }
+  if(sprite_file_name == "resources/graphics/sprite/bonus/lavaGuy.png"){
+    Component *pc = new PlatformingComponent(300);
+    e->addComponent(pc);
+    e->setBoundingBox(new sf::FloatRect(xy.x-12.5, xy.y-20, 25, 40));
+
+    this->createLava(sf::Vector2f(xy.x-2000, xy.y +400), 100, "resources/graphics/sprite/bonus/lava.png");
+  }
+
+
   if(sprite_file_name == "resources/graphics/sprite/bonus/james.png"){
     Component *rf = new Component(constants::RAPIDFIRE);
     e->addComponent(rf);
@@ -539,4 +548,33 @@ void EntityCreator::createBouncingEnemy(sf::Vector2f xy, float direction, float 
 
 
   em->addEntity(e);
+}
+
+void EntityCreator::createLava(sf::Vector2f xy, float speed, std::string sprite_file_name){
+  Entity *e = new Entity(em->getNewID());
+  e->setXY(xy);
+  e->setBoundingBox(new sf::FloatRect(xy.x, xy.y, 10000, 10));
+
+  sf::Sprite *sprite = new sf::Sprite();
+  sf::Texture *texture = sprite_file_name.empty()? textureManager.getTexture(WALL):textureManager.getTexture(sprite_file_name);
+  texture->setRepeated(true);
+  sprite->setTexture(*texture);
+  sf::IntRect ir;
+
+  ir.width = (int)10000;
+  ir.height = (int)600;
+  sprite->setTextureRect(ir);
+
+  GraphicsComponent *gc = new GraphicsComponent(sprite);
+  e->addComponent(gc);
+
+
+  MoveableComponent *mc = new MoveableComponent(0, 0, 100, 100, 90);
+  e->addComponent(mc);
+
+  TrapComponent *trc = new TrapComponent(true, 999);
+  e->addComponent(trc);
+
+  em->addEntity(e);
+
 }
