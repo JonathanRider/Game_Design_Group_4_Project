@@ -46,7 +46,8 @@ InventoryComponent::InventoryComponent():b_timingAlert(false){
 }
 
 InventoryComponent::~InventoryComponent(){}
-
+void InventoryComponent::pauseTimer(){timer.pause();}
+void InventoryComponent::resumeTimer(){timer.resume();}
 void InventoryComponent::addItem(InventoryItem item, int number){
   if (number < 0 ||  item < 0 || item >= INV_MAX )
     return;

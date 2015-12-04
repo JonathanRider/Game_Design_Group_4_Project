@@ -66,11 +66,14 @@ void LogicSystem::receiveInput(constants::Input input, void *extra_data) {
   switch(input) {
     case constants::INPUT_PAUSE :
       {
+        InventoryComponent *ic = (InventoryComponent*)(manager->getInventory())->getComponent(constants::INVENTORY);
         if (global()->gameEngine.gameState == constants::PLAYING){
-          global()->gameEngine.gameState =  constants::PAUSED;
+          global()->gameEngine.gameState = constants::PAUSED;
+          ic->pauseTimer();
         }
         else if (global()->gameEngine.gameState == constants::PAUSED ) {
           global()->gameEngine.gameState = constants::PLAYING;
+          ic->resumeTimer();
         }
       }
       return;

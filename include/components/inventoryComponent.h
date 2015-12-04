@@ -22,6 +22,8 @@ public:
   void update();
   void draw(sf::RenderWindow &w, sf::View &v);
   void setTimerStartTime(int seconds);
+  void pauseTimer();
+  void resumeTimer();
 
 private:
   class InventoryStruct {
