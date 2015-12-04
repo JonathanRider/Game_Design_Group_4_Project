@@ -1,7 +1,7 @@
 #include "nonPlaying.h"
-#include "typeConversion.h"
 #include <iostream>
 #include <string>
+#include <string.h>
 
 StoryMenu::StoryMenu(){
   story_board_map[1] = "resources/graphics/image/level_01_story.png";
@@ -48,54 +48,57 @@ void StoryMenu::draw(sf::RenderWindow &w){
   sprite.setTexture(*p_texture);
   w.draw(sprite);
 }
-BonusLevelMenu::BonusLevelMenu():position_row(0),position_column(0), num_row(2), num_column(3),
-cell_width(160), cell_height(160),
-margin_left(110), margin_right(115), margin_top(56), margin_down(60),
-b_instory(false){
 
-  storyMenu.setBonus(true);
-  level_file_map[1] = std::string("resources/levels/level_Lava.xml");
-  level_file_map[2] = std::string("resources/levels/level_sumo.xml");
-  level_file_map[3] = std::string("resources/levels/level_space.xml");
-  level_file_map[4] = std::string("resources/levels/level_Dino.xml");
-  level_file_map[5] = std::string("resources/levels/level_spiders.xml");
-  level_file_map[6] = std::string("resources/levels/level_bond.xml");
-}
-
-void BonusLevelMenu::draw(sf::RenderWindow &w){
-  if (b_instory){
-    storyMenu.draw(w);
-    return;
-  }
-  //calculateInterval(w.getSize().x, w.getSize().y);
+LevelMenu::Page::Page(int row, int col):
+n_row(row),n_col(col), cell_width(110), cell_height(95),
+margin_left(110), margin_right(115), margin_top(56), margin_down(60), selected_row(0), selected_col(0),text_x_offset(8),text_y_offset(28)
+{
+  level_display_list.resize(n_row * n_col);
   calculateInterval(800, 600);
+}
+LevelMenu::Page::~Page(){}
+void LevelMenu::Page::setBackgroundTexture(const char *texture_file){
+  background_sprite.setTexture(*(global()->gameEngine.resourceManager->getTexture(texture_file)));
+}
+void LevelMenu::Page::setPageParameters(const char *name, float value){
+  if (strcmp("CELL_WIDTH", name) == 0){
+    cell_width = value;
+  } else if (strcmp("CELL_HEIGHT", name) == 0){
+    cell_height = value;
+  } else if (strcmp("MARGIN_LEFT", name) == 0){
+    margin_left = value;
+  } else if (strcmp("MARGIN_RIGHT", name) == 0){
+    margin_right = value;
+  } else if (strcmp("MARGIN_TOP", name) == 0){
+    margin_top = value;
+  } else if (strcmp("MARGIN_DOWN", name) == 0){
+    margin_down = value;
+  } else if (strcmp("TEXT_X_OFFSET", name) == 0){
+    text_x_offset = value;
+  } else if (strcmp("TEXT_Y_OFFSET", name) == 0){
+    text_y_offset = value;
+  }
+  calculateInterval(800,600);
+}
+void LevelMenu::Page::setLevelDisplayString(int level, const char *str){
+  level_display_list[level - 1] = str;
+}
+void LevelMenu::Page::draw(sf::RenderWindow &w){
   w.clear(sf::Color(0, 0, 0, 255));
-  sf::Sprite background;
-  //background.setTexture(*global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu.png"));
-  w.draw(background);
-  for(int i=0; i < num_row; i++)
-    for(int j=0; j < num_column; j++){
-      drawCell(w,i, j);
+  w.draw(background_sprite);
+  for(int i=0; i < n_row; i++)
+    for(int j=0; j < n_col; j++){
+      if (i == selected_row && j == selected_col)
+        drawCell(w,i,j,true);
+      else
+        drawCell(w,i,j,false);
     }
 }
-void BonusLevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_position){
+void LevelMenu::Page::drawCell(sf::RenderWindow &w, int row_position, int column_position, bool b_selected){
   float x, y;
   //calculate the position
   x = margin_left + (cell_width + interval_horizontal) * column_position;
   y = margin_top + (cell_height + interval_vertical) * row_position;
-
-  //get level string
-  int temp = row_position * num_column + column_position + 1;
-  std::string level_string;
-  switch(temp){
-    case 1: level_string = "Lava\nLeapers"; break;
-    case 2: level_string = "Sumo\nSlammers"; break;
-    case 3: level_string = "AstroLoot"; break;
-    case 4: level_string = "Paramourus\nRex"; break;
-    case 5: level_string = "Arachine"; break;
-    case 6: level_string = "Gold...\nJames\nGold"; break;
-
-  }
 
   sf::RectangleShape box;
   box.setSize(sf::Vector2f(cell_width, cell_height));
@@ -103,13 +106,12 @@ void BonusLevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_
   box.setOutlineThickness(4);
   box.setPosition(x,y);
 
-
   sf::Text text;
   text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
   text.setCharacterSize(24);
-  text.setPosition(x,y+30);
-  text.setString(level_string);
-  if (position_row == row_position && position_column == column_position){
+  text.setPosition(x+text_x_offset,y+text_y_offset);
+  text.setString(level_display_list[row_position * n_col + column_position]);
+  if (b_selected){
     //SELECTED
     box.setFillColor(sf::Color(255,255,255,255));
     text.setColor(sf::Color::Red);
@@ -118,87 +120,57 @@ void BonusLevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_
     box.setFillColor(sf::Color::Red);
     text.setColor(sf::Color::White);
   }
-
-
   w.draw(box);
   w.draw(text);
 }
-
-void BonusLevelMenu::calculateInterval(float window_width, float window_height){
-  interval_horizontal = (window_width - margin_left - margin_right - cell_width * num_column)/(num_column - 1);
+void LevelMenu::Page::calculateInterval(float window_width, float window_height){
+  interval_horizontal = (window_width - margin_left - margin_right - cell_width * n_col)/(n_col - 1);
   if (interval_horizontal < 0)
     interval_horizontal = 0;
-  interval_vertical = (window_height - margin_top - margin_down -cell_height * num_row)/(num_row - 1);
+  interval_vertical = (window_height - margin_top - margin_down -cell_height * n_row)/(n_row - 1);
   if (interval_vertical < 0)
     interval_vertical = 0;
 }
-int BonusLevelMenu::getCurrentLevel(){
-  return position_row * num_column + position_column + 1;
-}
-
-void BonusLevelMenu::receiveInput(constants::Input input, int &state, void *extra_data){
-  if (b_instory){
-    storyMenu.receiveInput(input, state, &b_instory);
-    return;
+int LevelMenu::Page::move(const char *direction){
+  if (strcmp(direction, "UP") == 0){
+    selected_row --;
   }
-  switch (input) {
-    case constants::INPUT_UP:
-      position_row--;
-      break;
-    case constants::INPUT_DOWN:
-      position_row++;
-      break;
-    case constants::INPUT_LEFT:
-      position_column--;
-      break;
-    case constants::INPUT_RIGHT:
-      position_column++;
-      break;
-    case constants::INPUT_ESC:
-      state = NonPlaying::MAINMENU;
-      break;
-    case constants::INPUT_CONFIRM:
-      if (level_file_map.find(getCurrentLevel()) != level_file_map.end() ){
-        storyMenu.setLevelFile(level_file_map[getCurrentLevel()]);
-        storyMenu.setLevel(getCurrentLevel());
-        b_instory = true;
-      }
-      break;
-    default:
-      break;
+  else if (strcmp(direction, "DOWN") == 0){
+    selected_row ++;
   }
-  if (position_row < 0)
-    position_row = 0;
-  if (position_row >= num_row)
-    position_row = num_row - 1;
-  if (position_column < 0) {
-    if (position_row > 0){
-      position_column = num_column - 1;
-      position_row--;
+  else if (strcmp(direction, "LEFT") == 0 ){
+    selected_col --;
+  }
+  else if (strcmp(direction, "RIGHT") == 0){
+    selected_col ++;
+  }
+  if (selected_row < 0)
+    selected_row = 0;
+  if (selected_row >= n_row)
+    selected_row = n_row - 1;
+  if (selected_col < 0) {
+    if (selected_row > 0){
+      selected_col = n_col - 1;
+      selected_row--;
+    }
+    else
+      selected_col = 0;
+      return -1; //move to previous page
+  }
+  if (selected_col >= n_col){
+    if (selected_row < n_row - 1){
+      selected_col = 0;
+      selected_row ++;
     }
     else{
-      state = NonPlaying::LEVELMENU;
-      position_column = 0;
-
+      selected_col = n_col - 1;
+      return 1; //move to next page
     }
   }
-
-  if (position_column >= num_column){
-    if (position_row < num_row - 1){
-      position_column = 0;
-      position_row ++;
-    }
-    else{
-      state  = state = NonPlaying::BONUSLEVELMENU;
-      position_column = num_column - 1;
-    }
-  }
+  return 0;
 }
-
-LevelMenu::LevelMenu():position_row(0),position_column(0), num_row(3), num_column(3),
-cell_width(110), cell_height(95),
-margin_left(110), margin_right(115), margin_top(56), margin_down(60),
-b_instory(false){
+LevelMenu::LevelMenu():b_instory(false), current_page(0)
+{
   storyMenu.setBonus(false);
   level_file_map[1] = std::string("resources/levels/level_01.xml"); //this is level 1
   level_file_map[2] = std::string("resources/levels/level_02.xml");
@@ -214,8 +186,40 @@ b_instory(false){
   level_file_map[12] = std::string("resources/levels/level_space.xml");
   level_file_map[13] = std::string("resources/levels/level_Dino.xml");
   level_file_map[14] = std::string("resources/levels/level_spiders.xml");
+  level_file_map[15] = std::string("resources/levels/level_bond.xml");
+
+
+  page_list.push_back(new Page(3,3));
+  page_list[0]->setBackgroundTexture("resources/graphics/image/LevelMenu.png");
+  page_list[0]->setLevelDisplayString(1, "Level 1");
+  page_list[0]->setLevelDisplayString(2, "Level 2");
+  page_list[0]->setLevelDisplayString(3, "Level 3");
+  page_list[0]->setLevelDisplayString(4, "Level 4");
+  page_list[0]->setLevelDisplayString(5, "Level 5");
+  page_list[0]->setLevelDisplayString(6, "Level 6");
+  page_list[0]->setLevelDisplayString(7, "Level 7");
+  page_list[0]->setLevelDisplayString(8, "Level 8");
+  page_list[0]->setLevelDisplayString(9, "Level 9");
+
+  page_list.push_back(new Page(2,3));
+  page_list[1]->setPageParameters("CELL_WIDTH", 160);
+  page_list[1]->setPageParameters("CELL_HEIGHT", 160);
+  page_list[1]->setPageParameters("TEXT_X_OFFSET", 0);
+  page_list[1]->setPageParameters("TEXT_Y_OFFSET", 30);
+  page_list[1]->setLevelDisplayString(1, "Lava\nLeapers");
+  page_list[1]->setLevelDisplayString(2, "Sumo\nSlammers");
+  page_list[1]->setLevelDisplayString(3, "AstroLoot");
+  page_list[1]->setLevelDisplayString(4, "Paramourus\nRex");
+  page_list[1]->setLevelDisplayString(5, "Arachine");
+  page_list[1]->setLevelDisplayString(6, "Gold...\nJames\nGold");
 }
 LevelMenu::~LevelMenu(){}
+int LevelMenu::getCurrentLevel(){
+  if (current_page == 0)
+    return page_list[0]->getCurrentLevel();
+  else
+    return 3 * 3 + page_list[1]->getCurrentLevel();
+}
 void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_data){
   if (b_instory){
     storyMenu.receiveInput(input, state, &b_instory);
@@ -223,16 +227,16 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
   }
   switch (input) {
     case constants::INPUT_UP:
-      position_row--;
+      current_page += page_list[current_page]->move("UP");
       break;
     case constants::INPUT_DOWN:
-      position_row++;
+      current_page += page_list[current_page]->move("DOWN");
       break;
     case constants::INPUT_LEFT:
-      position_column--;
+      current_page += page_list[current_page]->move("LEFT");
       break;
     case constants::INPUT_RIGHT:
-      position_column++;
+      current_page += page_list[current_page]->move("RIGHT");
       break;
     case constants::INPUT_ESC:
       state = NonPlaying::MAINMENU;
@@ -247,91 +251,20 @@ void LevelMenu::receiveInput(constants::Input input, int &state, void *extra_dat
     default:
       break;
   }
-  if (position_row < 0)
-    position_row = 0;
-  if (position_row >= num_row)
-    position_row = num_row - 1;
-  if (position_column < 0) {
-    if (position_row > 0){
-      position_column = num_column - 1;
-      position_row--;
-    }
-    else
-      position_column = 0;
+  if (current_page < 0){
+    current_page = 0;
+  }
+  if (current_page >= page_list.size()){
+    current_page = page_list.size() - 1;
   }
 
-  if (position_column >= num_column){
-    if (position_row < num_row - 1){
-      position_column = 0;
-      position_row ++;
-    }
-    else{
-      state  = state = NonPlaying::BONUSLEVELMENU;
-      position_column = num_column - 1;
-    }
-  }
 }
 void LevelMenu::draw(sf::RenderWindow &w){
   if (b_instory){
     storyMenu.draw(w);
     return;
   }
-  //calculateInterval(w.getSize().x, w.getSize().y);
-  calculateInterval(800, 600);
-  w.clear(sf::Color(0, 0, 0, 255));
-  sf::Sprite background;
-  background.setTexture(*global()->gameEngine.resourceManager->getTexture("resources/graphics/image/LevelMenu.png"));
-  w.draw(background);
-  for(int i=0; i < num_row; i++)
-    for(int j=0; j < num_column; j++){
-      drawCell(w,i, j);
-    }
-}
-void LevelMenu::drawCell(sf::RenderWindow &w, int row_position, int column_position){
-  float x, y;
-  //calculate the position
-  x = margin_left + (cell_width + interval_horizontal) * column_position;
-  y = margin_top + (cell_height + interval_vertical) * row_position;
-
-  //get level string
-  std::string level_string = "Level " + typeconvert::int2string(row_position * num_column + column_position + 1 );
-
-  sf::RectangleShape box;
-  box.setSize(sf::Vector2f(cell_width, cell_height));
-  box.setOutlineColor(sf::Color::Black);
-  box.setOutlineThickness(4);
-  box.setPosition(x,y);
-
-
-  sf::Text text;
-  text.setFont(*(global()->gameEngine.resourceManager->getFont("resources/font/6809 chargen.ttf")));
-  text.setCharacterSize(24);
-  text.setPosition(x+8,y+28);
-  text.setString(level_string);
-  if (position_row == row_position && position_column == column_position){
-    //SELECTED
-    box.setFillColor(sf::Color(255,255,255,255));
-    text.setColor(sf::Color::Red);
-  }
-  else {
-    box.setFillColor(sf::Color::Red);
-    text.setColor(sf::Color::White);
-  }
-
-
-  w.draw(box);
-  w.draw(text);
-}
-void LevelMenu::calculateInterval(float window_width, float window_height){
-  interval_horizontal = (window_width - margin_left - margin_right - cell_width * num_column)/(num_column - 1);
-  if (interval_horizontal < 0)
-    interval_horizontal = 0;
-  interval_vertical = (window_height - margin_top - margin_down -cell_height * num_row)/(num_row - 1);
-  if (interval_vertical < 0)
-    interval_vertical = 0;
-}
-int LevelMenu::getCurrentLevel(){
-  return position_row * num_column + position_column + 1;
+  page_list[current_page]->draw(w);
 }
 
 MainMenu::MainMenu():current_index(0){}
@@ -478,8 +411,6 @@ void NonPlaying::receiveInput(constants::Input input, void *extra_data){
       case TERMINALMENU:
         terminalMenu.receiveInput(input, (int &)internal_state);
         return;
-      case BONUSLEVELMENU:
-        bonusLevelMenu.receiveInput(input, (int &)internal_state);
       default:
         return;
     }
@@ -500,8 +431,5 @@ void NonPlaying::draw(sf::RenderWindow &w){
   }else if (internal_state == INFOMENU){
     w.setView(w.getDefaultView()); //reset view
     infoMenu.draw(w);
-  }else if (internal_state == BONUSLEVELMENU){
-    w.setView(w.getDefaultView()); //reset view
-    bonusLevelMenu.draw(w);
   }
 }

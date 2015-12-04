@@ -36,39 +36,35 @@ public:
   ~LevelMenu();
   void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
   void draw(sf::RenderWindow &w);
+  int getCurrentLevel();
 protected:
-  void drawCell(sf::RenderWindow &w, int row_position, int column_position);
-  void calculateInterval(float window_width, float window_height);
-  int getCurrentLevel();
+  class Page{
+  public:
+    Page(int row, int col);
+    ~Page();
+    int move(const char *direction);
+    void setBackgroundTexture(const char *texture_file);
+    void setLevelDisplayString(int level, const char *str);//level from 1
+    void setPageParameters(const char *name, float value);
+    void draw(sf::RenderWindow &w);
+    void drawCell(sf::RenderWindow &w, int row_position, int column_position, bool b_selected);
+    void calculateInterval(float window_width, float window_height);
+    int getCurrentLevel(){return selected_row * n_col + selected_col + 1;}
+  private:
+    sf::Sprite background_sprite;
+    std::vector<std::string> level_display_list;
+    int n_row, n_col, selected_row, selected_col;
+    float cell_width, cell_height;
+    float margin_left, margin_right, margin_top, margin_down;
+    float interval_horizontal, interval_vertical;
+    float text_x_offset, text_y_offset;
+  };
+  std::vector<Page *> page_list;
+
   StoryMenu storyMenu;
   bool b_instory;
   std::map<int, std::string> level_file_map;
-  int position_row, position_column; //start from 0
-  int num_row, num_column;
-  float cell_width, cell_height;
-  float margin_left, margin_right, margin_top, margin_down;
-  float interval_horizontal, interval_vertical;
-};
-
-class BonusLevelMenu: public LevelMenu{
-public:
-  BonusLevelMenu();
-  void draw(sf::RenderWindow &w);
-  void receiveInput(constants::Input input, int &state, void *extra_data = NULL);
-private:
-  void drawCell(sf::RenderWindow &w, int row_position, int column_position);
-  void calculateInterval(float window_width, float window_height);
-  int getCurrentLevel();
-  StoryMenu storyMenu;
-  bool b_instory;
-  std::map<int, std::string> level_file_map;
-  int position_row, position_column; //start from 0
-  int num_row, num_column;
-  float cell_width, cell_height;
-  float margin_left, margin_right, margin_top, margin_down;
-  float interval_horizontal, interval_vertical;
-
-
+  int current_page;
 };
 
 class MainMenu: public Menu {
@@ -114,13 +110,12 @@ public:
 
   void receiveInput(constants::Input input, void *extra_data);
   void draw(sf::RenderWindow &w);
-  enum NonPlayingState {MAINMENU, LEVELMENU, TERMINALMENU, INFOMENU, CONTROLS, ENEMIES, ITEMS, BONUSLEVELMENU};
+  enum NonPlayingState {MAINMENU, LEVELMENU, TERMINALMENU, INFOMENU, CONTROLS, ENEMIES, ITEMS};
   NonPlayingState getState(){return internal_state;}
   void setState(NonPlayingState s){internal_state = s;}
 private:
   NonPlayingState internal_state;
   LevelMenu levelMenu;
-  BonusLevelMenu bonusLevelMenu;
   InfoMenu infoMenu;
   MainMenu mainMenu;
   TerminalMenu terminalMenu;
