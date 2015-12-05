@@ -1,5 +1,5 @@
 # Project name
-project(pong)
+project(RoysReality)
 
 # Minimum Cmake Version
 cmake_minimum_required(VERSION 2.6)
