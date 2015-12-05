@@ -4,25 +4,26 @@
 - SFML 2.3.1 (www.sfml-dev.org)
 
 
+**COMPILING**
+(LINUX)
+To make the compilation process easier for people downloading our game, we created a bash script called cm.sh.
+First, you need to make it executable, so run
+chmod 755 cm.sh
+Then simply run
+./cm.sh
+This will set the SFML environment variables, then it will run cmake, then it will run make.
+Now, you can run the program.
 
-**COMPILE**
-
-Run 'cmake .' to generate the Makefile.  If SFML is not installed in a standard search path, then CMake will not be able to find the required cmake module 'FindSFML.cmake'.  You can direct CMake to look for it in a specific location by setting the environment varibale 'CMAKE_MODULE_PATH'. For example assuming bash and SFML installed in ~/local
-
-export CMAKE_MODULE_PATH=~/local/share/SFML/cmake/Modules
-cmake .
-
-To compile, simply run 'make'. If SFML was installed correctly, a executable 'helloworld' will be generated.
-
-
-
-**ADDING FILES**
-
-- If you want to add an executable, just add the corresponding .cpp file in the 'bin' subdirectory, and _rerun_ 'cmake .' to update the Makefiles.
-- If you want to add a source file, just add the corresponding .cpp file in the 'src' subdirectory, and _rerun_ 'cmake .' to update the Makefile.
-- If you want to add a header file, just add the corresponding .h file to the 'include' subdirectory. You do not need to update the Makefile.
+(WINDOWS)
+First, make sure sfml dll files are located in your system PATH. Make sure you have the dll's that go with the compiler you are using.
+If the website doesn't have the precompiled version for your compiler, you can compile the dll's yourself.
 
 
+**DEMO VIDEO**
+https://www.youtube.com/watch?v=IfSA8Ex1UyA
+
+**BONUS LEVELS**
+The bonus levels with the other groups sprites can be accessed by going to level 9 and then going right.
 
 **CLEANING UP**
 
