@@ -347,12 +347,12 @@ void InfoMenu::draw(sf::RenderWindow &w){
     }
   }else {
     if (current_index == 0) {
-      p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu0.png");
+      p_texture= global()->gameEngine.resourceManager->getTexture("resources/graphics/image/infomenu0.png");
     }
     else if (current_index == 1){
-      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu1.png");
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/infomenu1.png");
     }else{
-      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/InfoMenu2.png");
+      p_texture = global()->gameEngine.resourceManager->getTexture("resources/graphics/image/infomenu2.png");
     }
   }
   sprite.setTexture(*p_texture);
